@@ -1,7 +1,23 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [cb2025-6-gangwars](#cb2025-6-gangwars)
+      + [Objects](#objects)
+         - [Gang](#gang)
+         - [Gangster](#gangster)
+         - [Business](#business)
+         - [Stronghold](#stronghold)
+         - [Neighborhood](#neighborhood)
+      + [Game Loop](#game-loop)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="cb2025-6-gangwars"></a>
 # cb2025-6-gangwars
 
+<!-- TOC --><a name="objects"></a>
 ### Objects
 
+<!-- TOC --><a name="gang"></a>
 #### Gang
 
 Type
@@ -31,6 +47,7 @@ Notoriety
 Gangster (list)
 
 
+<!-- TOC --><a name="gangster"></a>
 #### Gangster
 
 Name
@@ -67,6 +84,7 @@ Can form Party to:
     - Parties are slow to get to other neighborhoods; so, forming a party in one spot leaves other areas vulnerable if they dont have defense of their own
 
 
+<!-- TOC --><a name="business"></a>
 #### Business
 
 Type
@@ -74,6 +92,7 @@ Type
 
 Income = (Base income by type) * (Neighborhood influence) * (Conditional modifiers) * (1 + 0.01 * Assigned Pawns) * (1 + Assigned Gangster's Charisma)
 
+<!-- TOC --><a name="stronghold"></a>
 #### Stronghold
 
 Represents safehouses, mansions, politcal party offices, bunkers, armories, or anywhere gangsters and pawns can gather in physical (or social) safety, and mobilize sorties for defense of the neighborhood. Assigning gangsters or pawns here provides a blanket increase to defense of:
@@ -82,6 +101,7 @@ Represents safehouses, mansions, politcal party offices, bunkers, armories, or a
 
 Gangsters that are assigned to strongholds are much safer, providing their defense to the neighborhood while being hard to kill themselves. Pawns assigned to strongholds can die while defending other neighborhood assets, but gangsters will only die if the stronghold itself is attacked.
 
+<!-- TOC --><a name="neighborhood"></a>
 #### Neighborhood
 
 Collection of businesses and strongholds.
@@ -101,15 +121,17 @@ Influence
 
 Assigning pawns or gangsters to neighborhoods allows them to provide a small amount of defense to all businesses, but much less than being assigned to strongholds or directly to businesses. Additionally, they are vulnerable to parties patrolling the neighborhood.
 
+<!-- TOC --><a name="game-loop"></a>
 ### Game Loop
 
-Game time is composed of logical ticks (can speed up or slow down time by changing how long it takes to tick)
-Every X ticks, owned businesses generate income
-Every X ticks, pawns and gangsters generate influence
-Every X ticks, patrolling parties do (stuff)
-After X ticks of attacking a specific location (i.e. not just Patrolling), party resolves attack
-Every X ticks, random chance for an event (with a cooldown after an event) (events can follow quest trees?)
-Forming a party takes X ticks; Disbanding a party takes Y ticks, where X > Y
-Reassigning pawns takes X ticks, reassigning gangsters takes Y ticks, where X > Y (probably)
-Moving a party to another location takes X ticks, moving a party to another neighborhood takes Y ticks where Y > X. Maybe use a hex grid within a neighborhood? idk. If we use a hex grid we need to make sure it's not a dominant strategy to just disband a party if you need to move them far away. The game is semi-abstracted, and when a pawn/gangster is not assigned to an organized party, we're not tracking their physical movement in real time - the game takes place over time, not in the span of a few days, is my thinking. (Realistically it takes 30 minutes for one guy to drive across town, but it takes hours to get a group of 15 people together, organized, with a plan, and to not get separated when patrolling around, and oh everyone wait a sec Four-Eyes Friedriksen has to take a leak, etc; there's a reason it takes armies months to campaign but an individual much less time to travel)
-Every X ticks, Corpolice have a chance to interfere with activity in each neighborhood correlated to their Control, causing parties to disband, etc
+- Game time is composed of logical ticks (can speed up or slow down time by changing how long it takes to tick)
+- Every X ticks, owned businesses generate income
+- Every X ticks, pawns and gangsters generate influence
+- Every X ticks, patrolling parties do (stuff)
+- After X ticks of attacking a specific location (i.e. not just Patrolling), party resolves attack
+- Every X ticks, random chance for an event (with a cooldown after an event) (events can follow quest trees?)
+- Forming a party takes X ticks; Disbanding a party takes Y ticks, where X > Y
+- Reassigning pawns takes X ticks, reassigning gangsters takes Y ticks, where X > Y (probably)
+- Moving a party to another location takes X ticks, moving a party to another neighborhood takes Y ticks where Y > X. Maybe use a hex grid within a neighborhood? idk. If we use a hex grid we need to make sure it's not a dominant strategy to just disband a party if you need to move them far away. The game is semi-abstracted, and when a pawn/gangster is not assigned to an organized party, we're not tracking their physical movement in real time - the game takes place over time, not in the span of a few days, is my thinking. (Realistically it takes 30 minutes for one guy to drive across town, but it takes hours to get a group of 15 people together, organized, with a plan, and to not get separated when patrolling around, and oh everyone wait a sec Four-Eyes Friedriksen has to take a leak, etc; there's a reason it takes armies months to campaign but an individual much less time to travel)
+- Every X ticks, Corpolice have a chance to interfere with activity in each neighborhood correlated to their Control, causing parties to disband, etc
+- Every X ticks, Corpolice control goes down
