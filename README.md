@@ -1,12 +1,19 @@
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [cb2025-6-gangwars](#cb2025-6-gangwars)
+
       + [Objects](#objects)
+
          - [Gang](#gang)
+
          - [Gangster](#gangster)
+
          - [Business](#business)
+
          - [Stronghold](#stronghold)
+
          - [Neighborhood](#neighborhood)
+
       + [Game Loop](#game-loop)
 
 <!-- TOC end -->
