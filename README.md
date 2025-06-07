@@ -50,6 +50,9 @@ Gangster (list)
 <!-- TOC --><a name="gangster"></a>
 #### Gangster
 
+- Represents lieutenants, party leaders, etc. The boss of the street corner, manager of a gambling den, etc.
+- Not sure if we want them to have fiefs like in M&B or just assignments
+
 Name
   - I.E. John Pompadour, Grace De La Cruz, Jenny Machete, Raj Yamamoto, Four-Eyes Friedriksen
 
