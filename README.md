@@ -138,3 +138,16 @@ Assigning pawns or gangsters to neighborhoods allows them to provide a small amo
 - Moving a party to another location takes X ticks, moving a party to another neighborhood takes Y ticks where Y > X. Maybe use a hex grid within a neighborhood? idk. If we use a hex grid we need to make sure it's not a dominant strategy to just disband a party if you need to move them far away. The game is semi-abstracted, and when a pawn/gangster is not assigned to an organized party, we're not tracking their physical movement in real time - the game takes place over time, not in the span of a few days, is my thinking. (Realistically it takes 30 minutes for one guy to drive across town, but it takes hours to get a group of 15 people together, organized, with a plan, and to not get separated when patrolling around, and oh everyone wait a sec Four-Eyes Friedriksen has to take a leak, etc; there's a reason it takes armies months to campaign but an individual much less time to travel)
 - Every X ticks, Corpolice have a chance to interfere with activity in each neighborhood correlated to their Control, causing parties to disband, etc
 - Every X ticks, Corpolice control goes down
+
+<!-- TOC --><a name="battles"></a>
+## Battles
+
+- Autobattler?
+
+<!-- TOC --><a name="events"></a>
+## Events
+
+- Periodic events occur which passively effect things in the game, have one-time effects, or change behaviors/game rules
+- Some are random (a gangster is snitching for another gang; accident; trade proposals; etc)
+- Optionally, others could be pre-scripted (corporation defaults/collapses; martial law; etc)
+- Some events give the player a choice (Total War style); possibly some could be linked together as "quest lines"
