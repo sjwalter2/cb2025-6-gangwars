@@ -15,10 +15,10 @@
 # cb2025-6-gangwars
 
 <!-- TOC --><a name="objects"></a>
-### Objects
+## Objects
 
 <!-- TOC --><a name="gang"></a>
-#### Gang
+### Gang
 
 Type
   - I.E. Yakuza, cyborgs, bikers, clowns, etc
@@ -48,7 +48,7 @@ Gangster (list)
 
 
 <!-- TOC --><a name="gangster"></a>
-#### Gangster
+### Gangster
 
 - Represents lieutenants, party leaders, etc. The boss of the street corner, manager of a gambling den, etc.
 - Not sure if we want them to have fiefs like in M&B or just assignments
@@ -88,7 +88,7 @@ Can form Party to:
 
 
 <!-- TOC --><a name="business"></a>
-#### Business
+### Business
 
 Type
   - I.E. Gambling parlor, Drug store, Lemonade Stand, Construction Company, Harbor, Bar, Handholding spa
@@ -96,7 +96,7 @@ Type
 Income = (Base income by type) * (Neighborhood influence) * (Conditional modifiers) * (1 + 0.01 * Assigned Pawns) * (1 + Assigned Gangster's Charisma)
 
 <!-- TOC --><a name="stronghold"></a>
-#### Stronghold
+### Stronghold
 
 Represents safehouses, mansions, politcal party offices, bunkers, armories, or anywhere gangsters and pawns can gather in physical (or social) safety, and mobilize sorties for defense of the neighborhood. Assigning gangsters or pawns here provides a blanket increase to defense of:
   - pawns assigned to the neighborhood, who are otherwise vulnerable to enemy Party patrols
@@ -105,7 +105,7 @@ Represents safehouses, mansions, politcal party offices, bunkers, armories, or a
 Gangsters that are assigned to strongholds are much safer, providing their defense to the neighborhood while being hard to kill themselves. Pawns assigned to strongholds can die while defending other neighborhood assets, but gangsters will only die if the stronghold itself is attacked.
 
 <!-- TOC --><a name="neighborhood"></a>
-#### Neighborhood
+### Neighborhood
 
 Collection of businesses and strongholds.
 
@@ -125,7 +125,7 @@ Influence
 Assigning pawns or gangsters to neighborhoods allows them to provide a small amount of defense to all businesses, but much less than being assigned to strongholds or directly to businesses. Additionally, they are vulnerable to parties patrolling the neighborhood.
 
 <!-- TOC --><a name="game-loop"></a>
-### Game Loop
+## Game Loop
 
 - Game time is composed of logical ticks (can speed up or slow down time by changing how long it takes to tick)
 - Every X ticks, owned businesses generate income
