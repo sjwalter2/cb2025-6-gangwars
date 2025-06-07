@@ -1,12 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"obj_gang",
+  "%Name":"obj_business",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_gang",
+  "name":"obj_business",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
