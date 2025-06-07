@@ -15,10 +15,10 @@
 # cb2025-6-gangwars
 
 <!-- TOC --><a name="objects"></a>
-### Objects
+## Objects
 
 <!-- TOC --><a name="gang"></a>
-#### Gang
+### Gang
 
 Type
   - I.E. Yakuza, cyborgs, bikers, clowns, etc
@@ -48,7 +48,10 @@ Gangster (list)
 
 
 <!-- TOC --><a name="gangster"></a>
-#### Gangster
+### Gangster
+
+- Represents lieutenants, party leaders, etc. The boss of the street corner, manager of a gambling den, etc.
+- Not sure if we want them to have fiefs like in M&B or just assignments
 
 Name
   - I.E. John Pompadour, Grace De La Cruz, Jenny Machete, Raj Yamamoto, Four-Eyes Friedriksen
@@ -85,7 +88,7 @@ Can form Party to:
 
 
 <!-- TOC --><a name="business"></a>
-#### Business
+### Business
 
 Type
   - I.E. Gambling parlor, Drug store, Lemonade Stand, Construction Company, Harbor, Bar, Handholding spa
@@ -93,7 +96,7 @@ Type
 Income = (Base income by type) * (Neighborhood influence) * (Conditional modifiers) * (1 + 0.01 * Assigned Pawns) * (1 + Assigned Gangster's Charisma)
 
 <!-- TOC --><a name="stronghold"></a>
-#### Stronghold
+### Stronghold
 
 Represents safehouses, mansions, politcal party offices, bunkers, armories, or anywhere gangsters and pawns can gather in physical (or social) safety, and mobilize sorties for defense of the neighborhood. Assigning gangsters or pawns here provides a blanket increase to defense of:
   - pawns assigned to the neighborhood, who are otherwise vulnerable to enemy Party patrols
@@ -102,7 +105,7 @@ Represents safehouses, mansions, politcal party offices, bunkers, armories, or a
 Gangsters that are assigned to strongholds are much safer, providing their defense to the neighborhood while being hard to kill themselves. Pawns assigned to strongholds can die while defending other neighborhood assets, but gangsters will only die if the stronghold itself is attacked.
 
 <!-- TOC --><a name="neighborhood"></a>
-#### Neighborhood
+### Neighborhood
 
 Collection of businesses and strongholds.
 
@@ -122,7 +125,7 @@ Influence
 Assigning pawns or gangsters to neighborhoods allows them to provide a small amount of defense to all businesses, but much less than being assigned to strongholds or directly to businesses. Additionally, they are vulnerable to parties patrolling the neighborhood.
 
 <!-- TOC --><a name="game-loop"></a>
-### Game Loop
+## Game Loop
 
 - Game time is composed of logical ticks (can speed up or slow down time by changing how long it takes to tick)
 - Every X ticks, owned businesses generate income
@@ -135,3 +138,16 @@ Assigning pawns or gangsters to neighborhoods allows them to provide a small amo
 - Moving a party to another location takes X ticks, moving a party to another neighborhood takes Y ticks where Y > X. Maybe use a hex grid within a neighborhood? idk. If we use a hex grid we need to make sure it's not a dominant strategy to just disband a party if you need to move them far away. The game is semi-abstracted, and when a pawn/gangster is not assigned to an organized party, we're not tracking their physical movement in real time - the game takes place over time, not in the span of a few days, is my thinking. (Realistically it takes 30 minutes for one guy to drive across town, but it takes hours to get a group of 15 people together, organized, with a plan, and to not get separated when patrolling around, and oh everyone wait a sec Four-Eyes Friedriksen has to take a leak, etc; there's a reason it takes armies months to campaign but an individual much less time to travel)
 - Every X ticks, Corpolice have a chance to interfere with activity in each neighborhood correlated to their Control, causing parties to disband, etc
 - Every X ticks, Corpolice control goes down
+
+<!-- TOC --><a name="battles"></a>
+## Battles
+
+- Autobattler?
+
+<!-- TOC --><a name="events"></a>
+## Events
+
+- Periodic events occur which passively effect things in the game, have one-time effects, or change behaviors/game rules
+- Some are random (a gangster is snitching for another gang; accident; trade proposals; etc)
+- Optionally, others could be pre-scripted (corporation defaults/collapses; martial law; etc)
+- Some events give the player a choice (Total War style); possibly some could be linked together as "quest lines"
