@@ -20,13 +20,32 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 
 			        // Apply new color and trigger capture flash AFTER flicker ends
 			        if (!is_undefined(tile.pending_color)) {
-			            tile.color = tile.pending_color;
-			            tile.pending_color = undefined;
-						tile.owner = tile.pending_owner;
-						tile.pending_owner = undefined;
-						tile.flicker_enabled = false;
-			            tile.capture_time = current_time;
-			        }
+					    var previous_owner = tile.owner;
+					    var previous_color = scr_get_gang_color(previous_owner);
+    
+					    var new_owner = tile.pending_owner;
+					    var new_color = tile.pending_color;
+
+					    tile.color = new_color;
+					    tile.owner = new_owner;
+					    tile.pending_color = undefined;
+					    tile.pending_owner = undefined;
+					    tile.flicker_enabled = false;
+					    tile.capture_time = current_time;
+
+					    // ✅ Send log event
+					    if (object_exists(obj_eventLogger)) {
+					        scr_log_capture_event(
+					            new_owner,
+					            new_color,
+					            tile.q,
+					            tile.r,
+					            previous_owner,
+					            previous_color
+					        );
+					    }
+					}
+
 			    }
 			}
 

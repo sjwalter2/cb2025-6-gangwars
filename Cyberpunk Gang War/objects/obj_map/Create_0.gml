@@ -261,7 +261,7 @@ function update_gang_spread() {
             var tile = global.hex_grid[new_index];
 
             tile.flicker_enabled = true;
-            tile.flicker_count = 5;
+            tile.flicker_count = 4;
             tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
             tile.flicker_on = false;
             tile.pending_color = g.color;
