@@ -37,7 +37,7 @@ if (current_time - bg_effect_timer > bg_effect_duration || bg_effect_fade_dir ==
         }
 
         // Pick new color
-        bg_effect_color = make_color_rgb(irandom(255), irandom(255), irandom(255));
+        bg_effect_color = make_color_hsv(irandom(255), (255), (255));
 
         bg_effect_timer = current_time;
     }

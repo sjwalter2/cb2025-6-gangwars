@@ -1,6 +1,6 @@
 /// Create Event: obj_bgEffect
 bg_effects = [];
-
+randomize()
 // Add all effect functions to this list
 array_push(bg_effects, bg_effect_snake_sim_minimal);
 array_push(bg_effects, bg_effect_triangle_grid);
@@ -9,13 +9,13 @@ array_push(bg_effects, bg_effect_rotating_squares);
 array_push(bg_effects, bg_effect_grid_pulse);
 
 
-bg_effect_index = 0;
+bg_effect_index = irandom(4);
 bg_effect_played = [];
 bg_effect_timer = current_time;
 bg_effect_duration = 30000;
 bg_effect_fade = 0;
 bg_effect_fade_dir = 1;
-bg_effect_color = make_color_rgb(irandom(255), irandom(255), irandom(255));
+bg_effect_color = make_color_hsv(irandom(255), (255), (255));
 
 for (var i = 0; i < array_length(bg_effects); i++) {
     bg_effect_played[i] = false;
@@ -65,9 +65,9 @@ function bg_effect_triangle_grid() {
 function bg_effect_scroll_lines() {
     var offset = (current_time * 0.05) mod 50;
 
-    for (var i = 0; i < camera_get_view_height(view_camera[0]) div 10; i++) {
+    for (var i = -30; i < camera_get_view_height(view_camera[0]) div 10; i++) {
         var y_pos = i * 10 + offset;
-        draw_line(0, y_pos, camera_get_view_width(view_camera[0]), y_pos);
+        draw_line_width(0, y_pos, camera_get_view_width(view_camera[0]), y_pos, 2);
     }
 }
 
@@ -111,7 +111,7 @@ function bg_effect_rotating_squares() {
 
 /// Grid Pulse
 function bg_effect_grid_pulse() {
-    var time_val = current_time * 0.002;
+    var time_val = current_time * 0.001;
     var gap = 80;
     var count_w = ceil(camera_get_view_width(view_camera[0]) / gap);
     var count_h = ceil(camera_get_view_height(view_camera[0]) / gap);
@@ -120,7 +120,7 @@ function bg_effect_grid_pulse() {
         for (var row = 0; row <= count_h; row++) {
             var center_x = col * gap;
             var center_y = row * gap;
-            var radius = 2 + sin(time_val + col * 0.3 + row * 0.5) * 2;
+            var radius = 2 + sin(time_val + col * 0.3 + row * 0.5) * 8;
 
             draw_circle(center_x, center_y, radius, false);
         }
@@ -186,7 +186,7 @@ function bg_effect_snake_sim_minimal() {
             var a = s.segments[j - 1];
             var b = s.segments[j];
             if (a[0] == -1 || b[0] == -1) continue;
-            draw_line_width(a[0], a[1], b[0], b[1], 3);
+            draw_line_width(a[0], a[1], b[0], b[1], 8);
         }
 
         snakes[i] = s;

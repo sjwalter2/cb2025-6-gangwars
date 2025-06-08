@@ -1,5 +1,5 @@
 // === CONFIGURATION ===
-random_set_seed(irandom(199));
+randomize();
 
 var HEX_SIZE          = 18;
 var HEX_RADIUS        = 16;
@@ -98,11 +98,17 @@ global.gang_territories = [];
 
 // === UTILITY FUNCTIONS ===
 function axial_to_pixel(q, r) {
+    if (is_undefined(q) || is_undefined(r)) {
+        show_debug_message("axial_to_pixel: invalid input q=" + string(q) + " r=" + string(r));
+        return {px: 0, py: 0}; // Failsafe fallback
+    }
+
     var spacing = 1.1;
     var px = spacing * hex_size * sqrt(3) * (q + r / 2);
     var py = spacing * hex_size * 3/2 * r;
     return {px: px, py: py};
 }
+
 
 function pixel_to_axial(px, py) {
     var spacing = 1.1;
@@ -189,6 +195,33 @@ function array_contains(arr, val) {
 
 // === Add Timer-Based Spreading ===
 function update_gang_spread() {
+    // Global failsafe: abort if no tiles left to claim
+    var sole_owner = undefined;
+
+	for (var t = 0; t < array_length(global.hex_grid); t++) {
+	    var tile = global.hex_grid[t];
+	    if (tile.type != "core") {
+	        if (is_undefined(tile.owner)) {
+	            sole_owner = undefined;
+	            break; // unowned tile found — not dominated
+	        }
+
+	        if (is_undefined(sole_owner)) {
+	            sole_owner = tile.owner; // first owner we see
+	        } else if (tile.owner != sole_owner) {
+	            sole_owner = undefined;
+	            break; // different owner — not unified
+	        }
+	    }
+	}
+
+	if (!is_undefined(sole_owner)) {
+	    start_capture = 0;
+	    return; // ✅ one gang has taken over all non-core tiles
+	}
+
+
+    // Loop through each gang
     for (var i = 0; i < array_length(global.gang_territories); i++) {
         var g = global.gang_territories[i];
         if (array_length(g.owned) == 0 || current_time < g.cooldown) continue;
@@ -201,6 +234,8 @@ function update_gang_spread() {
             [-1,  0], [ 0, -1], [ 1, -1]
         ];
 
+        var viable_targets = [];
+
         for (var d = 0; d < 6; d++) {
             var dq = directions[d][0];
             var dr = directions[d][1];
@@ -210,29 +245,35 @@ function update_gang_spread() {
             for (var j = 0; j < array_length(global.hex_grid); j++) {
                 var tile = global.hex_grid[j];
                 if (
-					    tile.q == nq &&
-					    tile.r == nr &&
-					    tile.type != "core" &&
-					    tile.owner != g.name // skip tiles already owned by this gang
-					)
-					 {
-                    tile.flicker_enabled = true;
-                    tile.flicker_count = 5
-                    tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
-                    tile.flicker_on = false;
-                    tile.pending_color = g.color;
-					tile.pending_owner = g.name;
-
-                    global.hex_grid[j] = tile;
-
-                    // Update owned + cooldown, then write back to array
-                    array_push(g.owned, j);
-                    g.cooldown = current_time + irandom_range(2000, 8000);
-                    global.gang_territories[i] = g;
-
-                    return;
+                    tile.q == nq &&
+                    tile.r == nr &&
+                    tile.type != "core" &&
+                    tile.owner != g.name &&
+                    is_undefined(tile.pending_owner) // ✅ not already being claimed
+                ) {
+                    array_push(viable_targets, j);
                 }
             }
+        }
+
+        if (array_length(viable_targets) > 0) {
+            var new_index = viable_targets[irandom(array_length(viable_targets) - 1)];
+            var tile = global.hex_grid[new_index];
+
+            tile.flicker_enabled = true;
+            tile.flicker_count = 5;
+            tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
+            tile.flicker_on = false;
+            tile.pending_color = g.color;
+            tile.pending_owner = g.name;
+
+            global.hex_grid[new_index] = tile;
+
+            array_push(g.owned, new_index);
+            g.cooldown = current_time + irandom_range(2000, 8000);
+            global.gang_territories[i] = g;
+
+            return;
         }
     }
 }
