@@ -39,15 +39,17 @@
     {"id":{"name":"obj_gameHandler","path":"objects/obj_gameHandler/obj_gameHandler.yy",},},
     {"id":{"name":"obj_gang","path":"objects/obj_gang/obj_gang.yy",},},
     {"id":{"name":"obj_gangSpawner","path":"objects/obj_gangSpawner/obj_gangSpawner.yy",},},
+    {"id":{"name":"obj_gangster","path":"objects/obj_gangster/obj_gangster.yy",},},
     {"id":{"name":"obj_map","path":"objects/obj_map/obj_map.yy",},},
     {"id":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"gainMoney","path":"scripts/gainMoney/gainMoney.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
