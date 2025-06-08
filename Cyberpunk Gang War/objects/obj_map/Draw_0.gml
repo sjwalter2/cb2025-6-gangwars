@@ -24,6 +24,7 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 			            tile.pending_color = undefined;
 						tile.owner = tile.pending_owner;
 						tile.pending_owner = undefined;
+						tile.flicker_enabled = false;
 			            tile.capture_time = current_time;
 			        }
 			    }
