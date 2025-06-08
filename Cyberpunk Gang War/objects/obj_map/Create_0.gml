@@ -22,7 +22,7 @@ WARM_WHITE        = make_color_rgb(220, 220, 200);
 hex_size     = HEX_SIZE;
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 0;
+start_capture = 1;
 
 global.hex_grid = [];
 
