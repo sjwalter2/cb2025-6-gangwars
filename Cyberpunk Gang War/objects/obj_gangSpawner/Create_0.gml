@@ -2,12 +2,25 @@
 // Assumes global.hex_grid is populated
 
 // === CONFIGURABLE SETTINGS ===
-var NUM_GANGS = 15;
-var GANG_MIN_SPREAD = 5;
+var NUM_GANGS = 10;
+var GANG_MIN_SPREAD = 10;
 var GANG_MAX_SPREAD = 50;
 var CORE_MIN_DISTANCE = 5;
 var GANG_MIN_DISTANCE_FROM_EACH_OTHER = 6;
 var COLOR_VARIATION = 40;
+
+
+
+var adjectives = [
+    "Royal", "Rusty", "Bloody", "Silent", "Savage", "Wicked", "Glorious", "Crimson",
+    "Broken", "Sinister", "Wild", "Iron", "Chrome", "Neon", "Feral", "Lost"
+];
+
+var nouns = [
+    "Feuders", "Razors", "Serpents", "Wolves", "Hounds", "Riders", "Kings", "Nomads",
+    "Claws", "Fangs", "Knives", "Reapers", "Specters", "Grinders", "Stalkers", "Echoes"
+];
+
 
 // === HELPER ===
 function array_index_of(arr, val) {
@@ -101,20 +114,48 @@ while (array_length(placed_gangs) < NUM_GANGS && array_length(eligible_tiles) > 
 // Organic spreading of territory
 for (var g = 0; g < array_length(placed_gangs); g++) {
     var base_index = placed_gangs[g];
+	// Generate random gang name
+	// Maintain a list of used names
+	if (!variable_global_exists("used_gang_names")) {
+		global.used_gang_names = [];
+	}
+
+	var gang_name = "";
+	repeat (100) { // Prevent infinite loops (in case we run out of combos)
+		var adj = adjectives[irandom(array_length(adjectives) - 1)];
+		var noun = nouns[irandom(array_length(nouns) - 1)];
+		var try_name = "The " + adj + " " + noun;
+
+		var is_unique = true;
+		for (var i = 0; i < array_length(global.used_gang_names); i++) {
+		    if (global.used_gang_names[i] == try_name) {
+		        is_unique = false;
+		        break;
+		    }
+		}
+
+		if (is_unique) {
+		    gang_name = try_name;
+		    array_push(global.used_gang_names, gang_name);
+		    break;
+		}
+	}
+
+
+	
     var gang_color = gang_colors[g mod array_length(gang_colors)];
     global.hex_grid[base_index].color = gang_color;
+	global.hex_grid[base_index].owner = gang_name;
 
     var owned = [base_index];
     var to_expand = [base_index];
     var spread_target = irandom_range(GANG_MIN_SPREAD, GANG_MAX_SPREAD);
 
     while (array_length(owned) < spread_target && array_length(to_expand) > 0) {
-        // Pick a random tile from current frontier
         var from_index = to_expand[irandom(array_length(to_expand) - 1)];
         var from_tile = global.hex_grid[from_index];
         var neighbors = [];
 
-        // Check all 6 adjacent axial directions
         var directions = [
             [ 1,  0], [ 0,  1], [-1,  1],
             [-1,  0], [ 0, -1], [ 1, -1]
@@ -126,7 +167,6 @@ for (var g = 0; g < array_length(placed_gangs); g++) {
             var nq = from_tile.q + dq;
             var nr = from_tile.r + dr;
 
-            // Find the matching tile in the grid
             for (var i = 0; i < array_length(global.hex_grid); i++) {
                 var tile = global.hex_grid[i];
                 if (tile.q == nq && tile.r == nr && tile.type != "core" && tile.color == make_color_rgb(80, 80, 80)) {
@@ -138,13 +178,21 @@ for (var g = 0; g < array_length(placed_gangs); g++) {
         if (array_length(neighbors) > 0) {
             var new_index = neighbors[irandom(array_length(neighbors) - 1)];
             global.hex_grid[new_index].color = gang_color;
+			global.hex_grid[new_index].owner = gang_name;
             array_push(owned, new_index);
             array_push(to_expand, new_index);
         } else {
-            // No unclaimed neighbors from this tile, remove it from frontier
             var idx = array_index_of(to_expand, from_index);
             if (idx != -1) array_delete(to_expand, idx, 1);
         }
     }
+
+    array_push(global.gang_territories, {
+        color: gang_color,
+        owned: owned,
+        cooldown: current_time + irandom_range(2000, 8000),
+		name: gang_name
+    });
 }
+
 

@@ -1,10 +1,10 @@
 // === CONFIGURATION ===
 random_set_seed(irandom(199));
 
-var HEX_SIZE          = 16;
+var HEX_SIZE          = 18;
 var HEX_RADIUS        = 16;
 var CORE_RADIUS       = 5;
-FLICKER_PERCENT   = 0.1;
+FLICKER_PERCENT   = 0;
 FLICKER_MIN_TIME  = 20000;
 FLICKER_MAX_TIME  = 60000;
 FLICKER_TOGGLE_MIN = 100;
@@ -12,19 +12,17 @@ FLICKER_TOGGLE_MAX = 1000;
 FLICKER_MIN_BLIPS = 1;
 FLICKER_MAX_BLIPS = 3;
 
-var ZOOM_LEVEL_INIT   = 0;
-var ZOOM_LEVEL_MAX    = 2;
 
-var OUTLINE_THICKNESS = 2;
+
+OUTLINE_THICKNESS = 2;
 GRADIENT_STEPS    = 15;
 WARM_WHITE        = make_color_rgb(220, 220, 200);
 
 // === INITIALIZE MAP STATE ===
 hex_size     = HEX_SIZE;
 hex_radius   = HEX_RADIUS;
-zoom_level   = ZOOM_LEVEL_INIT;
-zoom_max     = ZOOM_LEVEL_MAX;
 flickering_tile_indices = [];
+start_capture = 0;
 
 global.hex_grid = [];
 
@@ -34,27 +32,54 @@ for (var q = -hex_radius; q <= hex_radius; q++) {
     for (var r = r1; r <= r2; r++) {
         var dist = max(abs(q), abs(r), abs(-q - r));
         var is_core = dist <= CORE_RADIUS;
+		var is_core_border = (dist == CORE_RADIUS);
+		var tile_type = "outer";
+		var tile_color = make_color_rgb(80, 80, 80); // outer
 
-        var tile = {
-            q: q,
-            r: r,
-            type: is_core ? "core" : "outer",
-            brightness: random_range(0.5, 1.0),
-            is_flickering: false,
-            flicker_enabled: false,
-            flicker_next: 0,
-            flicker_timer: 0,
-            flicker_count: 0,
-            flicker_on: false,
-            color: is_core ? make_color_rgb(255, 255, 255) : make_color_rgb(80, 80, 80)
-        };
+		if (dist == CORE_RADIUS) {
+		    tile_type = "core_border";
+		    tile_color = make_color_rgb(20, 20, 20); // dark red border
+		} else if (dist < CORE_RADIUS) {
+		    tile_type = "core";
+		    tile_color = make_color_rgb(255, 255, 255); // normal core white
+		}
+
+
+		var tile = {
+		    q: q,
+		    r: r,
+		    type: is_core ? "core" : "outer",
+		    brightness: is_core ? random_range(0.8, 1) : random_range(0.5, .8),
+		    is_flickering: false,
+		    flicker_enabled: false,
+		    flicker_next: 0,
+		    flicker_timer: 0,
+		    flicker_count: 0,
+		    flicker_on: false,
+		    color: tile_color,
+		    flicker_target: undefined, 
+		    pending_color: undefined,   
+			capture_time: -1,
+			pending_owner: undefined,
+			owner: undefined
+		};
+
 
         array_push(global.hex_grid, tile);
     }
 }
 
 // === ENABLE FLICKERING FOR SOME TILES ===
-var flicker_target = ceil(array_length(global.hex_grid) * FLICKER_PERCENT);
+// Only outer tiles should be eligible for flicker
+var flicker_eligible = [];
+for (var i = 0; i < array_length(global.hex_grid); i++) {
+    var tile = global.hex_grid[i];
+    if (tile.type == "outer") {
+        array_push(flicker_eligible, i);
+    }
+}
+
+flicker_target = ceil(array_length(flicker_eligible) * FLICKER_PERCENT);
 var chosen = ds_list_create();
 
 while (ds_list_size(chosen) < flicker_target) {
@@ -67,12 +92,47 @@ while (ds_list_size(chosen) < flicker_target) {
 }
 ds_list_destroy(chosen);
 
+
+global.gang_territories = [];
+
+
 // === UTILITY FUNCTIONS ===
 function axial_to_pixel(q, r) {
     var spacing = 1.1;
     var px = spacing * hex_size * sqrt(3) * (q + r / 2);
     var py = spacing * hex_size * 3/2 * r;
     return {px: px, py: py};
+}
+
+function pixel_to_axial(px, py) {
+    var spacing = 1.1;
+    var q = ((sqrt(3)/3 * px) - (1/3 * py)) / (spacing * hex_size);
+    var r = (2/3 * py) / (spacing * hex_size);
+    return axial_round(q, r);
+}
+
+function axial_round(q, r) {
+    var xx = q;
+    var z = r;
+    var yy = -xx - z;
+
+    var rx = round(xx);
+    var ry = round(yy);
+    var rz = round(z);
+
+    var dx = abs(rx - xx);
+    var dy = abs(ry - yy);
+    var dz = abs(rz - z);
+
+    if (dx > dy && dx > dz) {
+        rx = -ry - rz;
+    } else if (dy > dz) {
+        ry = -rx - rz;
+    } else {
+        rz = -rx - ry;
+    }
+
+    return { q: rx, r: rz };
 }
 
 function draw_illuminated_hex(x, y, size, color) {
@@ -82,7 +142,6 @@ function draw_illuminated_hex(x, y, size, color) {
         var t = s / GRADIENT_STEPS;
         var fade = 1 - t;
 
-        var interp_color;
         if (t < 1/3) {
             var blend_t = t / (1/3);
             interp_color = merge_color(color, darkened_edge_color, 1 - blend_t);
@@ -127,6 +186,58 @@ function array_contains(arr, val) {
     }
     return false;
 }
+
+// === Add Timer-Based Spreading ===
+function update_gang_spread() {
+    for (var i = 0; i < array_length(global.gang_territories); i++) {
+        var g = global.gang_territories[i];
+        if (array_length(g.owned) == 0 || current_time < g.cooldown) continue;
+
+        var spread_from = g.owned[irandom(array_length(g.owned) - 1)];
+        var from_tile = global.hex_grid[spread_from];
+
+        var directions = [
+            [ 1,  0], [ 0,  1], [-1,  1],
+            [-1,  0], [ 0, -1], [ 1, -1]
+        ];
+
+        for (var d = 0; d < 6; d++) {
+            var dq = directions[d][0];
+            var dr = directions[d][1];
+            var nq = from_tile.q + dq;
+            var nr = from_tile.r + dr;
+
+            for (var j = 0; j < array_length(global.hex_grid); j++) {
+                var tile = global.hex_grid[j];
+                if (
+					    tile.q == nq &&
+					    tile.r == nr &&
+					    tile.type != "core" &&
+					    tile.owner != g.name // skip tiles already owned by this gang
+					)
+					 {
+                    tile.flicker_enabled = true;
+                    tile.flicker_count = 5
+                    tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
+                    tile.flicker_on = false;
+                    tile.pending_color = g.color;
+					tile.pending_owner = g.name;
+
+                    global.hex_grid[j] = tile;
+
+                    // Update owned + cooldown, then write back to array
+                    array_push(g.owned, j);
+                    g.cooldown = current_time + irandom_range(2000, 8000);
+                    global.gang_territories[i] = g;
+
+                    return;
+                }
+            }
+        }
+    }
+}
+
+
 
 // === INIT GANG SPAWNER ===
 instance_create_depth(x, y, depth, obj_gangSpawner);
