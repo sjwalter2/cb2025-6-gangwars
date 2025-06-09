@@ -3,7 +3,10 @@
 owner = noone   //Gang ownership
 boss = noone //Boss (optional); set to noone if gangster is a toplevel gang member
 
-name = "Default Name"
+name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z")))
+
+
+show_debug_message(name)
 
 money = 0
 taxRate = 0.1

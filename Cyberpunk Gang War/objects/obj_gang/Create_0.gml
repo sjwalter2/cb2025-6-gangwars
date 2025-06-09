@@ -17,7 +17,6 @@ roster = ds_list_create()
 var newGangster = instance_create_depth(x,y,0,obj_gangster)
 with newGangster {
 	owner = other
-	name = "Steven"
 }
 ds_list_add(roster,newGangster)
 

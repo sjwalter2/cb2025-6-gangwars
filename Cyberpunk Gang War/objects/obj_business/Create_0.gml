@@ -14,14 +14,14 @@ function tick() {
 	{
 		with(manager)
 		{
-			gainMoney(other.baseIncome)
+			scr_get_money(other.baseIncome)
 		}
 	}
 	else if owner != noone
 	{
 		with(owner)
 		{
-			gainMoney(other.baseIncome)
+			scr_get_money(other.baseIncome)
 		}
 	}
 	else

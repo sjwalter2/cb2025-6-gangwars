@@ -27,7 +27,9 @@
     {"$GMFolder":"","%Name":"Timelines","folderPath":"folders/Timelines.yy","name":"Timelines","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
-  "IncludedFiles":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"firstnames.txt","CopyToMask":-1,"filePath":"datafiles","name":"firstnames.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
@@ -45,15 +47,17 @@
     {"id":{"name":"obj_map","path":"objects/obj_map/obj_map.yy",},},
     {"id":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
-    {"id":{"name":"gainMoney","path":"scripts/gainMoney/gainMoney.yy",},},
+    {"id":{"name":"scr_generate_names","path":"scripts/scr_generate_names/scr_generate_names.yy",},},
     {"id":{"name":"scr_get_gang_color","path":"scripts/scr_get_gang_color/scr_get_gang_color.yy",},},
+    {"id":{"name":"scr_get_money","path":"scripts/scr_get_money/scr_get_money.yy",},},
+    {"id":{"name":"scr_get_name","path":"scripts/scr_get_name/scr_get_name.yy",},},
     {"id":{"name":"scr_log_capture_event","path":"scripts/scr_log_capture_event/scr_log_capture_event.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
