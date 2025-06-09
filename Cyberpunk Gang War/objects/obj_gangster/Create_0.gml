@@ -5,6 +5,7 @@ boss = noone //Boss (optional); set to noone if gangster is a toplevel gang memb
 
 name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z")))
 
+charisma = 0
 
 show_debug_message(name)
 
