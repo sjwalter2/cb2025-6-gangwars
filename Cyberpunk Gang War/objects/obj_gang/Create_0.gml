@@ -8,6 +8,9 @@ testPing = false
 money = 0
 taxRate = 0.1
 
+notoriety = 0 //Increases a lot of stuff. This is in percent - so if notoriety=5, a lot of stuff is increased by 5%
+assignedPawnsValue = 1 //increase this if the basic foot soldier is upgraded. do this sparingly and wisely as it's a multiplicative!
+
 var gangTypeList = ["Yakuza","Biker","Mafia","Hacker","Cyborg","Clown","Communist"] 
 gangType =  gangTypeList[irandom(array_length(gangTypeList)-1)]
 
