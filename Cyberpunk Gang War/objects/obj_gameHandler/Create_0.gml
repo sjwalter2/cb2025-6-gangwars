@@ -9,8 +9,8 @@ tickers = ds_list_create()
 
 randomize()
 instance_create_layer(50,100,"Instances",obj_gang)
-instance_create_layer(250,100,"Instances",obj_gang)
 instance_create_layer(450,100,"Instances",obj_gang)
+instance_create_layer(850,100,"Instances",obj_gang)
 
 
 ///Handle timers

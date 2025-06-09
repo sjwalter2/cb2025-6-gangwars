@@ -1,0 +1,6 @@
+draw_text(x,y,"Business")
+draw_text(x,y+20,"Assigned Pawns: " + string(assignedPawns))
+draw_text(x,y+40,"Manager: " + string(manager.name))
+draw_text(x,y+60,"Owner: " + string(owner.gangType))
+draw_text(x,y+80,"Base income: " + string(baseIncome))
+draw_text(x,y+100,"Adjusted Income: " + string(adjustedIncome))
