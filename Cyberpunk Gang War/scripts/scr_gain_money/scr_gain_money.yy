@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_get_money",
+  "%Name":"scr_gain_money",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_get_money",
+  "name":"scr_gain_money",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

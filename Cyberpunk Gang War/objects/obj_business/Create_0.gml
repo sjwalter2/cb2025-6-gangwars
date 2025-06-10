@@ -7,6 +7,8 @@ assignedPawns = 0
 
 adjustedIncome = baseIncome
 
+buttonsActivated = false
+
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
 }
@@ -41,14 +43,14 @@ function tick() {
 		adjustedIncome = adjustedIncome * (1 + (manager.charisma/100))
 		with(manager)
 		{
-			scr_get_money(other.adjustedIncome)
+			scr_gain_money(other.adjustedIncome)
 		}
 	}
 	else
 	{
 		with(owner)
 		{
-			scr_get_money(other.adjustedIncome)
+			scr_gain_money(other.adjustedIncome)
 		}
 	}
 }
@@ -71,13 +73,13 @@ with (instance_create_depth(x-37,y+37,0,obj_button))
 
 
 //Testing buttons
-with (instance_create_depth(x+250,y,0,obj_buttonPawn))
+with (instance_create_depth(x+75,y,0,obj_buttonPawn))
 {
 	parent=other
 }
 
 //Testing buttons
-with (instance_create_depth(x+250,y+37,0,obj_buttonPawn))
+with (instance_create_depth(x+75,y+37,0,obj_buttonPawn))
 {
 	parent=other
 	mode="decrease"

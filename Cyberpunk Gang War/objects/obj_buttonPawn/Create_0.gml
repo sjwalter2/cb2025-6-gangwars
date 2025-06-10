@@ -1,2 +1,2 @@
-parent = self
+parent = noone
 mode = "increase"

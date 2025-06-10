@@ -1,7 +1,7 @@
 ///Initialize global lists
 
 global.firstnames = scr_generate_names("firstnames.txt")
-
+global.selected = ds_list_create()
 
 ///Initialize games
 tickers = ds_list_create()
