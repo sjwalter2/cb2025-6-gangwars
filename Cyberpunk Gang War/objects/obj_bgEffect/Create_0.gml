@@ -353,6 +353,5 @@ for (var i = 0; i < snake_count; i++) {
     });
 }
 
-depth = 20;
 
 randomize_effect(bg_effect_index);

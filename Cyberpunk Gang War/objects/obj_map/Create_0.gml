@@ -20,9 +20,12 @@ WARM_WHITE        = make_color_rgb(220, 220, 200);
 
 // === INITIALIZE MAP STATE ===
 hex_size     = HEX_SIZE;
+global.hex_size = HEX_SIZE
+global.offsetX = room_width/2
+global.offsetY = room_height/2
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 1;
+start_capture = 0;
 
 global.hex_grid = [];
 

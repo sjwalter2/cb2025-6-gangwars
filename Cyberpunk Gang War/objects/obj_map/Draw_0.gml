@@ -66,8 +66,8 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 draw_set_alpha(1);
 draw_set_color(c_white);
 
-var center_x = camera_get_view_width(view_camera[0]) / 2;
-var center_y = camera_get_view_height(view_camera[0]) / 2;
+var center_x = global.offsetX;
+var center_y = global.offsetY;
 
 for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
