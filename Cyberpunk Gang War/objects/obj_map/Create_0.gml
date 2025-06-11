@@ -45,7 +45,7 @@ global.offsetX = room_width/2
 global.offsetY = room_height/2
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 1;
+start_capture = 0;
 
 global.hex_grid = [];
 
@@ -118,6 +118,13 @@ ds_list_destroy(chosen);
 
 
 global.gang_territories = [];
+
+global.hex_lookup = ds_map_create();
+for (var i = 0; i < array_length(global.hex_grid); i++) {
+    var tile = global.hex_grid[i];
+    var key = string(tile.q) + "," + string(tile.r);
+    ds_map_add(global.hex_lookup, key, i);
+}
 
 
 // === UTILITY FUNCTIONS ===
