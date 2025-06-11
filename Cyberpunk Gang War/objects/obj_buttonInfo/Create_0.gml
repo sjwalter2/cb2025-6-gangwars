@@ -1,2 +1,2 @@
 event_inherited()
-mode = "increase"
+dummy = 0

@@ -30,3 +30,5 @@ People's
 Poison
 Power
 Chivalrous
+Net
+Wolf

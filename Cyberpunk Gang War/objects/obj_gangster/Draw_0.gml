@@ -1,2 +1,3 @@
-draw_text(x,y+40,name)
-draw_text(x,y+60,"Cash: " + string(money))
+draw_self()
+draw_sprite(spr_gangsterHead,sprite_head_index,x+sprite_width/2,y)
+

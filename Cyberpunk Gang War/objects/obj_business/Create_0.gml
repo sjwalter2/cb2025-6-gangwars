@@ -8,6 +8,7 @@ assignedPawns = 0
 adjustedIncome = baseIncome
 
 buttonsActivated = false
+displayStatsFull = false
 
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
@@ -57,15 +58,19 @@ function tick() {
 
 
 //Testing buttons
-with (instance_create_depth(x-37,y,0,obj_button))
+with (instance_create_depth(x-37,y,0,obj_buttonVariableChanger))
 {
+	relativeX = -37
+	relativeY = 0
 	variable="baseIncome"
 	parent=other
 }
 
 //Testing buttons
-with (instance_create_depth(x-37,y+37,0,obj_button))
+with (instance_create_depth(x-37,y+37,0,obj_buttonVariableChanger))
 {
+	relativeX = -37
+	relativeY = 37
 	variable="baseIncome"
 	parent=other
 	mode="decrease"
@@ -75,12 +80,16 @@ with (instance_create_depth(x-37,y+37,0,obj_button))
 //Testing buttons
 with (instance_create_depth(x+75,y,0,obj_buttonPawn))
 {
+	relativeX = 75
+	relativeY = 0
 	parent=other
 }
 
 //Testing buttons
 with (instance_create_depth(x+75,y+37,0,obj_buttonPawn))
 {
+	relativeX = 75
+	relativeY = 37
 	parent=other
 	mode="decrease"
 }

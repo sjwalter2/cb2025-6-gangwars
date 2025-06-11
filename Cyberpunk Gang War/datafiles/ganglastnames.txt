@@ -53,3 +53,9 @@ Party
 Horde
 Pack
 Killers
+Cyphers
+Coders
+Hackers
+Runners
+Drivers
+Guns

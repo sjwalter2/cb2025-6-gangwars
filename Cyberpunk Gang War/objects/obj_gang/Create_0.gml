@@ -35,14 +35,14 @@ with instance_create_depth(x,y + 200,0,obj_business) {
 }
 
 //Testing buttons
-with (instance_create_depth(x-37,y,0,obj_button))
+with (instance_create_depth(x-37,y,0,obj_buttonVariableChanger))
 {
 	variable="notoriety"
 	parent=other
 }
 
 //Testing buttons
-with (instance_create_depth(x-37,y+37,0,obj_button))
+with (instance_create_depth(x-37,y+37,0,obj_buttonVariableChanger))
 {
 	variable="notoriety"
 	parent=other
