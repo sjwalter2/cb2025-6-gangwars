@@ -195,4 +195,13 @@ for (var g = 0; g < array_length(placed_gangs); g++) {
     });
 }
 
+// === FINALIZE BORDER STATE FOR ALL OWNED TILES ===
+with(obj_map)
+{
+	for (var i = 0; i < array_length(global.hex_grid); i++) {
+	    if (!is_undefined(global.hex_grid[i].owner)) {
+	        update_tile_borders_for_neighbors(i);
+	    }
+	}
+}
 

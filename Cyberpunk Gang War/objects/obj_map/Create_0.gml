@@ -1,8 +1,8 @@
 // === CONFIGURATION ===
 randomize();
 
-var HEX_SIZE          = 18;
-var HEX_RADIUS        = 16;
+var HEX_SIZE          = 24;
+var HEX_RADIUS        = 12;
 var CORE_RADIUS       = 5;
 FLICKER_PERCENT   = 0;
 FLICKER_MIN_TIME  = 20000;
@@ -14,7 +14,7 @@ FLICKER_MAX_BLIPS = 3;
 
 
 
-OUTLINE_THICKNESS = 2;
+OUTLINE_THICKNESS = 3;
 GRADIENT_STEPS    = 15;
 WARM_WHITE        = make_color_rgb(220, 220, 200);
 
@@ -63,6 +63,7 @@ for (var q = -hex_radius; q <= hex_radius; q++) {
 			pending_owner: undefined,
 			owner: undefined
 		};
+		tile.border_dirs = [false, false, false, false, false, false];
 
 
         array_push(global.hex_grid, tile);
@@ -279,6 +280,66 @@ function update_gang_spread() {
 }
 
 
+function update_tile_borders(index) {
+    var tile = global.hex_grid[index];
+    var q = tile.q;
+    var r = tile.r;
+    var owner = tile.owner;
+
+    var dir_q = [1, 0, -1, -1, 0, 1];
+    var dir_r = [0, 1, 1, 0, -1, -1];
+
+    for (var d = 0; d < 6; d++) {
+        var nq = q + dir_q[d];
+        var nr = r + dir_r[d];
+
+        var neighbor_index = -1;
+        for (var i = 0; i < array_length(global.hex_grid); i++) {
+            var t = global.hex_grid[i];
+            if (t.q == nq && t.r == nr) {
+                neighbor_index = i;
+                break;
+            }
+        }
+
+        if (neighbor_index == -1) {
+            tile.border_dirs[d] = !is_undefined(owner);
+        } else {
+            var neighbor_owner = global.hex_grid[neighbor_index].owner;
+            tile.border_dirs[d] = (owner != neighbor_owner && !is_undefined(owner));
+        }
+    }
+
+    global.hex_grid[index] = tile;
+}
+
+function update_tile_borders_for_neighbors(index) {
+    if (index < 0 || index >= array_length(global.hex_grid)) return;
+
+    var tile = global.hex_grid[index];
+    var q = tile.q;
+    var r = tile.r;
+
+    var dir_q = [1, 0, -1, -1, 0, 1];
+    var dir_r = [0, 1, 1, 0, -1, -1];
+
+    // Update this tile
+    update_tile_borders(index);
+
+    // Update all 6 neighbors
+    for (var d = 0; d < 6; d++) {
+        var nq = q + dir_q[d];
+        var nr = r + dir_r[d];
+
+        for (var i = 0; i < array_length(global.hex_grid); i++) {
+            var t = global.hex_grid[i];
+            if (t.q == nq && t.r == nr) {
+                update_tile_borders(i);
+                break;
+            }
+        }
+    }
+}
 
 // === INIT GANG SPAWNER ===
 instance_create_depth(x, y, depth, obj_gangSpawner);
