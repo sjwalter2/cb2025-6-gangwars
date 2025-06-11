@@ -4,7 +4,7 @@
 /// @description Draw stylized gangster with randomized traits
 
 function draw_gangster_variant(xp, yp, size) {
-    var gang_color = scr_get_gang_color(owner);
+    var gang_color = scr_get_gang_color(owner.name);
 
     // === Seeded RNG based on name (stable per gangster)
     var hash = scr_hash_string(name);
@@ -63,5 +63,5 @@ function draw_gangster_variant(xp, yp, size) {
 
 // Draw using hex size
 draw_gangster_variant(x, y, global.hex_size);
-draw_text(x,y+40,name)
-draw_text(x,y+60,"Cash: " + string(money))
+//draw_text(x,y+40,name)
+//draw_text(x,y+60,"Cash: " + string(money))

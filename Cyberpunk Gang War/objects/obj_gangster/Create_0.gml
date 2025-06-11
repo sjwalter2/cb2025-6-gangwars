@@ -2,7 +2,7 @@
 
 owner = noone   //Gang ownership
 boss = noone //Boss (optional); set to noone if gangster is a toplevel gang member
-
+draw_gui = 0;
 //Stats
 name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z")))
 
@@ -37,9 +37,9 @@ function draw_polygon(cx, cy, radius, sides) {
     draw_primitive_end();
 }
 
-with (instance_create_depth(x+sprite_width+18,y-22,0,obj_buttonInfo))
-{
-	relativeX = sprite_width+18
-	relativeY = -22
-	parent=other
-}
+//with (instance_create_depth(x+sprite_width+18,y-22,0,obj_buttonInfo))
+//{
+//	relativeX = sprite_width+18
+//	relativeY = -22
+//	parent=other
+//}

@@ -59,6 +59,7 @@
     {"id":{"name":"scr_generate_names","path":"scripts/scr_generate_names/scr_generate_names.yy",},},
     {"id":{"name":"scr_get_gang_color","path":"scripts/scr_get_gang_color/scr_get_gang_color.yy",},},
     {"id":{"name":"scr_get_name","path":"scripts/scr_get_name/scr_get_name.yy",},},
+    {"id":{"name":"scr_gui_to_world","path":"scripts/scr_gui_to_world/scr_gui_to_world.yy",},},
     {"id":{"name":"scr_hash_string","path":"scripts/scr_hash_string/scr_hash_string.yy",},},
     {"id":{"name":"scr_init_gang","path":"scripts/scr_init_gang/scr_init_gang.yy",},},
     {"id":{"name":"scr_log_capture_event","path":"scripts/scr_log_capture_event/scr_log_capture_event.yy",},},
