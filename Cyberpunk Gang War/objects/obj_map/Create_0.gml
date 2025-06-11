@@ -13,16 +13,39 @@ FLICKER_MIN_BLIPS = 1;
 FLICKER_MAX_BLIPS = 3;
 
 
+// === Camera and Zoom Setup ===
+global.cam_zoom_levels = [1920, 1280, 960];
+global.cam_zoom_index = 0;
+global.cam_zoom_target = global.cam_zoom_levels[global.cam_zoom_index];
+global.cam_zoom_current = global.cam_zoom_target;
 
+global.cam_pos_x = room_width / 2;
+global.cam_pos_y = room_height / 2;
+global.cam_target_x = global.cam_pos_x;
+global.cam_target_y = global.cam_pos_y;
+global.cam_vel_x = 0;
+global.cam_vel_y = 0;
+global.drag_inertia = 0;
+
+global.is_dragging = false;
+global.drag_start_x = 0;
+global.drag_start_y = 0;
+global.drag_cam_start_x = 0;
+global.drag_cam_start_y = 0;
+
+draw_gui = 1;
 OUTLINE_THICKNESS = 3;
 GRADIENT_STEPS    = 15;
 WARM_WHITE        = make_color_rgb(220, 220, 200);
 
 // === INITIALIZE MAP STATE ===
 hex_size     = HEX_SIZE;
+global.hex_size = HEX_SIZE
+global.offsetX = room_width/2
+global.offsetY = room_height/2
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 1;
+start_capture = 0;
 
 global.hex_grid = [];
 

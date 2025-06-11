@@ -25,8 +25,8 @@ function bg_effect_snake_sim_minimal() {
         var margin = 5 * line_width;
         var screen_left = -margin;
         var screen_top = -margin;
-        var screen_right = camera_get_view_width(view_camera[0]) + margin;
-        var screen_bottom = camera_get_view_height(view_camera[0]) + margin;
+        var screen_right = room_width + margin;
+        var screen_bottom = room_height + margin;
 
         var bounced = false;
 
@@ -121,8 +121,8 @@ function bg_effect_scroll_lines() {
 
     var perp_dir = (scroll_dir + 90) mod 360;
 
-    var view_w = camera_get_view_width(view_camera[0]);
-    var view_h = camera_get_view_height(view_camera[0]);
+    var view_w = room_width
+    var view_h = room_height
 
     // Calculate vector directions
     var move_dx = lengthdir_x(1, scroll_dir);
@@ -184,8 +184,8 @@ function bg_effect_rotating_squares() {
     var p = bg_effect_params[? "rotating_squares"];
     var t = current_time * 0.001;
 
-    var cols = ceil(camera_get_view_width(view_camera[0]) / p.spacing) + 1;
-    var rows = ceil(camera_get_view_height(view_camera[0]) / p.spacing) + 1;
+    var cols = ceil(room_width / p.spacing) + 1;
+    var rows = ceil(room_height / p.spacing) + 1;
 
     for (var col = 0; col < cols; col++) {
         for (var row = 0; row < rows; row++) {
@@ -221,8 +221,8 @@ function bg_effect_grid_pulse() {
     var dir_x = lengthdir_x(1, pulse_dir);
     var dir_y = lengthdir_y(1, pulse_dir);
 
-    var view_w = camera_get_view_width(view_camera[0]);
-    var view_h = camera_get_view_height(view_camera[0]);
+    var view_w = room_width;
+    var view_h = room_height;
 
     var cols = ceil(view_w / gap) + 2;
     var rows = ceil(view_h / gap) + 2;
@@ -342,8 +342,8 @@ snake_count = 200;
 snake_color_mode = "normal"; // or "rainbow"
 
 for (var i = 0; i < snake_count; i++) {
-    var xx = irandom(camera_get_view_width(view_camera[0]));
-    var yy = irandom(camera_get_view_height(view_camera[0]));
+    var xx = irandom(room_width);
+    var yy = irandom(room_height);
     var dir = choose(0, 90, 180, 270);
     array_push(snakes, {
         head: [xx, yy],
@@ -353,6 +353,5 @@ for (var i = 0; i < snake_count; i++) {
     });
 }
 
-depth = 20;
 
 randomize_effect(bg_effect_index);

@@ -187,6 +187,22 @@ for (var g = 0; g < array_length(placed_gangs); g++) {
     });
 }
 
+
+// === SPAWN ONE obj_gang FOR EACH GANG TERRITORY (UI ELEMENT) ===
+var ui_base_x = room_width - 10;
+var ui_base_y = 10;
+var ui_spacing = 100;
+
+for (var i = 0; i < array_length(global.gang_territories); i++) {
+    var gang = global.gang_territories[i];
+    var y_offset = ui_base_y + (i * ui_spacing);
+
+    var new_gang = instance_create_layer(ui_base_x, y_offset, "UI", obj_gang);
+	scr_init_gang(new_gang, gang.name, gang.owned);
+}
+
+
+
 // === FINALIZE BORDER STATE FOR ALL OWNED TILES ===
 with(obj_map)
 {
