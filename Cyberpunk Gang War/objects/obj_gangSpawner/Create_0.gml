@@ -11,16 +11,8 @@ var COLOR_VARIATION = 40;
 
 
 
-var adjectives = [
-    "Royal", "Rusty", "Bloody", "Silent", "Savage", "Wicked", "Glorious", "Crimson",
-    "Broken", "Sinister", "Wild", "Iron", "Chrome", "Neon", "Feral", "Lost"
-];
-
-var nouns = [
-    "Feuders", "Razors", "Serpents", "Wolves", "Hounds", "Riders", "Kings", "Nomads",
-    "Claws", "Fangs", "Knives", "Reapers", "Specters", "Grinders", "Stalkers", "Echoes"
-];
-
+global.gangadjectives = scr_generate_names("gangfirstnames.txt")
+global.gangnouns = scr_generate_names("ganglastnames.txt")
 
 // === HELPER ===
 function array_index_of(arr, val) {
@@ -122,8 +114,8 @@ for (var g = 0; g < array_length(placed_gangs); g++) {
 
 	var gang_name = "";
 	repeat (100) { // Prevent infinite loops (in case we run out of combos)
-		var adj = adjectives[irandom(array_length(adjectives) - 1)];
-		var noun = nouns[irandom(array_length(nouns) - 1)];
+		var adj = scr_get_name(global.gangadjectives);
+		var noun = scr_get_name(global.gangnouns);
 		var try_name = "The " + adj + " " + noun;
 
 		var is_unique = true;
