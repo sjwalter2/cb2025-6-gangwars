@@ -45,7 +45,7 @@ global.offsetX = room_width/2
 global.offsetY = room_height/2
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 0;
+start_capture = 1;
 
 global.hex_grid = [];
 
