@@ -1,1 +1,1 @@
-scr_select_object()
+scr_select_object(sprite_width, sprite_height)

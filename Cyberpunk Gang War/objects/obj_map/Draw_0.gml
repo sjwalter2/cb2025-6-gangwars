@@ -71,7 +71,7 @@ var center_y = global.offsetY;
 
 for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
-    var pos = axial_to_pixel(tile.q, tile.r);
+    var pos = scr_axial_to_pixel(tile.q, tile.r);
     var draw_x = center_x + pos.px;
     var draw_y = center_y + pos.py;
 
@@ -127,7 +127,7 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 draw_set_alpha(.6)
 for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
-    var pos = axial_to_pixel(tile.q, tile.r);
+    var pos = scr_axial_to_pixel(tile.q, tile.r);
     var draw_x = center_x + pos.px;
     var draw_y = center_y + pos.py;
 

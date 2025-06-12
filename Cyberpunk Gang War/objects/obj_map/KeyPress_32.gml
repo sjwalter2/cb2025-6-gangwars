@@ -1,1 +1,0 @@
-start_capture = 1
