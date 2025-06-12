@@ -18,3 +18,4 @@ if (is_moving && move_target != undefined) {
     x = lerp(start.x, target.x, t);
     y = lerp(start.y, target.y, t);
 }
+

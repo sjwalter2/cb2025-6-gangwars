@@ -2,9 +2,9 @@
 // Assumes global.hex_grid is populated
 
 // === CONFIGURABLE SETTINGS ===
-var NUM_GANGS = 10;
-var GANG_MIN_SPREAD = 10;
-var GANG_MAX_SPREAD = 15;
+var NUM_GANGS = 5;
+var GANG_MIN_SPREAD = 30;
+var GANG_MAX_SPREAD = 55;
 var CORE_MIN_DISTANCE = 5;
 var GANG_MIN_DISTANCE_FROM_EACH_OTHER = 6;
 var COLOR_VARIATION = 40;

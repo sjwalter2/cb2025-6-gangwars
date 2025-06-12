@@ -119,6 +119,13 @@ ds_list_destroy(chosen);
 
 global.gang_territories = [];
 
+global.hex_lookup = ds_map_create();
+for (var i = 0; i < array_length(global.hex_grid); i++) {
+    var tile = global.hex_grid[i];
+    var key = string(tile.q) + "," + string(tile.r);
+    ds_map_add(global.hex_lookup, key, i);
+}
+
 
 // === UTILITY FUNCTIONS ===
 function draw_illuminated_hex(x, y, size, color) {

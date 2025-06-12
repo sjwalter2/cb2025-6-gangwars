@@ -10,6 +10,21 @@ charisma = 0
 might = 0
 honor = 0
 
+autonomous = true; // Set to false for player-controlled gangsters
+target_tile_index = -1;
+current_tile = { q: 0, r: 0 }; // Must be updated in Step or by spawn logic
+
+path = [];              // Will hold list of tile indices
+path_progress = 0;      // Which tile in the path we're headed to
+move_timer = 0;         // Countdown to move completion
+state = "idle";         // ["idle", "moving", "capturing", "resupplying"]
+start_tile_index = -1;  // Where we return after capturing
+
+var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
+current_tile.q = axial.q;
+current_tile.r = axial.r;
+
+
 //Display stuff
 name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z")))
 sprite_head_index = irandom(sprite_get_number(spr_gangsterHead)-1)
