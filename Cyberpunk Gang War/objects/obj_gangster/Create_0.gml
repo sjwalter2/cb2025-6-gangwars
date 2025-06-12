@@ -40,11 +40,12 @@ gangsterWidth = 0
 gangsterHeight = 0
 
 is_moving = false;
+move_queued = false;
 move_target = undefined;
 move_ticks_remaining = 0;
 flash_timer = 0;
 flash_type = ""; // "move" or "arrive"
-
+first_tick_bonus = 0;
 
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
@@ -70,6 +71,13 @@ function draw_polygon(cx, cy, radius, sides) {
 //}
 
 function tick() {
+	if (move_queued) {
+	    move_queued = false;
+	    is_moving = true;
+		
+	    return; // skip rest of this tick so they start fresh on the next
+	}
+
     if (is_moving) {
         show_debug_message("Tick: " + name + " (" + string(move_ticks_elapsed) + "/" + string(move_total_ticks) + ")");
 
@@ -77,22 +85,25 @@ function tick() {
         flash_timer = current_time + 150;
         flash_type = "move";
 
+        // Update exact tick-aligned position BEFORE incrementing
+        var t = move_ticks_elapsed / move_total_ticks;
+        var start = move_target.start_pos;
+        var target = move_target.target_pos;
+
+        x = lerp(start.x, target.x, t);
+        y = lerp(start.y, target.y, t);
+
         move_ticks_elapsed++;
-
-        if (move_ticks_elapsed < move_total_ticks) {
-            // Update exact tick-aligned position
-            var t = move_ticks_elapsed / move_total_ticks;
-            var start = move_target.start_pos;
-            var target = move_target.target_pos;
-
-            x = lerp(start.x, target.x, t);
-            y = lerp(start.y, target.y, t);
-        } else {
+		first_tick_bonus = 0;
+        if (move_ticks_elapsed >= move_total_ticks) {
             // Final tick — snap to end
-            var target = move_target.target_pos;
             x = target.x;
             y = target.y;
-
+			
+			 // Release claimed tile
+		    var idx = ds_list_find_index(global.claimed_tile_indices, move_target.tile_index);
+		    if (idx != -1) ds_list_delete(global.claimed_tile_indices, idx);
+			
             is_moving = false;
             move_target = undefined;
             move_ticks_elapsed = 0;

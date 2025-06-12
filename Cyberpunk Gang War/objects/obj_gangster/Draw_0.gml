@@ -1,17 +1,7 @@
 function draw_gangster_variant(xp, yp, size) {
     var gang_color = scr_get_gang_color(owner.name);
-
-    // === Seeded RNG for visual variation
-    var hash = scr_hash_string(name);
-    random_set_seed(hash);
-
-    var body_radius = size * random_range(0.42, 0.48);
-    var head_radius = size * random_range(0.18, 0.24);
-
-    // === Store width/height for hitbox
-    gangsterWidth  = max(body_radius * 2, head_radius * 2);
-    gangsterHeight = body_radius * 2 + head_radius * 2;
-
+	var body_radius = size * 0.45;
+   
     // === Selection effect ===
     if (ds_list_find_index(global.selected, self) != -1) {
         var pulse = 0.5 + 0.5 * sin(current_time * 0.005);
@@ -26,6 +16,16 @@ function draw_gangster_variant(xp, yp, size) {
             draw_line(xp - body_radius - 6, yp + 3, xp + body_radius + 6, yp + 3);
         }
     }
+	 // === Seeded RNG for visual variation
+	    var hash = scr_hash_string(name);
+	    random_set_seed(hash);
+
+	    body_radius = size * random_range(0.42, 0.48);
+	    var head_radius = size * random_range(0.18, 0.24);
+
+	    // === Store width/height for hitbox
+	    gangsterWidth  = max(body_radius * 2, head_radius * 2);
+	    gangsterHeight = body_radius * 2 + head_radius * 2;
 
 
     // === Body ===
@@ -72,36 +72,11 @@ function draw_gangster_variant(xp, yp, size) {
     random_set_seed(current_time);
 }
 
-
+scr_draw_path_to_target();
 // Draw using hex size
 draw_gangster_variant(x, y, global.hex_size);
 //draw_text(x,y+40,name)
 //draw_text(x,y+60,"Cash: " + string(money))
 
-if (global.debugMode && is_array(path) && array_length(path) > 0) {
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_set_alpha(1);
 
-    var prev_pos = scr_world_to_gui(x, y);
-
-    for (var i = 0; i < array_length(path); i++) {
-        var tile_index = path[i];
-        var tile = global.hex_grid[tile_index];
-        var axial = scr_axial_to_pixel(tile.q, tile.r);
-        var pos = scr_world_to_gui(axial.px + global.offsetX, axial.py + global.offsetY);
-
-        var move_cost = obj_gameHandler.cost_enemy;
-        if (is_undefined(tile.owner) || tile.owner == "") move_cost = obj_gameHandler.cost_unclaimed;
-        else if (tile.owner == owner.name) move_cost = obj_gameHandler.cost_friendly;
-
-        draw_set_color(c_red);
-        draw_line(prev_pos.x, prev_pos.y, pos.x, pos.y);
-
-        draw_set_color(c_white);
-        draw_text(pos.x, pos.y, string(move_cost));
-
-        prev_pos = pos;
-    }
-}
 

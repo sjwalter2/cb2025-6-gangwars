@@ -4,6 +4,7 @@ global.firstnames = scr_generate_names("firstnames.txt")
 global.selected = ds_list_create()
 global.selection_cooldown = false;
 global.tooltip_boxes_drawn = [];
+global.claimed_tile_indices = ds_list_create();
 
 ///Initialize games
 tickers = ds_list_create()

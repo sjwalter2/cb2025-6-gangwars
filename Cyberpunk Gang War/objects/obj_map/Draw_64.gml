@@ -25,19 +25,30 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
     }
 }
 
-// === DRAW INFO IF MOUSE IS OVER A TILE
-
 if (on_board && draw_gui) {
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_bottom);
-    draw_set_color(c_white);
-    draw_set_alpha(1);
+    var gui_x = 12;
+    var gui_y = display_get_gui_height() - 80;
 
-    if (!is_undefined(hover_owner)) {
-        draw_text(mx, my - 10, hover_owner);
+    var world_pos = scr_gui_to_world(gui_x, gui_y);
+
+    var text1 = !is_undefined(hover_owner) ? hover_owner : "";
+    var text2 = "(" + string(hover_q) + ", " + string(hover_r) + ")";
+
+    var exclude = ds_list_create();
+    with (obj_gangster) {
+        var gui_pos = scr_world_to_gui(x, y);
+        var dist_x = abs(device_mouse_x_to_gui(0) - gui_pos.x);
+        var dist_y = abs(device_mouse_y_to_gui(0) - gui_pos.y);
+        if (dist_x < gangsterWidth * 0.5 && dist_y < gangsterHeight * 0.5) {
+            var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
+            ds_list_add(exclude, string(axial.q) + "," + string(axial.r));
+        }
     }
 
-    var coord_text = "(" + string(hover_q) + ", " + string(hover_r) + ")";
-    draw_text(mx, my + 8, coord_text);
+    scr_draw_tooltip(text1, text2, world_pos.x, world_pos.y, exclude, scr_get_gang_color(hover_owner));
+    ds_list_destroy(exclude);
 }
+
+
 draw_gui = 1;
+

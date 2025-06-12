@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_get_gang_pathfinding_tiles",
+  "%Name":"scr_draw_path_to_target",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_get_gang_pathfinding_tiles",
+  "name":"scr_draw_path_to_target",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
