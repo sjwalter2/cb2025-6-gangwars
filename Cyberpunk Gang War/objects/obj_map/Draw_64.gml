@@ -7,7 +7,7 @@ var world_x = world_pos.x;
 var world_y = world_pos.y;
 
 // === Convert to axial and find tile ===
-var axial = pixel_to_axial(world_x - global.offsetX, world_y - global.offsetY);
+var axial = scr_pixel_to_axial(world_x - global.offsetX, world_y - global.offsetY);
 var hover_q = axial.q;
 var hover_r = axial.r;
 

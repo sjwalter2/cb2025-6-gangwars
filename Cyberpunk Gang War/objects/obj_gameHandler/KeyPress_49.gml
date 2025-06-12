@@ -1,1 +1,1 @@
-currentSpeed = 1
+nextSpeed = 1

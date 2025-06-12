@@ -45,7 +45,7 @@ global.offsetX = room_width/2
 global.offsetY = room_height/2
 hex_radius   = HEX_RADIUS;
 flickering_tile_indices = [];
-start_capture = 1;
+start_capture = 0;
 
 global.hex_grid = [];
 
@@ -121,50 +121,6 @@ global.gang_territories = [];
 
 
 // === UTILITY FUNCTIONS ===
-function axial_to_pixel(q, r) {
-    if (is_undefined(q) || is_undefined(r)) {
-        show_debug_message("axial_to_pixel: invalid input q=" + string(q) + " r=" + string(r));
-        return {px: 0, py: 0}; // Failsafe fallback
-    }
-
-    var spacing = 1.1;
-    var px = spacing * hex_size * sqrt(3) * (q + r / 2);
-    var py = spacing * hex_size * 3/2 * r;
-    return {px: px, py: py};
-}
-
-
-function pixel_to_axial(px, py) {
-    var spacing = 1.1;
-    var q = ((sqrt(3)/3 * px) - (1/3 * py)) / (spacing * hex_size);
-    var r = (2/3 * py) / (spacing * hex_size);
-    return axial_round(q, r);
-}
-
-function axial_round(q, r) {
-    var xx = q;
-    var z = r;
-    var yy = -xx - z;
-
-    var rx = round(xx);
-    var ry = round(yy);
-    var rz = round(z);
-
-    var dx = abs(rx - xx);
-    var dy = abs(ry - yy);
-    var dz = abs(rz - z);
-
-    if (dx > dy && dx > dz) {
-        rx = -ry - rz;
-    } else if (dy > dz) {
-        ry = -rx - rz;
-    } else {
-        rz = -rx - ry;
-    }
-
-    return { q: rx, r: rz };
-}
-
 function draw_illuminated_hex(x, y, size, color) {
     var darkened_edge_color = merge_color(color, c_black, 0.4);
 

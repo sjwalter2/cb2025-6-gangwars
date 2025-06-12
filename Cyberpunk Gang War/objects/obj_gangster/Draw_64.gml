@@ -1,8 +1,6 @@
-/// @description Draws hover tooltip in GUI space for this gangster
+var is_hovered = false;
 
-// === Mouse hover detection with zoom compensation ===
-if(draw_gui)
-{
+// === View and GUI scaling
 var cam = view_camera[0];
 var view_x = camera_get_view_x(cam);
 var view_y = camera_get_view_y(cam);
@@ -11,116 +9,129 @@ var view_h = camera_get_view_height(cam);
 
 var gui_w = display_get_gui_width();
 var gui_h = display_get_gui_height();
-
 var scale_x = view_w / gui_w;
 var scale_y = view_h / gui_h;
 
-// Convert mouse position to world space
-var mouse_world_x = view_x + device_mouse_x_to_gui(0) * scale_x;
-var mouse_world_y = view_y + device_mouse_y_to_gui(0) * scale_y;
+// === Mouse and gangster positions
+var mouse_gui_x = device_mouse_x_to_gui(0);
+var mouse_gui_y = device_mouse_y_to_gui(0);
+var gangster_gui = scr_world_to_gui(x, y);
 
-
-// === Gather gang data ===
-var gang_name = "Unknown Gang";
-var gang_color = c_gray;
-
-if (variable_instance_exists(id, "owner") && instance_exists(owner)) {
-    if (variable_instance_exists(owner, "name")) {
-        gang_name = owner.name;
-    }
-    if (variable_instance_exists(owner, "color")) {
-        gang_color = owner.color;
-    }
+// === Hover detection
+if (abs(mouse_gui_x - gangster_gui.x) < gangsterWidth * 0.5 &&
+    abs(mouse_gui_y - gangster_gui.y) < gangsterHeight * 0.5) {
+    is_hovered = true;
 }
 
-// === Convert gangster position to GUI space ===
-var pos_gui = scr_world_to_gui(x, y);
-var gui_x = pos_gui.x;
-var gui_y = pos_gui.y;
+// === Tooltip condition
+if (is_hovered || (ds_exists(global.selected, ds_type_list) && ds_list_find_index(global.selected, self) != -1)) {
 
-// === Tooltip layout ===
-var tooltip_text_1 = name;
-var tooltip_text_2 = gang_name;
+    // === Gang data
+    var gang_name = "Unknown Gang";
+    var gang_color = c_gray;
+    if (instance_exists(owner)) {
+        if (variable_instance_exists(owner, "name")) gang_name = owner.name;
+        if (variable_instance_exists(owner, "color")) gang_color = owner.color;
+    }
 
-var padding = 8;
-var spacing = 6;
+    // === Text and box dimensions
+    var tooltip_text_1 = name;
+    var tooltip_text_2 = gang_name;
 
-var text_width = max(string_width(tooltip_text_1), string_width(tooltip_text_2));
-var box_width = text_width + padding * 2;
-var box_height = string_height(tooltip_text_1) + string_height(tooltip_text_2) + spacing + padding * 2;
+    var padding = 8;
+    var spacing = 6;
 
-var triangle_height = 10;
-var triangle_width = 14;
+    var text_width = max(string_width(tooltip_text_1), string_width(tooltip_text_2));
+    var box_width = text_width + padding * 2;
+    var box_height = string_height(tooltip_text_1) + string_height(tooltip_text_2) + spacing + padding * 2;
 
-// === Default position: above gangster ===
-var box_x = gui_x - box_width / 2;
-var box_y = gui_y - triangle_height - box_height - 4;
-var triangle_dir = "down";
+    var offset = 24;
+    var gui_x = gangster_gui.x;
+    var gui_y = gangster_gui.y;
 
-// === Reposition if offscreen ===
-if (box_y < 0) {
-    var try_y = gui_y + triangle_height + 4;
-    if (try_y + box_height < gui_h) {
-        box_y = try_y;
-        triangle_dir = "up";
-    } else {
-        var try_right = gui_x + triangle_height + 4;
-        var try_left = gui_x - box_width - triangle_height - 4;
+    // === Placement options
+    var placements = [
+        { x: gui_x - box_width / 2, y: gui_y - offset - box_height },
+        { x: gui_x - box_width / 2, y: gui_y + offset },
+        { x: gui_x + offset, y: gui_y - box_height / 2 },
+        { x: gui_x - box_width - offset, y: gui_y - box_height / 2 }
+    ];
 
-        if (try_right + box_width < gui_w) {
-            box_x = try_right;
-            box_y = gui_y - box_height / 2;
-            triangle_dir = "left";
-        } else if (try_left > 0) {
-            box_x = try_left;
-            box_y = gui_y - box_height / 2;
-            triangle_dir = "right";
+    var best_score = 999999;
+    var best_x = gui_x;
+    var best_y = gui_y;
+
+    // Secondary fallback if no good position is found
+    var fallback_dist = 999999;
+    var fallback_x = best_x;
+    var fallback_y = best_y;
+
+    for (var i = 0; i < array_length(placements); i++) {
+        var pos = placements[i];
+        var bx = pos.x;
+        var by = pos.y;
+        var scoreVal = 0;
+
+        var offscreen = bx < 0 || by < 0 || bx + box_width > gui_w || by + box_height > gui_h;
+        if (offscreen) scoreVal += 1000;
+
+        var overlaps_mouse = mouse_gui_x > bx && mouse_gui_x < bx + box_width &&
+                             mouse_gui_y > by && mouse_gui_y < by + box_height;
+        if (overlaps_mouse) scoreVal += 100;
+
+        var overlaps_tooltip = false;
+        for (var j = 0; j < array_length(global.tooltip_boxes_drawn); j++) {
+            var prev = global.tooltip_boxes_drawn[j];
+            if (bx < prev.x + prev.w && bx + box_width > prev.x &&
+                by < prev.y + prev.h && by + box_height > prev.y) {
+                overlaps_tooltip = true;
+                scoreVal += 1;
+            }
+        }
+
+        if (scoreVal < best_score) {
+            best_score = scoreVal;
+            best_x = bx;
+            best_y = by;
+        }
+
+        // If everything is bad, track the least *distance* from hover center as fallback
+        if (offscreen || overlaps_mouse || overlaps_tooltip) {
+            var dx = (bx + box_width / 2) - gangster_gui.x;
+            var dy = (by + box_height / 2) - gangster_gui.y;
+            var dist = dx * dx + dy * dy;
+
+            if (dist < fallback_dist) {
+                fallback_dist = dist;
+                fallback_x = bx;
+                fallback_y = by;
+            }
         }
     }
-}
 
-// === Draw the box ===
-draw_set_alpha(0.8);
-draw_set_color(c_black);
-draw_roundrect(box_x, box_y, box_x + box_width, box_y + box_height, false);
+    // If all placements are bad, use fallback
+    if (best_score >= 1000 + 100 + 1) {
+        best_x = fallback_x;
+        best_y = fallback_y;
+    }
 
-// === Draw triangle pointer ===
-draw_set_color(c_black);
-draw_primitive_begin(pr_trianglelist);
+    // Register for collision tracking
+    array_push(global.tooltip_boxes_drawn, {
+        x: best_x,
+        y: best_y,
+        w: box_width,
+        h: box_height
+    });
 
-switch (triangle_dir) {
-    case "down":
-        draw_vertex(gui_x, gui_y);
-        draw_vertex(gui_x - triangle_width / 2, gui_y - triangle_height);
-        draw_vertex(gui_x + triangle_width / 2, gui_y - triangle_height);
-        break;
-    case "up":
-        draw_vertex(gui_x, gui_y);
-        draw_vertex(gui_x - triangle_width / 2, gui_y + triangle_height);
-        draw_vertex(gui_x + triangle_width / 2, gui_y + triangle_height);
-        break;
-    case "left":
-        draw_vertex(gui_x, gui_y);
-        draw_vertex(gui_x + triangle_height, gui_y - triangle_width / 2);
-        draw_vertex(gui_x + triangle_height, gui_y + triangle_width / 2);
-        break;
-    case "right":
-        draw_vertex(gui_x, gui_y);
-        draw_vertex(gui_x - triangle_height, gui_y - triangle_width / 2);
-        draw_vertex(gui_x - triangle_height, gui_y + triangle_width / 2);
-        break;
-}
+    // === Draw tooltip
+    draw_set_alpha(0.8);
+    draw_set_color(c_black);
+    draw_roundrect(best_x, best_y, best_x + box_width, best_y + box_height, false);
+    draw_set_alpha(1);
 
-draw_primitive_end();
-draw_set_alpha(1);
-
-// === Draw text ===
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
-draw_set_color(scr_get_gang_color(owner.name));
-draw_text(box_x + box_width / 2, box_y + padding, tooltip_text_1);
-
-draw_set_color(scr_get_gang_color(owner.name));
-draw_text(box_x + box_width / 2, box_y + padding + string_height(tooltip_text_1) + spacing, tooltip_text_2);
-
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_top);
+    draw_set_color(scr_get_gang_color(owner.name));
+    draw_text(best_x + box_width / 2, best_y + padding, tooltip_text_1);
+    draw_text(best_x + box_width / 2, best_y + padding + string_height(tooltip_text_1) + spacing, tooltip_text_2);
 }

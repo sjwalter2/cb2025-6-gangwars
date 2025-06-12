@@ -56,6 +56,7 @@
     {"id":{"name":"scr_axial_round","path":"scripts/scr_axial_round/scr_axial_round.yy",},},
     {"id":{"name":"scr_axial_to_pixel","path":"scripts/scr_axial_to_pixel/scr_axial_to_pixel.yy",},},
     {"id":{"name":"scr_gain_money","path":"scripts/scr_gain_money/scr_gain_money.yy",},},
+    {"id":{"name":"scr_gangster_start_movement","path":"scripts/scr_gangster_start_movement/scr_gangster_start_movement.yy",},},
     {"id":{"name":"scr_generate_names","path":"scripts/scr_generate_names/scr_generate_names.yy",},},
     {"id":{"name":"scr_get_gang_color","path":"scripts/scr_get_gang_color/scr_get_gang_color.yy",},},
     {"id":{"name":"scr_get_name","path":"scripts/scr_get_name/scr_get_name.yy",},},
