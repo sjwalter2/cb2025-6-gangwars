@@ -1,10 +1,15 @@
 ///Initialize global lists
-
+global.debugMode = true;
 global.firstnames = scr_generate_names("firstnames.txt")
 global.selected = ds_list_create()
 
 ///Initialize games
 tickers = ds_list_create()
+
+cost_friendly  = 2;
+cost_unclaimed = 3;
+cost_enemy     = 4;
+
 
 
 randomize()

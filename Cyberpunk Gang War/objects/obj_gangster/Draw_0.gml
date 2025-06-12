@@ -65,3 +65,31 @@ function draw_gangster_variant(xp, yp, size) {
 draw_gangster_variant(x, y, global.hex_size);
 //draw_text(x,y+40,name)
 //draw_text(x,y+60,"Cash: " + string(money))
+
+if (global.debugMode && is_array(path) && array_length(path) > 0) {
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_middle);
+    draw_set_alpha(1);
+
+    var prev_pos = scr_world_to_gui(x, y);
+
+    for (var i = 0; i < array_length(path); i++) {
+        var tile_index = path[i];
+        var tile = global.hex_grid[tile_index];
+        var axial = scr_axial_to_pixel(tile.q, tile.r);
+        var pos = scr_world_to_gui(axial.px + global.offsetX, axial.py + global.offsetY);
+
+        var move_cost = obj_gameHandler.cost_enemy;
+        if (is_undefined(tile.owner) || tile.owner == "") move_cost = obj_gameHandler.cost_unclaimed;
+        else if (tile.owner == owner.name) move_cost = obj_gameHandler.cost_friendly;
+
+        draw_set_color(c_red);
+        draw_line(prev_pos.x, prev_pos.y, pos.x, pos.y);
+
+        draw_set_color(c_white);
+        draw_text(pos.x, pos.y, string(move_cost));
+
+        prev_pos = pos;
+    }
+}
+
