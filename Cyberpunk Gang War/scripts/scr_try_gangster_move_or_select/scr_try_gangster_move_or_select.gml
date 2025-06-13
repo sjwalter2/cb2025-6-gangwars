@@ -20,7 +20,7 @@ function scr_try_gangster_move_or_select(q2, r2) {
 
     // Compute full A* path from current to clicked tile
     var axial_current = scr_pixel_to_axial(gangster.x - global.offsetX, gangster.y - global.offsetY);
-    var path = scr_hex_a_star_path(axial_current.q, axial_current.r, q2, r2);
+    var path = scr_hex_a_star_path(axial_current.q, axial_current.r, q2, r2, gangster.owner.name);
 
     if (array_length(path) == 0) return; // Unreachable
 

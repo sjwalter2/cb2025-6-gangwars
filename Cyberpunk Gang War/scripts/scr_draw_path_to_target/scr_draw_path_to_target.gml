@@ -13,7 +13,7 @@ function scr_draw_path_to_target() {
     if (!hoverPathValid || mouse_axial.q != hoverTileQ || mouse_axial.r != hoverTileR) {
         hoverTileQ = mouse_axial.q;
         hoverTileR = mouse_axial.r;
-        hoverPath = scr_hex_a_star_path(my_axial.q, my_axial.r, hoverTileQ, hoverTileR);
+        hoverPath = scr_hex_a_star_path(my_axial.q, my_axial.r, hoverTileQ, hoverTileR, owner.name);
         hoverPathValid = true;
     }
 

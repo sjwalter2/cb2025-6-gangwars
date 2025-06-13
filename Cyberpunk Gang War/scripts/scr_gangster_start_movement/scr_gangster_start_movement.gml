@@ -39,10 +39,14 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
     if(firstMove)
 	{
 		gangster.move_queued = true;
+		gangster.state = "moving"
 		gangster.first_tick_bonus = global.tickTime - global.time;
 	}
 	else
+	{
 		gangster.is_moving = true;
+		gangster.state = "moving"
+	}
 
 
     // Claim this tile index

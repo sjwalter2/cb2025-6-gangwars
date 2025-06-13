@@ -1,8 +1,8 @@
-/// @function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r)
+/// @function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name)
 /// @description A* pathfinding on hex grid using axial coords
 /// @return Array of tile indices (from start to goal) or empty array if no path
 
-function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r) {
+function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name) {
     var frontier = ds_priority_create();
     var came_from = ds_map_create(); // key: "q,r", value: previous "q,r"
     var cost_so_far = ds_map_create(); // key: "q,r", value: total cost
@@ -62,7 +62,7 @@ function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r) {
 			if (tile.owner == "") {
 			    tile_cost = global.cost_unclaimed;
 			}
-			else if (tile.owner == global.selected[| 0].owner.name) {
+			else if (tile.owner == gang_name) {
 			    tile_cost = global.cost_friendly;
 			}
 			else {

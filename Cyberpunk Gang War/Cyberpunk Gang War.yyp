@@ -58,9 +58,11 @@
     {"id":{"name":"scr_axial_distance","path":"scripts/scr_axial_distance/scr_axial_distance.yy",},},
     {"id":{"name":"scr_axial_round","path":"scripts/scr_axial_round/scr_axial_round.yy",},},
     {"id":{"name":"scr_axial_to_pixel","path":"scripts/scr_axial_to_pixel/scr_axial_to_pixel.yy",},},
+    {"id":{"name":"scr_claim_tile","path":"scripts/scr_claim_tile/scr_claim_tile.yy",},},
     {"id":{"name":"scr_draw_path_to_target","path":"scripts/scr_draw_path_to_target/scr_draw_path_to_target.yy",},},
     {"id":{"name":"scr_draw_tooltip","path":"scripts/scr_draw_tooltip/scr_draw_tooltip.yy",},},
     {"id":{"name":"scr_gain_money","path":"scripts/scr_gain_money/scr_gain_money.yy",},},
+    {"id":{"name":"scr_gangster_ai_decide_target","path":"scripts/scr_gangster_ai_decide_target/scr_gangster_ai_decide_target.yy",},},
     {"id":{"name":"scr_gangster_start_movement","path":"scripts/scr_gangster_start_movement/scr_gangster_start_movement.yy",},},
     {"id":{"name":"scr_generate_names","path":"scripts/scr_generate_names/scr_generate_names.yy",},},
     {"id":{"name":"scr_get_gang_color","path":"scripts/scr_get_gang_color/scr_get_gang_color.yy",},},
@@ -86,8 +88,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
+    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

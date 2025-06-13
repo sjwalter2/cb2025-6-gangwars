@@ -5,39 +5,44 @@ for (var i = 0; i < array_length(messages); i++) {
     var m = messages[i];
     var age = current_time - m.time_created;
     var fade = 1 - (age / m.duration);
-
     var yy = base_y - i * spacing;
-
-    var msg = "";
-
-    if (is_undefined(m.prev_owner)) {
-        msg = string(m.new_owner) + " captured tile (" + string(m.q) + "," + string(m.r) + ")";
-    } else {
-        msg = string(m.new_owner) + " captured tile (" + string(m.q) + "," + string(m.r) + ") from " + string(m.prev_owner);
-    }
 
     draw_set_alpha(fade);
     draw_set_valign(fa_bottom);
     draw_set_halign(fa_left);
 
-    var name_split = string(m.new_owner);
-    draw_set_color(m.new_color);
-    draw_text(16, yy, name_split);
-
+    // Build message parts
+    var msg_prefix = "Gangster " + string(m.gangster) + " of the ";
+    var msg_tile = " captured tile (" + string(m.q) + "," + string(m.r) + ")";
+    var msg_suffix = "";
     if (!is_undefined(m.prev_owner)) {
-        var part1 = string(m.new_owner) + " captured tile (" + string(m.q) + "," + string(m.r) + ") from ";
-        var w1 = string_width(part1);
+        msg_suffix = " from " + string(m.prev_owner);
+    }
 
-        draw_set_color(c_white);
-        draw_text(16, yy, part1);
+    // Measure text widths
+    var prefix_width = string_width(msg_prefix);
+    var gang_width = string_width(string(m.new_owner));
+    var tile_width = string_width(msg_tile);
 
+    // Draw "Gangster X of the "
+    draw_set_color(c_white);
+    draw_text(16, yy, msg_prefix);
+
+    // Draw gang name in its color
+    draw_set_color(m.new_color);
+    draw_text(16 + prefix_width, yy, string(m.new_owner));
+
+    // Draw tile part
+    draw_set_color(c_white);
+    draw_text(16 + prefix_width + gang_width, yy, msg_tile);
+
+    // Draw "from Z" in previous owner's color (if present)
+    if (!is_undefined(m.prev_owner)) {
         draw_set_color(m.prev_color);
-        draw_text(16 + w1, yy, string(m.prev_owner));
-    } else {
-        draw_set_color(c_white);
-        draw_text(16 + string_width(string(m.new_owner)), yy, " captured tile (" + string(m.q) + "," + string(m.r) + ")");
+        draw_text(16 + prefix_width + gang_width + tile_width, yy, msg_suffix);
     }
 }
 
+// Reset draw state
 draw_set_alpha(1);
 draw_set_color(c_white);

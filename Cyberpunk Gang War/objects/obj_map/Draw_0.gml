@@ -4,55 +4,41 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
 
     if (tile.flicker_enabled) {
-        if (current_time >= tile.flicker_next && tile.flicker_count <= 0) {
-            tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
-            tile.flicker_count = irandom_range(FLICKER_MIN_BLIPS, FLICKER_MAX_BLIPS);
-            tile.flicker_on = false;
-        }
 
-        if (tile.flicker_count > 0 && current_time >= tile.flicker_timer) {
-            tile.flicker_on = !tile.flicker_on;
-            tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
-			if (!tile.flicker_on) {
-			    tile.flicker_count--;
-			    if (tile.flicker_count <= 0) {
-			        tile.flicker_next = current_time + irandom_range(FLICKER_MIN_TIME, FLICKER_MAX_TIME);
+	if (current_time >= tile.flicker_timer) {
+	    tile.flicker_on = !tile.flicker_on;
+	    tile.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
+	}
 
-			        // Apply new color and trigger capture flash AFTER flicker ends
-			        if (!is_undefined(tile.pending_color)) {
-					    var previous_owner = tile.owner;
-					    var previous_color = scr_get_gang_color(previous_owner);
-    
-					    var new_owner = tile.pending_owner;
-					    var new_color = tile.pending_color;
+	// Apply new color and finalize capture if pending
+	if (!is_undefined(tile.pending_color) && tile.flicker_enabled == false) {
+	    var previous_owner = tile.owner;
+	    var previous_color = scr_get_gang_color(previous_owner);
 
-					    tile.color = new_color;
-					    tile.owner = new_owner;
-					    tile.pending_color = undefined;
-					    tile.pending_owner = undefined;
-					    tile.flicker_enabled = false;
-					    tile.capture_time = current_time;
-						update_tile_borders(i); // where i is the tile index
-						update_tile_borders_for_neighbors(i);
-						
-					    // ✅ Send log event
-					    if (object_exists(obj_eventLogger)) {
-					        scr_log_capture_event(
-					            new_owner,
-					            new_color,
-					            tile.q,
-					            tile.r,
-					            previous_owner,
-					            previous_color
-					        );
-					    }
-					}
+	    var new_owner = tile.pending_owner;
+	    var new_color = tile.pending_color;
 
-			    }
-			}
+	    tile.color = new_color;
+	    tile.owner = new_owner;
+	    tile.pending_color = undefined;
+	    tile.pending_owner = undefined;
+	    tile.capture_time = current_time;
 
+	    update_tile_borders(i);
+	    update_tile_borders_for_neighbors(i);
 
-        }
+	    if (object_exists(obj_eventLogger)) {
+	        scr_log_capture_event(
+	            new_owner,
+	            new_color,
+	            tile.q,
+	            tile.r,
+	            previous_owner,
+	            previous_color
+	        );
+	    }
+	}
+
 
         tile.is_flickering = tile.flicker_on;
     } else {

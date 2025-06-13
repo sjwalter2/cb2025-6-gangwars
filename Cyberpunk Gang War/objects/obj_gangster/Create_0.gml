@@ -9,7 +9,8 @@ name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z
 charisma = 0
 might = 0
 honor = 0
-
+startGame = 1
+alarm[0] = 10
 autonomous = true; // Set to false for player-controlled gangsters
 target_tile_index = -1;
 current_tile = { q: 0, r: 0 }; // Must be updated in Step or by spawn logic
@@ -46,12 +47,17 @@ move_ticks_remaining = 0;
 flash_timer = 0;
 flash_type = ""; // "move" or "arrive"
 first_tick_bonus = 0;
-
+FLICKER_TOGGLE_MIN = 100;  // ms or tick equivalent
+FLICKER_TOGGLE_MAX = 300;
 //Pathfinding
 hoverPathValid = false;
 hoverTileQ = 0;
 hoverTileR = 0;
 hoverPath = [];
+
+capture_ticks_remaining = 0;
+capture_tile_index = -1;
+
 
 // Path following support
 move_path = [];         // Array of remaining tile indices to follow
@@ -94,6 +100,29 @@ function array_shift(arr) {
 
 
 function tick() {
+		if (state == "capturing") {
+	    capture_ticks_remaining--;
+
+	    // Flash effect (optional)
+	    flash_timer = current_time + 200;
+	    flash_type = "capture";
+
+	    if (capture_ticks_remaining <= 0) {
+	        scr_claim_tile(capture_tile_index, owner);
+
+	        // Reset capture state
+
+	        capture_tile_index = -1;
+	        capture_ticks_remaining = 0;
+	        flash_timer = current_time + 300;
+	        flash_type = "complete";
+
+	        state = "idle";
+	    }
+
+	    return;
+	}
+
     if (move_queued) {
         move_queued = false;
         is_moving = true;
@@ -133,11 +162,44 @@ function tick() {
             flash_type = "arrive";
 
             // === Check for next step ===
-            if (has_followup_move && array_length(move_path) > 0) {
-                var next_tile_index = array_shift(move_path); // removes and returns first
-                if (array_length(move_path) == 0) has_followup_move = false;
-                scr_gangster_start_movement(self, next_tile_index,0);
-            }
+			if (has_followup_move && array_length(move_path) > 0) {
+			    var next_tile_index = array_shift(move_path);
+			    if (array_length(move_path) == 0) has_followup_move = false;
+			    scr_gangster_start_movement(self, next_tile_index, 0);
+			} else {
+			    // No more moves — check for capture
+			    var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
+				var key = string(axial.q) + "," + string(axial.r);
+
+				if (!ds_map_exists(global.hex_lookup, key)) exit;
+				var final_tile_index = global.hex_lookup[? key];
+				var tile = global.hex_grid[final_tile_index];
+
+				if (tile.owner != owner.name) {
+				    state = "capturing";
+
+				    var move_cost = global.cost_unclaimed;
+				    if (!is_undefined(tile.owner)) move_cost = global.cost_enemy;
+
+				    capture_ticks_remaining = move_cost * 2;
+				    capture_tile_index = final_tile_index;
+
+				    // 🟡 Trigger flickering
+				    var tile_ref = global.hex_grid[capture_tile_index];
+				    tile_ref.flicker_enabled = true;
+				    tile_ref.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
+				    tile_ref.flicker_next = current_time + 1000; // minimum delay between full cycles
+				    tile_ref.flicker_on = false;
+				    tile_ref.pending_color = scr_get_gang_color(owner.name);
+				    tile_ref.pending_owner = owner.name;
+				    global.hex_grid[capture_tile_index] = tile_ref;
+				}
+
+				else {
+			        state = "idle";
+			    }
+			}
+
         }
     }
 }
