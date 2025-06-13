@@ -2,9 +2,9 @@
 // Assumes global.hex_grid is populated
 
 // === CONFIGURABLE SETTINGS ===
-var NUM_GANGS = 5;
-var GANG_MIN_SPREAD = 30;
-var GANG_MAX_SPREAD = 55;
+var NUM_GANGS = 10;
+var GANG_MIN_SPREAD = 10;
+var GANG_MAX_SPREAD = 15;
 var CORE_MIN_DISTANCE = 5;
 var GANG_MIN_DISTANCE_FROM_EACH_OTHER = 6;
 var COLOR_VARIATION = 40;
@@ -72,122 +72,104 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
     }
 }
 
-// === PLACE GANGS WITH SPACING ===
-var placed_gangs = [];
-var placed_coords = [];
+// === FILTER VALID STRONGHOLDS ===
+var available_strongholds = [];
+for (var i = 0; i < array_length(global.stronghold_instances); i++) {
+    var sh = global.stronghold_instances[i];
+    var tile = global.hex_grid[sh.tile_index];
+    if (is_undefined(tile.owner)) {
+        array_push(available_strongholds, sh);
+    }
+}
 
-while (array_length(placed_gangs) < NUM_GANGS && array_length(eligible_tiles) > 0) {
-    var candidate_index = eligible_tiles[irandom(array_length(eligible_tiles) - 1)];
-    var candidate_tile = global.hex_grid[candidate_index];
+// Limit to number of gangs
+NUM_GANGS = min(NUM_GANGS, array_length(available_strongholds));
 
-    var too_close = false;
-    for (var i = 0; i < array_length(placed_coords); i++) {
-        var placed = placed_coords[i];
-        var dq = candidate_tile.q - placed.q;
-        var dr = candidate_tile.r - placed.r;
-        var dist = max(abs(dq), abs(dr), abs(-dq - dr));
-        if (dist < GANG_MIN_DISTANCE_FROM_EACH_OTHER) {
-            too_close = true;
+// === SPAWN GANGS FROM VALID STRONGHOLDS ===
+for (var g = 0; g < NUM_GANGS; g++) {
+    var stronghold = available_strongholds[g];
+    var base_index = stronghold.tile_index;
+    var base_tile = global.hex_grid[base_index];
+
+    if (!variable_global_exists("used_gang_names")) global.used_gang_names = [];
+
+    var gang_name = "";
+    repeat (100) {
+        var adj = scr_get_name(global.gangadjectives);
+        var noun = scr_get_name(global.gangnouns);
+        var try_name = "The " + adj + " " + noun;
+
+        if (!array_contains(global.used_gang_names, try_name)) {
+            gang_name = try_name;
+            array_push(global.used_gang_names, try_name);
             break;
         }
     }
 
-    if (!too_close) {
-        array_push(placed_gangs, candidate_index);
-        array_push(placed_coords, { q: candidate_tile.q, r: candidate_tile.r });
-    }
-
-    var idx = array_index_of(eligible_tiles, candidate_index);
-    if (idx != -1) {
-        array_delete(eligible_tiles, idx, 1);
-    }
-}
-
-// Organic spreading of territory
-for (var g = 0; g < array_length(placed_gangs); g++) {
-    var base_index = placed_gangs[g];
-	// Generate random gang name
-	// Maintain a list of used names
-	if (!variable_global_exists("used_gang_names")) {
-		global.used_gang_names = [];
-	}
-
-	var gang_name = "";
-	repeat (100) { // Prevent infinite loops (in case we run out of combos)
-		var adj = scr_get_name(global.gangadjectives);
-		var noun = scr_get_name(global.gangnouns);
-		var try_name = "The " + adj + " " + noun;
-
-		var is_unique = true;
-		for (var i = 0; i < array_length(global.used_gang_names); i++) {
-		    if (global.used_gang_names[i] == try_name) {
-		        is_unique = false;
-		        break;
-		    }
-		}
-
-		if (is_unique) {
-		    gang_name = try_name;
-		    array_push(global.used_gang_names, gang_name);
-		    break;
-		}
-	}
-
-
-	
     var gang_color = gang_colors[g mod array_length(gang_colors)];
-    global.hex_grid[base_index].color = gang_color;
-	global.hex_grid[base_index].owner = gang_name;
+    base_tile.owner = gang_name;
+    base_tile.color = gang_color;
+    global.hex_grid[base_index] = base_tile;
+
+    stronghold.owner = gang_name;
 
     var owned = [base_index];
-    var to_expand = [base_index];
-    var spread_target = irandom_range(GANG_MIN_SPREAD, GANG_MAX_SPREAD);
 
-    while (array_length(owned) < spread_target && array_length(to_expand) > 0) {
-        var from_index = to_expand[irandom(array_length(to_expand) - 1)];
-        var from_tile = global.hex_grid[from_index];
+    array_push(global.gang_territories, {
+        name: gang_name,
+        color: gang_color,
+        owned: owned,
+        cooldown: current_time + irandom_range(2000, 8000)
+    });
+}
+
+// === EXPAND EACH GANG ONE TILE AT A TIME ===
+var any_can_expand = true;
+
+while (any_can_expand) {
+    any_can_expand = false;
+
+    for (var g = 0; g < array_length(global.gang_territories); g++) {
+        var gang = global.gang_territories[g];
+        var target_size = irandom_range(GANG_MIN_SPREAD, GANG_MAX_SPREAD);
+        if (array_length(gang.owned) >= target_size) continue;
+
         var neighbors = [];
 
-        var directions = [
-            [ 1,  0], [ 0,  1], [-1,  1],
-            [-1,  0], [ 0, -1], [ 1, -1]
-        ];
+        for (var i = 0; i < array_length(gang.owned); i++) {
+            var index = gang.owned[i];
+            var tile = global.hex_grid[index];
 
-        for (var d = 0; d < 6; d++) {
-            var dq = directions[d][0];
-            var dr = directions[d][1];
-            var nq = from_tile.q + dq;
-            var nr = from_tile.r + dr;
+            var directions = [
+                [ 1,  0], [ 0,  1], [-1,  1],
+                [-1,  0], [ 0, -1], [ 1, -1]
+            ];
 
-            for (var i = 0; i < array_length(global.hex_grid); i++) {
-                var tile = global.hex_grid[i];
-                if (tile.q == nq && tile.r == nr && tile.type != "core" && tile.color == make_color_rgb(80, 80, 80)) {
-                    array_push(neighbors, i);
+            for (var d = 0; d < 6; d++) {
+                var nq = tile.q + directions[d][0];
+                var nr = tile.r + directions[d][1];
+
+                for (var j = 0; j < array_length(global.hex_grid); j++) {
+                    var t = global.hex_grid[j];
+                    if (t.q == nq && t.r == nr && t.type != "core" && is_undefined(t.owner)) {
+                        array_push(neighbors, j);
+                    }
                 }
             }
         }
 
         if (array_length(neighbors) > 0) {
             var new_index = neighbors[irandom(array_length(neighbors) - 1)];
-            global.hex_grid[new_index].color = gang_color;
-			global.hex_grid[new_index].owner = gang_name;
-            array_push(owned, new_index);
-            array_push(to_expand, new_index);
-        } else {
-            var idx = array_index_of(to_expand, from_index);
-            if (idx != -1) array_delete(to_expand, idx, 1);
+            global.hex_grid[new_index].owner = gang.name;
+            global.hex_grid[new_index].color = gang.color;
+            array_push(gang.owned, new_index);
+            global.gang_territories[g] = gang;
+            any_can_expand = true;
         }
     }
-
-    array_push(global.gang_territories, {
-        color: gang_color,
-        owned: owned,
-        cooldown: current_time + irandom_range(2000, 8000),
-		name: gang_name
-    });
 }
 
-
+	
 // === SPAWN ONE obj_gang FOR EACH GANG TERRITORY (UI ELEMENT) ===
 var ui_base_x = room_width - 10;
 var ui_base_y = 10;
@@ -198,6 +180,8 @@ for (var i = 0; i < array_length(global.gang_territories); i++) {
     var y_offset = ui_base_y + (i * ui_spacing);
 
     var new_gang = instance_create_layer(ui_base_x, y_offset, "UI", obj_gang);
+	new_gang.name = gang.name;
+	new_gang.owned = gang.owned;
 	scr_init_gang(new_gang, gang.name, gang.owned);
 }
 

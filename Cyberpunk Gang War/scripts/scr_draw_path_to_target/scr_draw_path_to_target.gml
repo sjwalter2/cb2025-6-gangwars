@@ -2,7 +2,9 @@
 /// @description Draws a preview path using A* from selected gangster to hovered tile. If unreachable, draws red indicator only.
 
 function scr_draw_path_to_target() {
-    if (ds_list_find_index(global.selected, self) == -1) exit;
+    if (ds_list_find_index(global.selected, id) == -1) exit;
+	
+
 
     var mouse_axial = scr_pixel_to_axial(mouse_x - global.offsetX, mouse_y - global.offsetY);
     var my_axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
