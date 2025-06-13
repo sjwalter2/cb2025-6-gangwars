@@ -3,7 +3,7 @@ function draw_gangster_variant(xp, yp, size) {
 	var body_radius = size * 0.45;
    
     // === Selection effect ===
-    if (ds_list_find_index(global.selected, self) != -1) {
+    if (ds_list_find_index(global.selected, id) != -1) {
         var pulse = 0.5 + 0.5 * sin(current_time * 0.005);
         draw_set_color(merge_color(gang_color, c_white, pulse));
         draw_circle(xp, yp, body_radius + 6 + pulse * 2, false);

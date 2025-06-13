@@ -48,10 +48,11 @@ flash_type = ""; // "move" or "arrive"
 first_tick_bonus = 0;
 
 //Pathfinding
-hoverPath = [];
-hoverTileQ = undefined;
-hoverTileR = undefined;
 hoverPathValid = false;
+hoverTileQ = 0;
+hoverTileR = 0;
+hoverPath = [];
+
 // Path following support
 move_path = [];         // Array of remaining tile indices to follow
 has_followup_move = false;  // Whether to continue pathing after reaching this tile

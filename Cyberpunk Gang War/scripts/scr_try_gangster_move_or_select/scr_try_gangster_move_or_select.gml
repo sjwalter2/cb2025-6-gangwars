@@ -1,15 +1,10 @@
 /// @function scr_try_gangster_move_or_select()
 /// @description Handles left-clicks for selecting or moving a gangster.
 
-function scr_try_gangster_move_or_select() {
+function scr_try_gangster_move_or_select(q2, r2) {
     if (ds_list_size(global.selected) == 0) return;
 
     var gangster = global.selected[| 0];
-
-    // Get clicked tile
-    var axial_target = scr_pixel_to_axial(mouse_x - global.offsetX, mouse_y - global.offsetY);
-    var q2 = axial_target.q;
-    var r2 = axial_target.r;
 
     // Check if tile is occupied
     var target_occupied = false;
