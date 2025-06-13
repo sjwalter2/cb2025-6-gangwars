@@ -47,6 +47,16 @@ flash_timer = 0;
 flash_type = ""; // "move" or "arrive"
 first_tick_bonus = 0;
 
+//Pathfinding
+hoverPath = [];
+hoverTileQ = undefined;
+hoverTileR = undefined;
+hoverPathValid = false;
+// Path following support
+move_path = [];         // Array of remaining tile indices to follow
+has_followup_move = false;  // Whether to continue pathing after reaching this tile
+
+
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
 }
@@ -70,22 +80,30 @@ function draw_polygon(cx, cy, radius, sides) {
 //	parent=other
 //}
 
+/// @function array_shift(arr)
+/// @description Removes and returns the first element of the array
+function array_shift(arr) {
+    var result = arr[0];
+    for (var i = 1; i < array_length(arr); i++) {
+        arr[i - 1] = arr[i];
+    }
+    array_resize(arr, array_length(arr) - 1);
+    return result;
+}
+
+
 function tick() {
-	if (move_queued) {
-	    move_queued = false;
-	    is_moving = true;
-		
-	    return; // skip rest of this tick so they start fresh on the next
-	}
+    if (move_queued) {
+        move_queued = false;
+        is_moving = true;
+        return; // Start next tick
+    }
 
     if (is_moving) {
-        show_debug_message("Tick: " + name + " (" + string(move_ticks_elapsed) + "/" + string(move_total_ticks) + ")");
-
-        // Trigger tick flash
+        // Flash and position updates
         flash_timer = current_time + 150;
         flash_type = "move";
 
-        // Update exact tick-aligned position BEFORE incrementing
         var t = move_ticks_elapsed / move_total_ticks;
         var start = move_target.start_pos;
         var target = move_target.target_pos;
@@ -94,24 +112,31 @@ function tick() {
         y = lerp(start.y, target.y, t);
 
         move_ticks_elapsed++;
-		first_tick_bonus = 0;
+        first_tick_bonus = 0;
+
         if (move_ticks_elapsed >= move_total_ticks) {
-            // Final tick — snap to end
+            // Snap to final position
             x = target.x;
             y = target.y;
-			
-			 // Release claimed tile
-		    var idx = ds_list_find_index(global.claimed_tile_indices, move_target.tile_index);
-		    if (idx != -1) ds_list_delete(global.claimed_tile_indices, idx);
-			
+
+            // Release claimed tile
+            var idx = ds_list_find_index(global.claimed_tile_indices, move_target.tile_index);
+            if (idx != -1) ds_list_delete(global.claimed_tile_indices, idx);
+
             is_moving = false;
             move_target = undefined;
             move_ticks_elapsed = 0;
             move_total_ticks = 0;
 
-            // Trigger arrival flash
             flash_timer = current_time + 300;
             flash_type = "arrive";
+
+            // === Check for next step ===
+            if (has_followup_move && array_length(move_path) > 0) {
+                var next_tile_index = array_shift(move_path); // removes and returns first
+                if (array_length(move_path) == 0) has_followup_move = false;
+                scr_gangster_start_movement(self, next_tile_index,0);
+            }
         }
     }
 }
