@@ -36,6 +36,8 @@ displayStatsFull = false
 money = 0
 taxRate = 0.1
 
+assignedPawns = irandom(4)
+
 gangsterWidth = 0
 gangsterHeight = 0
 

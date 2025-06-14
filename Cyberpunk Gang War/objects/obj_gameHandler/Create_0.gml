@@ -6,8 +6,9 @@ global.selection_cooldown = false;
 global.tooltip_boxes_drawn = [];
 global.claimed_tile_indices = ds_list_create();
 
-//Initialize GUI flags
+//Initialize GUI flags and objects
 global.displayStatsFull = false
+gui_button_shelf = instance_create_depth(0,0,0,obj_gui_button_shelf)
 
 ///Initialize games
 tickers = ds_list_create()
@@ -39,6 +40,6 @@ moveEnemy = 4
 function tick() {
 }
 
-	with(obj_gameHandler) {
-		ds_list_add(tickers,other)
+with(obj_gameHandler) {
+	ds_list_add(tickers,other)
 }

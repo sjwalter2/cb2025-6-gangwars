@@ -23,12 +23,7 @@ if (is_hovered || (ds_exists(global.selected, ds_type_list) && ds_list_find_inde
     ds_list_destroy(exclude_tiles);
 }
 
-if(global.displayStatsFull || displayStatsFull)
+if(global.displayStatsFull ||  displayStatsFull)
 {
-	//scr_draw_tooltip("Charisma",string(charisma),x,y,,c_green) -> need to extend or copy the script to accept arbitrary amounts of text; also allow smaller size?
-	/*
-	draw_text(10, yy, "Charisma: " + string(inst.charisma));
-	draw_text(10, yy, "Might: " + string(inst.might));
-	draw_text(10, yy, "Honor: " + string(inst.honor));
-	*/
+	scr_draw_tooltip_ext(["Charisma " + string(charisma),"Might " + string(might), "Honor " + string(honor), "Party " + string(assignedPawns)],x+10,y-30,,c_green)	
 }

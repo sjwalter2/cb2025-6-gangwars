@@ -3,6 +3,7 @@ draw_set_valign(fa_top);
 draw_set_color(c_white);
 draw_set_alpha(1);
 
+
 var yy = 10;
 var line_height = 18;
 
@@ -50,9 +51,17 @@ if (ds_exists(global.selected, ds_type_list))
 				}
 			}
 		}
-
 	}
 } else {
     draw_text(10, yy, "(no selection list)");
 }
+
+if(instance_exists(gui_button_shelf))
+{
+	yy += line_height;
+	gui_button_shelf.guiY = yy
+	yy += gui_button_shelf.shelfHeight
+}
+
+
 global.tooltip_boxes_drawn = [];
