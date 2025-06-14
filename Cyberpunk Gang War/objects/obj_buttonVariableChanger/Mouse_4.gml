@@ -16,4 +16,5 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 			variable_instance_set(parent, variable, variable_instance_get(parent,variable)-1);
 		}
 	}
+	global.buttonPressed = true
 }

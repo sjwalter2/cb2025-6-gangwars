@@ -42,6 +42,7 @@
   "resources":[
     {"id":{"name":"obj_bgEffect","path":"objects/obj_bgEffect/obj_bgEffect.yy",},},
     {"id":{"name":"obj_business","path":"objects/obj_business/obj_business.yy",},},
+    {"id":{"name":"obj_buttonGlobalInfo","path":"objects/obj_buttonGlobalInfo/obj_buttonGlobalInfo.yy",},},
     {"id":{"name":"obj_buttonInfo","path":"objects/obj_buttonInfo/obj_buttonInfo.yy",},},
     {"id":{"name":"obj_buttonParent","path":"objects/obj_buttonParent/obj_buttonParent.yy",},},
     {"id":{"name":"obj_buttonPawn","path":"objects/obj_buttonPawn/obj_buttonPawn.yy",},},

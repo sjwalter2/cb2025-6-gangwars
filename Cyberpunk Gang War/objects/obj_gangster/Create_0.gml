@@ -32,7 +32,6 @@ sprite_head_index = irandom(sprite_get_number(spr_gangsterHead)-1)
 image_blend = make_color_rgb(irandom(255),irandom(255),irandom(255));
 
 displayStatsFull = false
-show_debug_message(name)
 
 money = 0
 taxRate = 0.1
@@ -80,12 +79,13 @@ function draw_polygon(cx, cy, radius, sides) {
     draw_primitive_end();
 }
 
-//with (instance_create_depth(x+sprite_width+18,y-22,0,obj_buttonInfo))
-//{
-//	relativeX = sprite_width+18
-//	relativeY = -22
-//	parent=other
-//}
+with (instance_create_depth(x+sprite_width+18,y-22,0,obj_buttonInfo))
+{
+	relativeX = sprite_width+8
+	relativeY = -22
+	parent=other
+}
+
 
 /// @function array_shift(arr)
 /// @description Removes and returns the first element of the array

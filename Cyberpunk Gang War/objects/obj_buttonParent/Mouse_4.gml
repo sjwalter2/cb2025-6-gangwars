@@ -1,10 +1,13 @@
-_activated = false
-if(variable_instance_exists(parent,"buttonsActivated")) {
-	if(parent.buttonsActivated == true) {
-		_activated = true
-		alarm[0] = 1
-	}
-} else {
-	_activated = true
-}
 
+if (ds_exists(global.selected, ds_type_list)) {
+    for (var i = 0; i < ds_list_size(global.selected); i++) {
+        var inst = global.selected[| i];
+        if (instance_exists(inst) && variable_instance_exists(inst, "name")) {
+            if inst.name == parent.name {
+				_activated = true
+				exit;
+			}
+		}
+	}
+}
+_activated = false

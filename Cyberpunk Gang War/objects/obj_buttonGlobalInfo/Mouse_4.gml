@@ -5,16 +5,12 @@ if _activated == false
 
 	if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && mouse_y < y+sprite_get_height(sprite_index)
 	{
-		if (parent.displayStatsFull == false)
+		if (global.displayStatsFull == false)
 		{
-			parent.displayStatsFull = true
+			global.displayStatsFull = true
 		} else {
-			parent.displayStatsFull = false
+			global.displayStatsFull = false
 		}
-		
 		global.buttonPressed = true
-		/*if (ds_exists(global.selected, ds_type_list)) {
-			ds_list_clear(global.selected);
-		}*/
 	}
 

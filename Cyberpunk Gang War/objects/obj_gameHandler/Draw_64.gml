@@ -14,18 +14,44 @@ draw_text(10, yy, "Total Ticks: " + string(totalTicks)); yy += line_height;
 // === Display global.selected list ===
 draw_text(10, yy, "Selected:"); yy += line_height;
 
-if (ds_exists(global.selected, ds_type_list)) {
-    for (var i = 0; i < ds_list_size(global.selected); i++) {
+if (ds_exists(global.selected, ds_type_list))
+{
+    for (var i = 0; i < ds_list_size(global.selected); i++)
+	{
         var inst = global.selected[| i];
         var name_text = "  " + string(i) + ": ";
-        if (instance_exists(inst) && variable_instance_exists(inst, "name")) {
+        if (instance_exists(inst) && variable_instance_exists(inst, "name"))
+		{
             name_text += inst.name;
         } else {
             name_text += "invalid";
         }
         draw_text(10, yy, name_text);
         yy += line_height;
-    }
+
+		if(variable_instance_exists(inst,"displayStatsFull") || global.displayStatsFull)
+		{
+			if(inst.displayStatsFull || global.displayStatsFull)
+			{
+				if(variable_instance_exists(inst,"charisma"))
+				{
+					draw_text(10, yy, "Charisma: " + string(inst.charisma));
+					yy += line_height;
+				}
+				if(variable_instance_exists(inst,"charisma"))
+				{
+					draw_text(10, yy, "Might: " + string(inst.might));
+					yy += line_height;
+				}
+				if(variable_instance_exists(inst,"honor"))
+				{
+					draw_text(10, yy, "Honor: " + string(inst.honor));
+					yy += line_height;
+				}
+			}
+		}
+
+	}
 } else {
     draw_text(10, yy, "(no selection list)");
 }

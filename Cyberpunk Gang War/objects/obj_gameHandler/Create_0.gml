@@ -6,6 +6,9 @@ global.selection_cooldown = false;
 global.tooltip_boxes_drawn = [];
 global.claimed_tile_indices = ds_list_create();
 
+//Initialize GUI flags
+global.displayStatsFull = false
+
 ///Initialize games
 tickers = ds_list_create()
 
@@ -16,10 +19,9 @@ global.cost_enemy    = 4;
 
 
 randomize()
-//instance_create_layer(50,100,"Instances",obj_gang)
-//instance_create_layer(450,100,"Instances",obj_gang)
-//instance_create_layer(850,100,"Instances",obj_gang)
 
+//Handle per-turn flags
+global.buttonPressed = false
 
 ///Handle timers
 nextSpeed = 1

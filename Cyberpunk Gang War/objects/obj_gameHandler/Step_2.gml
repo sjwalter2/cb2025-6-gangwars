@@ -1,0 +1,1 @@
+global.buttonPressed = false
