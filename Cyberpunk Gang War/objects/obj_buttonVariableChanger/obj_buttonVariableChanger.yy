@@ -13,8 +13,8 @@
     "path":"folders/Objects/buttons.yy",
   },
   "parentObjectId":{
-    "name":"obj_buttonParent",
-    "path":"objects/obj_buttonParent/obj_buttonParent.yy",
+    "name":"obj_buttonParentGui",
+    "path":"objects/obj_buttonParentGui/obj_buttonParentGui.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

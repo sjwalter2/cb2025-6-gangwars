@@ -1,21 +1,21 @@
 {
   "$GMObject":"",
-  "%Name":"obj_gui_button_shelf",
+  "%Name":"obj_buttonGangInfo",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":2,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":74,"eventType":9,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":75,"eventType":5,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":53,"eventType":6,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_gui_button_shelf",
+  "name":"obj_buttonGangInfo",
   "overriddenProperties":[],
   "parent":{
     "name":"buttons",
     "path":"folders/Objects/buttons.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_buttonParentGui",
+    "path":"objects/obj_buttonParentGui/obj_buttonParentGui.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -33,7 +33,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_gangsterHead",
+    "path":"sprites/spr_gangsterHead/spr_gangsterHead.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

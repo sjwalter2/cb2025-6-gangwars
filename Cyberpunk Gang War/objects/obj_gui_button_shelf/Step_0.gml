@@ -1,5 +1,14 @@
-currentShelf[0].guiY = guiY
-currentShelf[0].guiX = guiX
-currentShelf[0].shelfActive = true
+if(array_length(currentShelf) == 0)
+{
+	exit;
+}
 
-shelfHeight = currentShelf[0].sprite_height+18
+
+for (var i = 0 ; i < array_length(currentShelf); i+= 1)
+{
+	currentShelf[i].guiY = guiY+(currentShelf[i].sprite_height +lineHeight)*i
+	currentShelf[i].guiX = guiX
+	currentShelf[i].shelfActive = true
+}
+
+shelfHeight = (currentShelf[0].sprite_height+lineHeight) * array_length(currentShelf) +18

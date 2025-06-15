@@ -7,8 +7,10 @@ global.tooltip_boxes_drawn = [];
 global.claimed_tile_indices = ds_list_create();
 
 //Initialize GUI flags and objects
-global.displayStatsFull = false
+global.displayGangsterStatsFull = false
+global.displayGangStatsFull = true
 gui_button_shelf = instance_create_depth(0,0,0,obj_gui_button_shelf)
+gui_button_shelf.lineHeight = 18
 
 ///Initialize games
 tickers = ds_list_create()

@@ -23,7 +23,7 @@ if (is_hovered || (ds_exists(global.selected, ds_type_list) && ds_list_find_inde
     ds_list_destroy(exclude_tiles);
 }
 
-if(global.displayStatsFull ||  displayStatsFull)
+if(global.displayGangsterStatsFull ||  displayStatsFull)
 {
 	scr_draw_tooltip_ext(["Charisma " + string(charisma),"Might " + string(might), "Honor " + string(honor), "Party " + string(assignedPawns)],x+10,y-30,,c_green)	
 }

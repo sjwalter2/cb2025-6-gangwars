@@ -30,9 +30,9 @@ if (ds_exists(global.selected, ds_type_list))
         draw_text(10, yy, name_text);
         yy += line_height;
 
-		if(variable_instance_exists(inst,"displayStatsFull") || global.displayStatsFull)
+		if(variable_instance_exists(inst,"displayStatsFull") || global.displayGangsterStatsFull)
 		{
-			if(inst.displayStatsFull || global.displayStatsFull)
+			if(inst.displayStatsFull || global.displayGangsterStatsFull)
 			{
 				if(variable_instance_exists(inst,"charisma"))
 				{
@@ -58,6 +58,7 @@ if (ds_exists(global.selected, ds_type_list))
 
 if(instance_exists(gui_button_shelf))
 {
+	gui_button_shelf.lineHeight = line_height
 	yy += line_height;
 	gui_button_shelf.guiY = yy
 	yy += gui_button_shelf.shelfHeight
