@@ -1,4 +1,1 @@
-changeShelf(displayShelf)
-
-
 currentParentShelf = displayShelf

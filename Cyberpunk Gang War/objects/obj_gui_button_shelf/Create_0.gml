@@ -6,6 +6,7 @@ lineHeight = 0
 
 gangShelf = []
 
+
 //Info Shelf
 var nextBut = instance_create_depth(-100,-100,0,obj_buttonNextShelf)
 with nextBut
