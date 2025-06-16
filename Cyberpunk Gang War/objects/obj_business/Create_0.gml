@@ -2,6 +2,8 @@
 owner = noone   //Gang ownership; set to noone if neutral
 manager = noone //Individual gang manager (optional); set to noone if generally gang managed
 
+name = ""
+
 baseIncome = 100
 assignedPawns = 0
 
@@ -9,6 +11,8 @@ adjustedIncome = baseIncome
 
 buttonsActivated = false
 displayStatsFull = false
+
+alarm_set(0,20)
 
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)

@@ -48,6 +48,7 @@
     {"id":{"name":"obj_buttonGangInfo","path":"objects/obj_buttonGangInfo/obj_buttonGangInfo.yy",},},
     {"id":{"name":"obj_buttonGlobalGangInfo","path":"objects/obj_buttonGlobalGangInfo/obj_buttonGlobalGangInfo.yy",},},
     {"id":{"name":"obj_buttonGlobalGangsterInfo","path":"objects/obj_buttonGlobalGangsterInfo/obj_buttonGlobalGangsterInfo.yy",},},
+    {"id":{"name":"obj_buttonHirePawnGui","path":"objects/obj_buttonHirePawnGui/obj_buttonHirePawnGui.yy",},},
     {"id":{"name":"obj_buttonInfo","path":"objects/obj_buttonInfo/obj_buttonInfo.yy",},},
     {"id":{"name":"obj_buttonNextShelf","path":"objects/obj_buttonNextShelf/obj_buttonNextShelf.yy",},},
     {"id":{"name":"obj_buttonParent","path":"objects/obj_buttonParent/obj_buttonParent.yy",},},

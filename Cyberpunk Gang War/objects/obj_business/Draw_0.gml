@@ -4,7 +4,7 @@ if(distance_to_point(mouse_x,mouse_y) < 100 || (ds_list_find_index(global.select
 	if(manager != noone)
 		draw_text(x,y+80,"Manager: " + string(manager.name))
 	if(owner != noone)
-		draw_text(x,y+100,"Owner: " + string(owner.gangType))
+		draw_text(x,y+100,"Owner: " + string(owner.name))
 	draw_text(x,y+120,"Base income: " + string(baseIncome))
 	draw_text(x,y+140,"Adjusted Income: " + string(adjustedIncome))
 }

@@ -7,10 +7,10 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 	{
 		if(mode == "increase")
 		{
-			if(parent.owner.pawns > 0)
+			if(parent.owner.freePawns > 0)
 			{
 				parent.assignedPawns += 1;
-				parent.owner.pawns -= 1
+				parent.owner.freePawns -= 1
 			}
 		}
 		else if(mode == "decrease")
@@ -18,7 +18,7 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 			if(parent.assignedPawns > 0)
 			{
 				parent.assignedPawns -= 1;
-				parent.owner.pawns += 1
+				parent.owner.freePawns += 1
 			}
 		}
 	}
