@@ -9,6 +9,14 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 		{
 			if(parent.owner.freePawns > 0)
 			{
+				if(variable_instance_exists(parent,"maxPawns"))
+				{
+					if(parent.assignedPawns >= parent.maxPawns)
+					{
+						global.buttonPressed = true;
+						exit;
+					}
+				}
 				parent.assignedPawns += 1;
 				parent.owner.freePawns -= 1
 			}

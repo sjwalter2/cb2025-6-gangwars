@@ -41,3 +41,4 @@ tile_index = -1;        // Tile index on the hex grid
 resupply_timer = 0;     // Placeholder for future logic
 q = -1
 r = -1
+assignedPawns = 0

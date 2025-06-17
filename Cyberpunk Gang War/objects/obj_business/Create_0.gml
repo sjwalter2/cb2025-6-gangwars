@@ -4,13 +4,20 @@ manager = noone //Individual gang manager (optional); set to noone if generally 
 
 name = ""
 
-baseIncome = 100
+baseIncome = 10
 assignedPawns = 0
+maxPawns = 6
 
 adjustedIncome = baseIncome
 
 buttonsActivated = false
 displayStatsFull = false
+
+tile_index = -1;        // Tile index on the hex grid
+q = -1
+r = -1
+
+
 
 alarm_set(0,20)
 
@@ -41,7 +48,7 @@ function tick() {
 
 	*/
 	//Assigned pawns increase income by 1% each, unless the gang has upgraded pawns, in which case assignedPawnsValue will increase	
-	adjustedIncome = adjustedIncome * (1 + ((assignedPawns/100)*owner.assignedPawnsValue))	
+	adjustedIncome = adjustedIncome * (1 + ((assignedPawns/2)*owner.assignedPawnsValue)) //Example. PawnsValue = 1.5, PawnCost = 2, baseIncome = 10. Adding 4 pawns would increase income by 300%, for an additional $30, minus the $8 cost of the pawns.
 	
 	if manager != noone
 	{
@@ -61,6 +68,7 @@ function tick() {
 }
 
 
+/*
 //Testing buttons
 with (instance_create_depth(x-37,y,0,obj_buttonVariableChanger))
 {
@@ -79,7 +87,7 @@ with (instance_create_depth(x-37,y+37,0,obj_buttonVariableChanger))
 	parent=other
 	mode="decrease"
 }
-
+*/
 
 //Testing buttons
 with (instance_create_depth(x+75,y,0,obj_buttonPawn))

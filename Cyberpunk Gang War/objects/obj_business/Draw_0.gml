@@ -1,6 +1,6 @@
 draw_self()
 if(distance_to_point(mouse_x,mouse_y) < 100 || (ds_list_find_index(global.selected,self) != -1)) {
-	draw_text(x,y+60,"Assigned Pawns: " + string(assignedPawns))
+	draw_text(x,y+60,"Assigned Pawns: " + string(assignedPawns) + "/" + string(maxPawns))
 	if(manager != noone)
 		draw_text(x,y+80,"Manager: " + string(manager.name))
 	if(owner != noone)

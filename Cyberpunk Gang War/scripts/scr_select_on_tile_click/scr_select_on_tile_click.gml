@@ -23,6 +23,15 @@ function scr_select_on_tile_click() {
 			array_push(objects_on_tile, { inst: id, priority: 2 });
 		}
 	}
+	
+	/*
+	// === Priority 3: Businesses
+	with (obj_business) {
+		if (q == click_axial.q && r == click_axial.r) {
+			array_push(objects_on_tile, { inst: id, priority: 2 });
+		}
+	}*/
+
 
 	if (array_length(objects_on_tile) == 0) {
 		ds_list_clear(global.selected);
