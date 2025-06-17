@@ -1,0 +1,1 @@
+current_color = make_color_hsv((color_get_hue(current_color) + 20) mod 255 ,255,255)
