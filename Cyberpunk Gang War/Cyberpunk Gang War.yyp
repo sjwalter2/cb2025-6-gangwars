@@ -29,6 +29,8 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"businessadjectives.txt","CopyToMask":-1,"filePath":"datafiles","name":"businessadjectives.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"businessnouns.txt","CopyToMask":-1,"filePath":"datafiles","name":"businessnouns.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"firstnames.txt","CopyToMask":-1,"filePath":"datafiles","name":"firstnames.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"gangfirstnames.txt","CopyToMask":-1,"filePath":"datafiles","name":"gangfirstnames.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"ganglastnames.txt","CopyToMask":-1,"filePath":"datafiles","name":"ganglastnames.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

@@ -1,6 +1,7 @@
 ///Initialize global lists
 global.debugMode = true;
 global.firstnames = scr_generate_names("firstnames.txt")
+
 global.selected = ds_list_create()
 global.selection_cooldown = false;
 global.tooltip_boxes_drawn = [];

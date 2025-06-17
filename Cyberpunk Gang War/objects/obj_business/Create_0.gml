@@ -2,8 +2,6 @@
 owner = noone   //Gang ownership; set to noone if neutral
 manager = noone //Individual gang manager (optional); set to noone if generally gang managed
 
-name = ""
-
 baseIncome = 10
 assignedPawns = 0
 maxPawns = 6
@@ -17,9 +15,44 @@ tile_index = -1;        // Tile index on the hex grid
 q = -1
 r = -1
 
+// === UNIQUE NAME GENERATION ===
+name = "";
 
 
-alarm_set(0,20)
+if (!variable_global_exists("businessAdjectives")) {
+	global.businessAdjectives = scr_generate_names("businessadjectives.txt");
+}
+
+if (!variable_global_exists("businessNouns")) {
+	global.businessNouns = scr_generate_names("businessnouns.txt");
+}
+
+if (!variable_global_exists("used_business_names")) {
+	global.used_business_names = [];
+}
+
+
+repeat (100) { // Cap attempts to avoid infinite loop
+	var adj = scr_get_name(global.businessAdjectives);
+	var noun = scr_get_name(global.businessNouns);
+	var try_name = adj + " " + noun;
+
+	var is_unique = true;
+	for (var i = 0; i < array_length(global.used_business_names); i++) {
+	    if (global.used_business_names[i] == try_name) {
+	        is_unique = false;
+	        break;
+	    }
+	}
+
+	if (is_unique) {
+	    name = try_name;
+	    array_push(global.used_business_names, name);
+	    break;
+	}
+}
+
+
 
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
@@ -90,18 +123,18 @@ with (instance_create_depth(x-37,y+37,0,obj_buttonVariableChanger))
 */
 
 //Testing buttons
-with (instance_create_depth(x+75,y,0,obj_buttonPawn))
+with (instance_create_depth(x+18,y-10,0,obj_buttonPawn))
 {
-	relativeX = 75
-	relativeY = 0
 	parent=other
+	relativeX = 18
+	relativeY = -10
 }
 
 //Testing buttons
-with (instance_create_depth(x+75,y+37,0,obj_buttonPawn))
+with (instance_create_depth(x+18,y+10,0,obj_buttonPawn))
 {
-	relativeX = 75
-	relativeY = 37
+	relativeX = 18
+	relativeY = 10
 	parent=other
 	mode="decrease"
 }

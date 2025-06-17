@@ -157,6 +157,8 @@ repeat (stronghold_target_count) {
         var tile_index = candidate_tiles[rand_idx];
         var tile = global.hex_grid[tile_index];
 
+
+		//Check for nearby strongholds
         var too_close = false;
         for (var j = 0; j < array_length(placed_stronghold_tiles); j++) {
             var other_tile = global.hex_grid[placed_stronghold_tiles[j]];
@@ -182,6 +184,61 @@ repeat (stronghold_target_count) {
 }
 
 
+// Step 3 === Business SPAWNING ===
+var business_target_count = 25; // Can be set dynamically later
+min_spacing = 3; // Min distance between businesses
+
+global.business_instances = [];
+
+// Step 4: Randomly place businesses with spacing constraints
+
+var placed_business_tiles = [];
+
+repeat (stronghold_target_count) {
+    var attempts = 0;
+    var placed = false;
+
+    while (attempts < 200 && !placed && array_length(candidate_tiles) > 0) {
+        var rand_idx = irandom(array_length(candidate_tiles) - 1);
+        var tile_index = candidate_tiles[rand_idx];
+        var tile = global.hex_grid[tile_index];
+
+        var too_close = false;
+		
+		//Check for nearby businesses
+        for (var j = 0; j < array_length(placed_business_tiles); j++) {
+            var other_tile = global.hex_grid[placed_business_tiles[j]];
+            if (axial_distance(tile.q, tile.r, other_tile.q, other_tile.r) < min_spacing) {
+                too_close = true;
+                break;
+            }
+        }
+		
+		//Check for nearby strongholds
+        too_close = false;
+        for (var j = 0; j < array_length(placed_stronghold_tiles); j++) {
+            var other_tile = global.hex_grid[placed_stronghold_tiles[j]];
+            if (axial_distance(tile.q, tile.r, other_tile.q, other_tile.r) < min_spacing) {
+                too_close = true;
+                break;
+            }
+        }
+		
+
+        if (!too_close) {
+            var pos = scr_axial_to_pixel(tile.q, tile.r);
+            var business = instance_create_layer(pos.px + global.offsetX, pos.py + global.offsetY, "Instances", obj_business);
+            business.tile_index = tile_index;
+			business.q = tile.q;
+			business.r = tile.r;
+            array_push(global.business_instances, business);
+            array_push(placed_business_tiles, tile_index);
+            placed = true;
+        }
+
+        attempts++;
+    }
+}
 
 // === UTILITY FUNCTIONS ===
 function draw_illuminated_hex(x, y, size, color) {
