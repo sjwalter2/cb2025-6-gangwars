@@ -1,8 +1,5 @@
+/// @description Assigns or unassigns pawns to a business or stronghold
 event_inherited()
-
-if _activated == false
-	exit;
-
 
 if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && mouse_y < y+sprite_get_height(sprite_index)
 {
@@ -10,10 +7,18 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 	{
 		if(mode == "increase")
 		{
-			if(parent.owner.pawns > 0)
+			if(parent.owner.freePawns > 0)
 			{
+				if(variable_instance_exists(parent,"maxPawns"))
+				{
+					if(parent.assignedPawns >= parent.maxPawns)
+					{
+						global.buttonPressed = true;
+						exit;
+					}
+				}
 				parent.assignedPawns += 1;
-				parent.owner.pawns -= 1
+				parent.owner.freePawns -= 1
 			}
 		}
 		else if(mode == "decrease")
@@ -21,8 +26,9 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 			if(parent.assignedPawns > 0)
 			{
 				parent.assignedPawns -= 1;
-				parent.owner.pawns += 1
+				parent.owner.freePawns += 1
 			}
 		}
 	}
+	global.buttonPressed = true
 }

@@ -10,10 +10,15 @@ if mouse_x > x && mouse_y > y && mouse_x < x+sprite_get_width(sprite_index) && m
 		if(mode == "increase")
 		{
 			variable_instance_set(parent, variable, variable_instance_get(parent,variable)+1);
+			if(variable_instance_exists(parent,"money"))
+			{
+				parent.money = parent.money-cost;
+			}
 		}
 		else if(mode == "decrease")
 		{
 			variable_instance_set(parent, variable, variable_instance_get(parent,variable)-1);
 		}
 	}
+	global.buttonPressed = true
 }

@@ -17,13 +17,11 @@ function scr_select_object(_w, _h) {
         if (index == -1) {
             ds_list_clear(global.selected); // ensure only one selected at a time
             ds_list_add(global.selected, self);
-            buttonsActivated = true;
         }
         // already selected: do nothing
     } else {
         if (index != -1) {
             ds_list_delete(global.selected, index);
-            buttonsActivated = false;
         }
     }
 }

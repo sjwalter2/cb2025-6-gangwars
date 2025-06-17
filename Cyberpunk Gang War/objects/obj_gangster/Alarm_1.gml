@@ -1,0 +1,1 @@
+color = scr_get_gang_color(owner.name)

@@ -1,10 +1,19 @@
 ///Initialize global lists
 global.debugMode = true;
 global.firstnames = scr_generate_names("firstnames.txt")
+
 global.selected = ds_list_create()
 global.selection_cooldown = false;
 global.tooltip_boxes_drawn = [];
 global.claimed_tile_indices = ds_list_create();
+
+//Initialize GUI flags and objects
+global.displayGangsterStatsFull = false
+global.displayGangStatsFull = true
+gui_button_shelf = instance_create_depth(0,0,0,obj_gui_button_shelf)
+gui_button_shelf.lineHeight = 18
+gui_button_pause = instance_create_layer(-100,-100,"UI",obj_buttonSpeedGui)
+
 
 ///Initialize games
 tickers = ds_list_create()
@@ -16,10 +25,9 @@ global.cost_enemy    = 4;
 
 
 randomize()
-//instance_create_layer(50,100,"Instances",obj_gang)
-//instance_create_layer(450,100,"Instances",obj_gang)
-//instance_create_layer(850,100,"Instances",obj_gang)
 
+//Handle per-turn flags
+global.buttonPressed = false
 
 ///Handle timers
 nextSpeed = 1
@@ -37,6 +45,6 @@ moveEnemy = 4
 function tick() {
 }
 
-	with(obj_gameHandler) {
-		ds_list_add(tickers,other)
+with(obj_gameHandler) {
+	ds_list_add(tickers,other)
 }
