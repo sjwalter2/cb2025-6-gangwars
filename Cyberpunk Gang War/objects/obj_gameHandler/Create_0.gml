@@ -12,6 +12,8 @@ global.displayGangsterStatsFull = false
 global.displayGangStatsFull = true
 gui_button_shelf = instance_create_depth(0,0,0,obj_gui_button_shelf)
 gui_button_shelf.lineHeight = 18
+gui_button_pause = instance_create_layer(-100,-100,"UI",obj_buttonSpeedGui)
+
 
 ///Initialize games
 tickers = ds_list_create()

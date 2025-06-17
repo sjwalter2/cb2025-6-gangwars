@@ -12,6 +12,11 @@ draw_text(10, yy, "Speed: " + string(global.currentSpeed)); yy += line_height;
 draw_text(10, yy, "Time: " + string(global.time)); yy += line_height;
 draw_text(10, yy, "Total Ticks: " + string(totalTicks)); yy += line_height;
 
+gui_button_pause.guiX = 10
+gui_button_pause.guiY = yy
+
+yy += sprite_get_height(spr_speed);
+
 // === Display global.selected list ===
 draw_text(10, yy, "Selected:"); yy += line_height;
 
