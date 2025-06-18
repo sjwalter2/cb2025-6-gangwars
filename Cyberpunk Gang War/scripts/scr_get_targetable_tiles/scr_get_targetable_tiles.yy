@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_get_targetable_tiles",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"pathfinding",
+    "path":"folders/Scripts/pathfinding.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

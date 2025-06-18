@@ -62,7 +62,7 @@ function tick() {
 
 	if owner == noone
 	{
-		show_debug_message("No owner, so nobody profits!");
+		//show_debug_message("No owner, so nobody profits!");
 		exit;
 	}
 

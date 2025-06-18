@@ -118,6 +118,7 @@ for (var g = 0; g < NUM_GANGS; g++) {
     array_push(global.gang_territories, {
         name: gang_name,
         color: gang_color,
+		strongholds: [],
         owned: owned,
         cooldown: current_time + irandom_range(2000, 8000)
     });

@@ -77,6 +77,25 @@ scr_draw_path_to_target();
 draw_gangster_variant(x, y, global.hex_size);
 //draw_text(x,y+40,name)
 //draw_text(x,y+60,"Cash: " + string(money))
+var state_color = c_white;
+var current_state = state;
 
+if (state == "waiting" && first_tick_bonus != 0)
+    current_state = "moving";
 
+switch (current_state) {
+    case "idle":         state_color = c_white;     break;
+    case "thinking":     state_color = c_yellow;    break;
+    case "deciding":     state_color = c_orange;    break;
+    case "waiting":      state_color = c_aqua;      break;
+    case "moving":       state_color = c_lime;      break;
+    case "capturing":    state_color = c_red;       break;
+    case "resupplying":  state_color = c_fuchsia;   break;
+    case "intervening":  state_color = c_blue;      break;
+    case "alerted":      state_color = c_maroon;    break;
+}
 
+draw_set_color(state_color);
+draw_text(x, y + gangsterHeight * 0.6, string_upper(current_state));
+
+draw_text(x, y + gangsterHeight * 1, "Captures: " + string_upper(global.resupply_tile_limit - captures_since_resupply));

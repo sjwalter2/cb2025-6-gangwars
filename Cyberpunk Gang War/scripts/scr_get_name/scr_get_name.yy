@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_get_name",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"gang",
+    "path":"folders/Scripts/gang.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

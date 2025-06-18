@@ -8,7 +8,7 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
     if (gangster.is_moving || gangster.move_queued) exit;
 
     // Prevent duplicate claim
-    if (ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) exit;
+	if (!gangster.is_intervening_path && ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) exit;
 
     var tile = global.hex_grid[target_tile_index];
 
@@ -47,6 +47,13 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
 		gangster.is_moving = true;
 		gangster.state = "moving"
 	}
+	var key = scr_axial_key(tile.q, tile.r);
+
+	// Prevent duplicate reservation
+	if (!gangster.is_intervening_path && ds_map_exists(global.tile_reservations, key)) exit;
+
+	// Mark this tile as reserved
+	global.tile_reservations[? key] = gangster.id;
 
 
     // Claim this tile index
