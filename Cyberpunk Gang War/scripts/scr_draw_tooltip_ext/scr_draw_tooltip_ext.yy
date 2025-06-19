@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_draw_tooltip_ext",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"UI",
+    "path":"folders/Scripts/UI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

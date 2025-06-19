@@ -12,7 +12,8 @@ function scr_get_targetable_tiles(gang_name) {
             for (var d = 0; d < 6; d++) {
                 var nq = tile.q + directions[d][0];
                 var nr = tile.r + directions[d][1];
-                var neighbor_key = string(nq) + "," + string(nr);
+                var neighbor_key = scr_axial_key(nq, nr);
+
 
                 if (!ds_map_exists(visited_keys, neighbor_key) && ds_map_exists(global.hex_lookup, neighbor_key)) {
                     var j = global.hex_lookup[? neighbor_key];

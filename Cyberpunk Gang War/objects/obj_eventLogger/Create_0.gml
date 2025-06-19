@@ -1,7 +1,3 @@
 messages = [];
-max_visible = 15; // configurable number of visible messages
-
-
-
-
-
+defeat_messages = [];
+max_visible = 15;

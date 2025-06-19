@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_check_gang_defeated",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_check_gang_defeated",
+  "parent":{
+    "name":"gang",
+    "path":"folders/Scripts/gang.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

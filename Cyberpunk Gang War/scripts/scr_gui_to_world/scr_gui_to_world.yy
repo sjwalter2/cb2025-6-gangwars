@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_gui_to_world",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"utility and map",
+    "path":"folders/Scripts/utility and map.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

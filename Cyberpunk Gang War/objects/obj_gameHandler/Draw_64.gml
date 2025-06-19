@@ -8,6 +8,8 @@ var yy = 10;
 var line_height = 18;
 
 draw_text(10, yy, "FPS: " + string(fps)); yy += line_height;
+draw_text(10, yy, "Worst FPS (10s): " + string(global.fps_worst_10s)); yy += line_height;
+draw_text(10, yy, "Avg FPS (10s): " + string_format(global.fps_avg_10s, 0, 1)); yy += line_height;
 draw_text(10, yy, "Speed: " + string(global.currentSpeed)); yy += line_height;
 draw_text(10, yy, "Time: " + string(global.time)); yy += line_height;
 draw_text(10, yy, "Total Ticks: " + string(totalTicks)); yy += line_height;

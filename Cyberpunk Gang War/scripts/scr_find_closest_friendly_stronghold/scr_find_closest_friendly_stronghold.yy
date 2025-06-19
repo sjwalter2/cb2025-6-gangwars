@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_find_closest_friendly_stronghold",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_find_closest_friendly_stronghold",
+  "parent":{
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

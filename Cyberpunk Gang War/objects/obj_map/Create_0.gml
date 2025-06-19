@@ -123,7 +123,9 @@ global.hex_lookup = ds_map_create();
 for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
     var key = string(tile.q) + "," + string(tile.r);
-    ds_map_add(global.hex_lookup, key, i);
+    ds_map_add(global.hex_lookup, scr_axial_key(tile.q, tile.r), i);
+	show_debug_message("Hex lookup key: " + string(scr_axial_key(tile.q, tile.r)));
+
 }
 
 // === STRONGHOLD SPAWNING ===
@@ -174,6 +176,11 @@ repeat (stronghold_target_count) {
             stronghold.tile_index = tile_index;
 			stronghold.q = tile.q;
 			stronghold.r = tile.r;
+			// Mark the hex grid tile as a stronghold
+			var tile_ref = global.hex_grid[tile_index];
+			tile_ref.type = "stronghold";
+			global.hex_grid[tile_index] = tile_ref;
+
             array_push(global.stronghold_instances, stronghold);
             array_push(placed_stronghold_tiles, tile_index);
             placed = true;

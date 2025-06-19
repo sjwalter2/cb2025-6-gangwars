@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_alert_closest_defender",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_alert_closest_defender",
+  "parent":{
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

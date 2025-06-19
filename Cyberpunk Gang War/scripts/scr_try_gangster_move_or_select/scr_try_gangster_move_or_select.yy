@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_try_gangster_move_or_select",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

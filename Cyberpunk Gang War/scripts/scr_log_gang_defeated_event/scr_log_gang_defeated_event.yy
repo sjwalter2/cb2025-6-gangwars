@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_log_gang_defeated_event",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_log_gang_defeated_event",
+  "parent":{
+    "name":"UI",
+    "path":"folders/Scripts/UI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

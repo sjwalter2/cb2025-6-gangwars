@@ -20,7 +20,7 @@ current_tile = { q: 0, r: 0 }; // Must be updated in Step or by spawn logic
 path = [];              // Will hold list of tile indices
 path_progress = 0;      // Which tile in the path we're headed to
 move_timer = 0;         // Countdown to move completion
-state = "idle";         // ["idle", "moving", "capturing", "resupplying"]
+state = "idle";         // state = ["idle", "thinking", "deciding", "moving", "capturing", "resupplying", "waiting"]
 start_tile_index = -1;  // Where we return after capturing
 
 var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
@@ -58,8 +58,20 @@ hoverTileQ = 0;
 hoverTileR = 0;
 hoverPath = [];
 
+alert_path = [];
+alert_target_tile_index = -1;
+is_intervening_path = false;
+alerted_by = noone;
+
+move_ticks_elapsed = 0;
+move_total_ticks = 0;
 capture_ticks_remaining = 0;
 capture_tile_index = -1;
+
+captures_since_resupply = 0;
+resupply_ticks_remaining = 0;
+reserved_stronghold_key = undefined;
+
 
 
 // Path following support
@@ -104,106 +116,43 @@ function array_shift(arr) {
 
 
 function tick() {
-		if (state == "capturing") {
-	    capture_ticks_remaining--;
+    if (state == "moving" && move_total_ticks <= 0) {
+        show_debug_message("ERROR: Gangster " + name + " has invalid move_total_ticks!");
+        is_moving = false;
+        move_target = undefined;
+        state = "idle";
+        exit;
+    }
 
-	    // Flash effect (optional)
-	    flash_timer = current_time + 200;
-	    flash_type = "capture";
+    if (state == "capturing") {
+        scr_tick_gangster_capturing(self);
+        return;
+    }
 
-	    if (capture_ticks_remaining <= 0) {
-	        scr_claim_tile(capture_tile_index, owner);
-
-	        // Reset capture state
-
-	        capture_tile_index = -1;
-	        capture_ticks_remaining = 0;
-	        flash_timer = current_time + 300;
-	        flash_type = "complete";
-
-	        state = "idle";
-	    }
-
+    if (state == "alerted") {
+        scr_tick_gangster_alerted(self);
+        return;
+    }
+	if (state == "intervening") {
+	    scr_tick_gangster_intervening(self);
 	    return;
 	}
+    if (state == "resupplying") {
+        scr_tick_gangster_resupplying(self);
+        exit;
+    }
 
-    if (move_queued) {
+    if (state == "waiting" && move_queued) {
         move_queued = false;
         is_moving = true;
-        return; // Start next tick
+        state = "moving";
+        return;
+    } else if (state == "waiting" && !move_queued) {
+        state = "moving";
     }
 
     if (is_moving) {
-        // Flash and position updates
-        flash_timer = current_time + 150;
-        flash_type = "move";
-
-        var t = move_ticks_elapsed / move_total_ticks;
-        var start = move_target.start_pos;
-        var target = move_target.target_pos;
-
-        x = lerp(start.x, target.x, t);
-        y = lerp(start.y, target.y, t);
-
-        move_ticks_elapsed++;
-        first_tick_bonus = 0;
-
-        if (move_ticks_elapsed >= move_total_ticks) {
-            // Snap to final position
-            x = target.x;
-            y = target.y;
-
-            // Release claimed tile
-            var idx = ds_list_find_index(global.claimed_tile_indices, move_target.tile_index);
-            if (idx != -1) ds_list_delete(global.claimed_tile_indices, idx);
-
-            is_moving = false;
-            move_target = undefined;
-            move_ticks_elapsed = 0;
-            move_total_ticks = 0;
-
-            flash_timer = current_time + 300;
-            flash_type = "arrive";
-
-            // === Check for next step ===
-			if (has_followup_move && array_length(move_path) > 0) {
-			    var next_tile_index = array_shift(move_path);
-			    if (array_length(move_path) == 0) has_followup_move = false;
-			    scr_gangster_start_movement(self, next_tile_index, 0);
-			} else {
-			    // No more moves — check for capture
-			    var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
-				var key = string(axial.q) + "," + string(axial.r);
-
-				if (!ds_map_exists(global.hex_lookup, key)) exit;
-				var final_tile_index = global.hex_lookup[? key];
-				var tile = global.hex_grid[final_tile_index];
-
-				if (tile.owner != owner.name) {
-				    state = "capturing";
-
-				    var move_cost = global.cost_unclaimed;
-				    if (!is_undefined(tile.owner)) move_cost = global.cost_enemy;
-
-				    capture_ticks_remaining = move_cost * 2;
-				    capture_tile_index = final_tile_index;
-
-				    // 🟡 Trigger flickering
-				    var tile_ref = global.hex_grid[capture_tile_index];
-				    tile_ref.flicker_enabled = true;
-				    tile_ref.flicker_timer = current_time + irandom_range(FLICKER_TOGGLE_MIN, FLICKER_TOGGLE_MAX);
-				    tile_ref.flicker_next = current_time + 1000; // minimum delay between full cycles
-				    tile_ref.flicker_on = false;
-				    tile_ref.pending_color = scr_get_gang_color(owner.name);
-				    tile_ref.pending_owner = owner.name;
-				    global.hex_grid[capture_tile_index] = tile_ref;
-				}
-
-				else {
-			        state = "idle";
-			    }
-			}
-
-        }
+        scr_tick_gangster_moving(self);
+        exit;
     }
 }

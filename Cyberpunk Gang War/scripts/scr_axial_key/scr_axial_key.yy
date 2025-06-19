@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_axial_key",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_axial_key",
+  "parent":{
+    "name":"pathfinding",
+    "path":"folders/Scripts/pathfinding.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -3,7 +3,11 @@
 for (var i = 0; i < array_length(global.hex_grid); i++) {
     var tile = global.hex_grid[i];
 
-    if (tile.flicker_enabled) {
+    var key = scr_axial_key(tile.q, tile.r);
+	var occupied = ds_map_exists(global.gangster_tile_map, key);
+
+	if (tile.flicker_enabled && occupied) {
+
 
 	if (current_time >= tile.flicker_timer) {
 	    tile.flicker_on = !tile.flicker_on;

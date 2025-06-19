@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_hex_a_star_path",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"pathfinding",
+    "path":"folders/Scripts/pathfinding.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
