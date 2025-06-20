@@ -8,7 +8,7 @@ testPing = false
 money = 0
 taxRate = 0.5
 
-//todo: set pawn cost to 0 for now until we can guarantee gangs start with businesses
+//todo: set pawn cost to 0 for now until we can guarantee gangs can claim businesses
 pawnCost = 0
 //pawnCost = 2
 

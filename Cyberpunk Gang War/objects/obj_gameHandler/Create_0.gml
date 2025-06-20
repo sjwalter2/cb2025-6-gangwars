@@ -63,3 +63,5 @@ function tick() {
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
 }
+
+quest_handler = instance_create_layer(1,1,"UI",obj_questHandler)

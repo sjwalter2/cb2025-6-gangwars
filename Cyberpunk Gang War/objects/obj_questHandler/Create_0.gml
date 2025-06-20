@@ -1,48 +1,97 @@
-//TODO: write script that pops up the dialogue
-//TODO: create quest script group
+//-----------------------------------------------------\\
+/*
+
+For a tutorial on how to add quests, please see the tutorial in script "scr_sample_quest"
+
+obj_questHandler is in charge of creating obj_quest instances
+obj_quest creates dialogue boxes for players to make choices; it then is assigned a script, which it proceeds to run every Step
+obj_buttonQuest is created by obj_quest; it's given text and a function argument called "func" (like a mini function name? idk), which gets passed into obj_quest
+
+Because text is memory-cheap, at game start, we load all above quest details into a ds_list, which gets ds_list_shuffle'd
+When a quest is required, we pop a value from the ds_list and create an obj_quest with the same.
+Note: we create an obj_quest because some quests are not instantaneous/have longterm effects/require player to make some effects happen.1
+
+*/
+
+
+quests_list = ds_list_create()
+
+var quests = file_text_open_read(working_directory + "quests.txt");
+while (!file_text_eof(quests))
+{
+	ds_list_add(quests_list,file_text_read_string(quests));
+	file_text_readln(quests);
+}
+file_text_close(quests);
+
 //TODO: create a couple basic quest script templates
 //TODO: create a method to get player's gang specifically, set to a variable
 //TODO: make a way to quickly test scripts without relying on quest spawner
 //TODO: make a quick way to create json quests
+//TODO: make a quest journal for completed events?
+//TODO: make the quests time out after a while so the player has to choose fast
+
+pause_on_quest = true
 
 with(obj_gameHandler)
 {
 	ds_list_add(tickers,other)	
 }
 
+min_ticks_between_quests = 8
+current_tick_count = 0
+base_quest_chance=0.20
+quest_chance_increase_amount = 0.05 //Percent increase chance of a quest for each tick that goes by above the min
+
 function tick()
 {
-	//TODO: check if it's been long enough since the last quest
-	//TODO: randomize chance of quest to make it a non-regular cadence
-	//TODO: pause game
-	//TODO: pop a value from ds_list quests
-	//TODO: parse the json into an array of values
-	//TODO: pass key:value's to the obj_quest
-	//TODO: pass player gang to the obj_quest so it knows what gang is player-controlled
-	//TODO: when chained quests are created, we'll need to revisit this!
+	if(ds_list_size(quests_list) <= 0)
+	{
+		show_debug_message("Ran out of new quests. Have a nice day!")
+		exit;
+	}
+	current_tick_count += 1
+	
+	//Make sure no quest prompts are already active
+	if instance_number(obj_buttonQuest) > 0
+		exit;
+	
+	if current_tick_count >= min_ticks_between_quests
+	{
+		var test_for_quest = base_quest_chance + (current_tick_count-min_ticks_between_quests)*quest_chance_increase_amount
+		var _rand = random(1)
+		if _rand < test_for_quest //We quest!
+		{
+			current_tick_count = 0
+			
+			//Either pause game, or set it to the slowest non-paused speed
+			if(pause_on_quest)
+			{
+				with(obj_gameHandler)
+				{
+					nextSpeed = 0
+				}
+			} else
+			{
+				with(obj_gameHandler)
+				{
+					nextSpeed = 1
+				}	
+			}
+			
+			//Choose a random quest from the list
+			var _questNum = irandom(ds_list_size(quests_list)-1)
+			var _questJSON = json_parse(ds_list_find_value(quests_list,_questNum))
+			ds_list_delete(quests_list,_questNum)
+			
+			//Create the quest with the associated JSON
+			instance_create_layer(x,y,"UI",obj_quest,_questJSON)
+			
+			//TODO: pass player gang to the obj_quest so it knows what gang is player-controlled		
+		}
+		else
+		{
+			exit;
+		}
+	}
 }
-
-///JSON FILE FORMAT
-/*
-Quests are saved in datafiles/quests.txt
-Each line is a separate JSON object, with the following entries:
-
- name: the quest's name, string, to be displayed at the top
- image: what sprite to use. might be a sprite name, or might be an image_index within a single sprite - to be determined
- description: string containing the quest text
- button1: text for button 1
- button2 (optional): text for button 2
- button3 (optional): text for button 3
- button4 (optional): text for button 4
- script1: name of script to run if button1 is pressed
- script2 (optional): name of script to run if button2 is pressed
- script3 (optional): name of script to run if button3 is pressed
- script4 (optional): name of script to run if button4 is pressed
-
-Because text is memory-cheap, at game start, we load all above quest details into a ds_list, which gets ds_list_shuffle'd
-When a quest is required, we pop a value from the ds_list and create an obj_quest with the same.
-Note: we create an obj_quest because some quests are not instantaneous/have longterm effects/require player to make some effects happen.
-obj_quest destroys itself when the quest is complete.
-//TODO: make a quest journal for completed events?
-
-*/

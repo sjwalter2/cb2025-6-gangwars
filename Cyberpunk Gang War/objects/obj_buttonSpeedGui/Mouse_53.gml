@@ -23,5 +23,7 @@ if (device_mouse_x_to_gui(0) > guiX && device_mouse_x_to_gui(0) < guiX+sprite_wi
 	{
 		nextSpeed = _newSpeed
 	}
+	
+	
 	global.buttonPressed = true
 }

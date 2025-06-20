@@ -33,5 +33,7 @@ if shelfActive
 			}
 		}
 		global.buttonPressed = true
+		
+	effect_create_layer("UI", ef_star,device_mouse_x_to_gui(0),device_mouse_y_to_gui(0), 2, c_yellow);
 	}
 }
