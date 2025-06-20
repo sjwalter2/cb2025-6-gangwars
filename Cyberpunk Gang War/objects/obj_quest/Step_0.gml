@@ -8,10 +8,11 @@ if(displayReady)
 		display_outer_rect_direction = display_outer_rect_direction*-1
 	}
 }
-
-
-//If quest is activated, execute whatever script is associated with this quest
 if(is_method(myQuest))
 {
-	myQuest(func)
+	if(func != "setup")
+	{
+		//If quest is activated, execute whatever script is associated with this quest
+		myQuest(func)
+	}
 }

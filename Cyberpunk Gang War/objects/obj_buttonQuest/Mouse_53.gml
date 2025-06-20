@@ -8,19 +8,8 @@ if shelfActive
 
 		with(parent)
 		{
-			//Attach the script to the quest
-			var script_to_run = asset_get_index(runscript)
-			if(script_to_run != -1)
-			{
-				myQuest = method(self,script_to_run)
-			
-				//The button that was pressed dictates what happens in the script
-				func = other.myFunction
-			}
-			else
-			{
-				show_message("Attempted to execute an event that does not exist... " + string(runscript))
-			}
+			//The button that was pressed dictates what happens in the script
+			func = other.myFunction
 		
 			//Quest dialogue box can be closed
 			displayReady = false

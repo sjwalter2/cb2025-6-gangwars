@@ -4,14 +4,33 @@
 function scr_quest_hire_kid(_func){
 	switch _func {
 		case "hire":
-			show_message("You chose to hire the kid")
+			with(obj_eventLogger)
+			{
+				show_debug_message("You chose to hire the kid");
+			}
+			instance_destroy()
 			break;		
 		case "steal":
-			show_message("You chose to steal from the kid")
+			with(obj_eventLogger)
+			{
+				show_debug_message("You chose to steal from the kid");
+			}
+			instance_destroy()
 			break;
 		case "kill":
-			show_message("You chose to kill the kid")
+			with(obj_eventLogger)
+			{
+				show_debug_message("You chose to kill the kid");
+			}
+			instance_destroy()
+			break;
+		case "setup":
+			if(playerGang != noone)
+			{
+				description = string_replace(description,"$GANG",playerGang.name)
+			}
+
+
 			break;
 	}
-	instance_destroy()
 }

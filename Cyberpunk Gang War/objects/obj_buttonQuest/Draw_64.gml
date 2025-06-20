@@ -6,5 +6,5 @@ if(shelfActive)
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
 	draw_set_alpha(1);
-	draw_text(guiX, guiY+sprite_height+5, text);
+	draw_text_ext(guiX, guiY+sprite_height+5, text,16, camera_get_view_width(view_camera[0])/4);
 }

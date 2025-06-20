@@ -3,6 +3,8 @@
 owner = noone //leave as noone; this is only used for compatibility with scripts
 boss = noone //leave as noone; this is only used for compatibility with scripts
 
+autonomous = true; // Set to false for player-controlled gangsters
+
 testPing = false
 
 money = 0

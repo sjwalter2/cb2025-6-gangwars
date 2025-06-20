@@ -184,6 +184,9 @@ for (var i = 0; i < array_length(global.gang_territories); i++) {
 	new_gang.name = gang.name;
 	new_gang.owned = gang.owned;
 	scr_init_gang(new_gang, gang.name, gang.owned);
+	if i == 0 {
+		new_gang.autonomous = false
+	}
 }
 
 

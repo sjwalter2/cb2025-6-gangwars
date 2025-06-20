@@ -1,59 +1,31 @@
-/// @description Display "dialogue box" and create all relevant choice buttons
+/// @description Run "setup" case
 
-var _width = camera_get_view_width(view_camera[0])
-var _height = camera_get_view_height(view_camera[0])
+playerGang = noone
 
-
-if(button1 != "")
+with(obj_gang)
 {
-	with instance_create_layer(_width*0.333,_height*0.555,"questButtons",obj_buttonQuest)
+	if !autonomous
 	{
-		parent = other
-		myFunction = other.func1
-		text = other.button1
-		shelfActive = true
-		
-		guiX = x
-		guiY = y
-	}
-}
-if(button2 != "")
-{
-	with instance_create_layer(_width*0.666,_height*0.555,"questButtons",obj_buttonQuest)
-	{
-		parent = other
-		myFunction = other.func2
-		text = other.button2
-		shelfActive = true
-		guiX = x
-		guiY = y
-	}
-}
-if(button3 != "")
-{
-	with instance_create_layer(_width*0.333,_height*0.666,"questButtons",obj_buttonQuest)
-	{
-		parent = other
-		myFunction = other.func3
-		text = other.button3
-		shelfActive = true
-		
-		guiX = x
-		guiY = y
-	}
-}
-if(button4 != "")
-{
-	with instance_create_layer(_width*0.666,_height*0.666,"questButtons",obj_buttonQuest)
-	{
-		parent = other
-		myFunction = other.func4
-		text = other.button4
-		shelfActive = true
-		
-		guiX = x
-		guiY = y
+		other.playerGang = self
 	}
 }
 
-displayReady = true
+//Attach the script to the quest
+var script_to_run = asset_get_index(runscript)
+if(script_to_run != -1)
+{
+	myQuest = method(self,script_to_run)
+}
+else
+{
+	show_message("Attempted to execute an event that does not exist... " + string(runscript))
+}
+
+//If quest is activated, execute setup case
+if(is_method(myQuest))
+{
+	myQuest("setup")
+}
+
+alarm[1] = 1
+
