@@ -7,13 +7,26 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
 
     if (!instance_exists(gangster)) exit;
     if (gangster.move_queued) exit;
-
+	var tile = global.hex_grid[target_tile_index];
     // Prevent duplicate claim
-	if (!gangster.is_intervening_path && 
-	ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) 
-	exit;
+	if (!gangster.is_intervening_path && ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) {
+    if (tile.type != "stronghold") {
+        exit;
+    } else {
+        var is_friendly_claim = false;
 
-    var tile = global.hex_grid[target_tile_index];
+	        with (obj_gangster) {
+	            if (is_struct(move_target) && variable_struct_exists(move_target, "tile_index")) {
+	                if (move_target.tile_index == target_tile_index && owner.name == gangster.owner.name) {
+	                    is_friendly_claim = true;
+	                }
+	            }
+	        }
+
+	        if (!is_friendly_claim) exit;
+	    }
+	}
+    
 
     var move_cost = global.cost_unclaimed;
     if (tile.owner == gangster.owner.name) {

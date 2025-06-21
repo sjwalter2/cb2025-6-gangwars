@@ -7,22 +7,36 @@ function scr_find_closest_stronghold(gang_name, x, y, require_friendly) {
     var best_key = undefined;
 
     var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
-	if(stuck_waiting > 3)
-		var k = 1;
+
     for (var i = 0; i < array_length(global.hex_grid); i++) {
         var tile = global.hex_grid[i];
-        if (tile.type == "stronghold" ) {
-            if (require_friendly && tile.owner != gang_name) continue;
-            if (!require_friendly && tile.owner == gang_name) continue;
-			// Skip if this tile is in the claimed tiles list
-            if (ds_list_find_index(global.claimed_tile_indices, i) != -1) continue;
+        if (tile.type != "stronghold") continue;
 
+        if (require_friendly && tile.owner != gang_name) continue;
+        if (!require_friendly && tile.owner == gang_name) continue;
 
-            var d = scr_axial_distance(axial.q, axial.r, tile.q, tile.r);
-            if (d < min_dist) {
-                min_dist = d;
-                best_key = scr_axial_key(tile.q, tile.r);
+        // Check if tile is in claimed list
+        var is_claimed = ds_list_find_index(global.claimed_tile_indices, i) != -1;
+        var allowed = true;
+
+        if (is_claimed) {
+            allowed = false;
+
+            with (obj_gangster) {
+                if (is_struct(move_target) && variable_struct_exists(move_target, "tile_index")) {
+                    if (move_target.tile_index == i && owner.name == gang_name) {
+                        allowed = true;
+                    }
+                }
             }
+        }
+
+        if (!allowed) continue;
+
+        var d = scr_axial_distance(axial.q, axial.r, tile.q, tile.r);
+        if (d < min_dist) {
+            min_dist = d;
+            best_key = scr_axial_key(tile.q, tile.r);
         }
     }
 

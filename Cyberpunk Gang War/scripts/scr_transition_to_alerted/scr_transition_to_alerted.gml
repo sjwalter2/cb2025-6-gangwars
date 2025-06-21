@@ -9,6 +9,6 @@ function scr_transition_to_alerted(gangster) {
     gangster.move_elapsed = 0;
     gangster.is_intervening_path = true;
     gangster.state = "moving";
-
-    scr_gangster_start_movement(gangster, array_shift(gangster.alert_path), false);
+	var next_tile_index = array_shift(gangster.alert_path)
+    scr_gangster_start_movement(gangster, next_tile_index , false);
 }

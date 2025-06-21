@@ -10,7 +10,7 @@ if (mouse_check_button_pressed(mb_left)) {
 			if (ds_list_size(global.selected) > 0) {
 				var inst = global.selected[| 0];
 				if (instance_exists(inst) && inst.object_index == obj_gangster) {
-					move_attempted = scr_try_gangster_move_or_select(click_axial.q, click_axial.r);
+					//move_attempted = scr_try_gangster_move_or_select(click_axial.q, click_axial.r);
 				}
 			}
 
