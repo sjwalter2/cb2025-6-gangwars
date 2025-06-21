@@ -78,7 +78,9 @@ function tick()
 			}
 			
 			//Choose a random quest from the list
-			var _questNum = irandom(ds_list_size(quests_list)-1)
+//			var _questNum = irandom(ds_list_size(quests_list)-1)
+//TODO
+			var _questNum = ds_list_size(quests_list)-1
 			var _questJSON = json_parse(ds_list_find_value(quests_list,_questNum))
 			ds_list_delete(quests_list,_questNum)
 			

@@ -37,6 +37,8 @@ function scr_sample_quest(_func){
 			//If you have nothing you want to set up, it's a good idea to explicitly set a "setup" case anyway.
 			//This also prevents the script running while the player waits to make a choice
 			//Otherwise your "default" case will run, which you might not want!
+			//Also note - after the first Step, if you have a "default" case, it will start running before the user has even made a choice.
+			//To avoid this, set func to a value that has a case - an empty "confirm" case is a good idea
 			break;
 		
 		case "Accept":
@@ -82,8 +84,8 @@ function scr_sample_quest(_func){
 			break;
 			
 			
-		//This is a special case - the quest will NEVER execute the script when func="confirm". It should only be used when creating a dialogue box
-		//For example see case "Succeeded" above, or scr_quest_hire_kid for another example. You can leave out this case entirely as well.
+		//This is a special case - the quest will NEVER execute the script when func="confirm". It should only be used when creating a dialogue box that allows the user to set func
+		//For example see case "Succeeded" above, or scr_quest_hire_kid for another example. You can leave out this case entirely as well, but if you do, "default" case will always run (if set) after the first step
 		case "confirm":
 			break;
 
