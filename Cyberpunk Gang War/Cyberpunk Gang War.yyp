@@ -124,6 +124,7 @@
     {"id":{"name":"scr_neutralize_hex_stronghold","path":"scripts/scr_neutralize_hex_stronghold/scr_neutralize_hex_stronghold.yy",},},
     {"id":{"name":"scr_neutralize_hex","path":"scripts/scr_neutralize_hex/scr_neutralize_hex.yy",},},
     {"id":{"name":"scr_pixel_to_axial","path":"scripts/scr_pixel_to_axial/scr_pixel_to_axial.yy",},},
+    {"id":{"name":"scr_quest_corify_hex","path":"scripts/scr_quest_corify_hex/scr_quest_corify_hex.yy",},},
     {"id":{"name":"scr_quest_hire_kid","path":"scripts/scr_quest_hire_kid/scr_quest_hire_kid.yy",},},
     {"id":{"name":"scr_quest_peony_gambler","path":"scripts/scr_quest_peony_gambler/scr_quest_peony_gambler.yy",},},
     {"id":{"name":"scr_quest_territory_stash","path":"scripts/scr_quest_territory_stash/scr_quest_territory_stash.yy",},},

@@ -1,4 +1,4 @@
-
+//TODO - make the script ONLY neutralize hexes that are adjacent to an "outer" hex
 function scr_neutralize_hex_stronghold(_func){
 	switch _func {
 		//=============================================================================================================

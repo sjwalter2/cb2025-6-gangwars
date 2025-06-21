@@ -21,6 +21,7 @@ function scr_quest_territory_stash(_func){
 					guiX = x
 					guiY = y
 				}
+				outer_tile.brightness = oldBrightness
 			} else {
 				outer_tile_blink_count += 1
 				if outer_tile_blink_count == 20 {
@@ -28,7 +29,7 @@ function scr_quest_territory_stash(_func){
 					outer_tile_blinks_total += 1
 					if(outer_tile_blinks_total % 2)
 					{
-						outer_tile.color = make_color_rgb(20, 20, 20);
+						outer_tile.color = oldColor;
 					} else
 					{
 						outer_tile.color = make_color_rgb(220, 220, 20);
@@ -66,11 +67,17 @@ function scr_quest_territory_stash(_func){
 				instance_destroy();
 				exit;
 			} else {
-				
+				oldColor = outer_tile.color
 				outer_tile.color = make_color_rgb(220, 220, 20);
+				oldBrightness = outer_tile.brightness
+				outer_tile.brightness = 1
 				outer_tile_blink_count = 0
 				outer_tile_blinks_total = 0
 			}
+			break;
+		//=============================================================================================================
+		case "end":
+			instance_destroy()
 			break;
 	}
 }
