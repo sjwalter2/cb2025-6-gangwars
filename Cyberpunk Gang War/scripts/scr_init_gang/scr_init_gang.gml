@@ -50,10 +50,11 @@ with (_gang) {
 
     for (var i = 0; i < array_length(spawn_positions); i++) {
         var pos = spawn_positions[i];
-        var gangster = instance_create_depth(pos[0], pos[1], 0, obj_gangster);
+        var gangster = instance_create_layer(pos[0], pos[1], "Instances", obj_gangster);
 
         with (gangster) {
             owner = _gang;
+			myGang = _name
             name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"), ord("Z")));
             sprite_head_index = irandom(sprite_get_number(spr_gangsterHead) - 1);
             image_blend = make_color_rgb(irandom(255), irandom(255), irandom(255));

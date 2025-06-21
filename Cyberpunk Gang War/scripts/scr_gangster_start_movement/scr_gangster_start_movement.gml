@@ -3,29 +3,37 @@
 /// @param gangster - the gangster instance
 /// @param target_tile_index - index into global.hex_grid
 
-function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
+function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1, allow_claim_override=false){
+
 
     if (!instance_exists(gangster)) exit;
     if (gangster.move_queued) exit;
+	if (gangster.state = "intervening") 
+		exit;
 	var tile = global.hex_grid[target_tile_index];
     // Prevent duplicate claim
-	if (!gangster.is_intervening_path && ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) {
-    if (tile.type != "stronghold") {
-        exit;
-    } else {
-        var is_friendly_claim = false;
+	if (ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) {
+    var is_override_target = (allow_claim_override && gangster.alert_active && gangster.alert_tile_index == target_tile_index);
+    
+	    if (!is_override_target) {
+	        if (tile.type != "stronghold") {
+	            exit;
+	        } else {
+	            var is_friendly_claim = false;
 
-	        with (obj_gangster) {
-	            if (is_struct(move_target) && variable_struct_exists(move_target, "tile_index")) {
-	                if (move_target.tile_index == target_tile_index && owner.name == gangster.owner.name) {
-	                    is_friendly_claim = true;
+	            with (obj_gangster) {
+	                if (is_struct(move_target) && variable_struct_exists(move_target, "tile_index")) {
+	                    if (move_target.tile_index == target_tile_index && owner.name == gangster.owner.name) {
+	                        is_friendly_claim = true;
+	                    }
 	                }
 	            }
-	        }
 
-	        if (!is_friendly_claim) exit;
+	            if (!is_friendly_claim) exit;
+	        }
 	    }
 	}
+
     
 
     var move_cost = global.cost_unclaimed;
@@ -66,7 +74,7 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
 	var key = scr_axial_key(tile.q, tile.r);
 
 	// Prevent duplicate reservation
-	if (!gangster.is_intervening_path && ds_map_exists(global.tile_reservations, key)) exit;
+	if (ds_map_exists(global.tile_reservations, key)) exit;
 
 	// Mark this tile as reserved
 	global.tile_reservations[? key] = gangster.id;

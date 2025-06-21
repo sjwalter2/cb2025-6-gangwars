@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_alert_gang_for_intervention",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_alert_gang_for_intervention",
+  "parent":{
+    "name":"gang",
+    "path":"folders/Scripts/gang.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

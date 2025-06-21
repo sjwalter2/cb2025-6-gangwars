@@ -1,4 +1,4 @@
-if (mouse_check_button_pressed(mb_left)) {
+if (!global.inputLocked && mouse_check_button_pressed(mb_left)) {
 	if (instance_exists(obj_map)) { // Make sure the map exists
 		var click_axial = scr_pixel_to_axial(mouse_x - global.offsetX, mouse_y - global.offsetY);
 

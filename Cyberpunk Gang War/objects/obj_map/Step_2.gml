@@ -1,3 +1,6 @@
+if(global.inputLocked) exit;
+else
+{
 // === ZOOM CONTROL (Mouse Wheel Up/Down) ===
 if (mouse_wheel_down()) {
     global.cam_zoom_index = max(0, global.cam_zoom_index - 1);
@@ -58,3 +61,4 @@ global.cam_pos_y = lerp(global.cam_pos_y, global.cam_target_y, 0.25);
 var cam = view_camera[0];
 camera_set_view_size(cam, view_w, view_h);
 camera_set_view_pos(cam, global.cam_pos_x - half_w, global.cam_pos_y - half_h);
+}

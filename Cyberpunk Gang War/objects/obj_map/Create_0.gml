@@ -172,7 +172,7 @@ repeat (stronghold_target_count) {
 
         if (!too_close) {
             var pos = scr_axial_to_pixel(tile.q, tile.r);
-            var stronghold = instance_create_layer(pos.px + global.offsetX, pos.py + global.offsetY, "Instances", obj_stronghold);
+            var stronghold = instance_create_layer(pos.px + global.offsetX, pos.py + global.offsetY, "Map_Objects", obj_stronghold);
             stronghold.tile_index = tile_index;
 			stronghold.q = tile.q;
 			stronghold.r = tile.r;
@@ -234,7 +234,7 @@ repeat (stronghold_target_count) {
 
         if (!too_close) {
             var pos = scr_axial_to_pixel(tile.q, tile.r);
-            var business = instance_create_layer(pos.px + global.offsetX, pos.py + global.offsetY, "Instances", obj_business);
+            var business = instance_create_layer(pos.px + global.offsetX, pos.py + global.offsetY, "Map_Objects", obj_business);
             business.tile_index = tile_index;
 			business.q = tile.q;
 			business.r = tile.r;

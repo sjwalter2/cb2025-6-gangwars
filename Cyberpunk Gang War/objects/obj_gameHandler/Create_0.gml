@@ -17,6 +17,16 @@ global.fps_worst_10s = fps; // Start with current fps
 global.fps_avg_10s = fps;
 
 
+global.intervene_fail_chance_with_capture = 0.3;
+global.intervene_fail_chance_without_capture = 0.7;
+global.resupply_tile_limit = 2;
+
+global.currentSpeedBeforeBattle = 1;
+global.pendingBattles = [];
+global.activeBattle = undefined;
+global.inputLocked = false;
+
+
 //Initialize GUI flags and objects
 global.displayGangsterStatsFull = false
 global.displayGangStatsFull = true
