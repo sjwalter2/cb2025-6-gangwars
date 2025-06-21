@@ -12,7 +12,8 @@ taxRate = 0.5
 
 //todo: set pawn cost to 0 for now until we can guarantee gangs can claim businesses
 pawnCost = 0
-//pawnCost = 2
+//pawnCost = 2 //ongoing pawn salary
+hirePawnCost = 10 //cost of hiring new pawns
 
 notoriety = 0 //Increases a lot of stuff. This is in percent - so if notoriety=5, a lot of stuff is increased by 5%
 gPower = 0 //Abstract representation of firepower, tech, etc - ability to use violence as a force.
@@ -25,17 +26,8 @@ gangType =  gangTypeList[irandom(array_length(gangTypeList)-1)]
 
 roster = ds_list_create()
 
-function tick() {
-	
-	//Must pay pawns their salary!
-	money -= pawns*pawnCost
-	//todo - uncomment the below once all gangs have businesses? TBD
-	//money -= 10 //placeholder - representing general gang cost maintenance. likely to remove or replace this.
-	
-	if(money < 0)
-	{
-		money = 0
-
+function lose_pawn()
+{
 		//Start losing pawns if the gang is out of cash to pay them
 
 		//Make sure we take pawns that are unassigned before taking pawns from other sources
@@ -101,7 +93,20 @@ function tick() {
 			pawns = 0
 			show_debug_message("Somehow, we tried to charge Pawn salary, but there were no pawns!")
 		}
+	
+}
 
+function tick() {
+	
+	//Must pay pawns their salary!
+	money -= pawns*pawnCost
+	//todo - uncomment the below once all gangs have businesses? TBD
+	//money -= 10 //placeholder - representing general gang cost maintenance. likely to remove or replace this.
+	
+	if(money < 0)
+	{
+		money = 0
+		lose_pawn()
 	}
 }
 

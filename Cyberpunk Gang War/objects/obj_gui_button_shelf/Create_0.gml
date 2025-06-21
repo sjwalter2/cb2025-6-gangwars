@@ -23,8 +23,11 @@ currentParentShelf = displayShelf
 
 function changeShelf(shelf)
 {
-	with(obj_buttonParentGui) {
-		shelfActive = false
+	for(var i = 0; i < array_length(currentShelf); i+= 1)
+	{
+		with(currentShelf[i]) {
+			shelfActive = false
+		}
 	}
 	currentShelf = shelf
 }

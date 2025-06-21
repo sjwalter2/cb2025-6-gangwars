@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_neutralize_hex",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_neutralize_hex",
+  "parent":{
+    "name":"quests",
+    "path":"folders/Scripts/quests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
