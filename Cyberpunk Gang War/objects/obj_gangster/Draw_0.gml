@@ -77,6 +77,16 @@ function draw_gangster_variant(xp, yp, size) {
 draw_gangster_variant(x, y, global.hex_size);
 //draw_text(x,y+40,name)
 //draw_text(x,y+60,"Cash: " + string(money))
+draw_set_font(bigfont)
+if (alert_active) {
+    draw_set_color(c_red);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_bottom);
+	
+    draw_text(x, y - gangsterHeight * 0.6, "!");
+}
+
+draw_set_font(smallfont)
 var state_color = c_white;
 var current_state = state;
 
@@ -91,7 +101,6 @@ switch (current_state) {
     case "capturing":    state_color = c_red;       break;
     case "resupplying":  state_color = c_fuchsia;   break;
     case "intervening":  state_color = c_blue;      break;
-    case "alerted":      state_color = c_maroon;    break;
 }
 
 draw_set_color(state_color);

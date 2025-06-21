@@ -45,6 +45,7 @@ if (global.currentSpeed > 0) {
 global.selection_cooldown = false;
 
 // Toggle pause
+if (global.inputLocked) exit;
 if (keyboard_check_pressed(vk_space)) {
     if (nextSpeed == 0)
         nextSpeed = 1;

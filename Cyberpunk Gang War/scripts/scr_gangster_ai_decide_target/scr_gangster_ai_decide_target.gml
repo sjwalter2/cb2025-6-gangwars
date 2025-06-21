@@ -14,8 +14,6 @@ function scr_gangster_ai_decide_target(gangster) {
 	var GANG_AI_STRONGHOLD_SOFT_CHANCE = 0.10;
 	var GANG_AI_STRONGHOLD_COST_MIN = 6;
 	var GANG_AI_STRONGHOLD_COST_MAX = 15;
-	if(gangster.stuck_waiting > 3)
-			var k = 1;
 
     if (!ds_map_exists(global.hex_lookup, start_key)) return -1;
 
@@ -62,11 +60,13 @@ function scr_gangster_ai_decide_target(gangster) {
 	                            else if (step.owner == "") total_cost += global.cost_unclaimed;
 	                            else total_cost += global.cost_enemy;
 	                        }
-							if (ds_list_find_index(global.claimed_tile_indices, i) != -1) continue;
-
-	                        // Always go for it if gang has no strongholds
+							// Always go for it if gang has no strongholds
 	                        if (!has_stronghold) 
 								return i;
+								
+							if (ds_list_find_index(global.claimed_tile_indices, i) != -1) continue;
+
+	                        
 
 	                        // Soft priority chance scaling: 100% at cost ≤ min, 10% at cost ≥ max
 	                        var ratio = clamp((total_cost - GANG_AI_STRONGHOLD_COST_MIN) / (GANG_AI_STRONGHOLD_COST_MAX - GANG_AI_STRONGHOLD_COST_MIN), 0, 1);

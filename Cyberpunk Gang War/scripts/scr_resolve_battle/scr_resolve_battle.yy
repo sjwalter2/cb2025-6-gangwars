@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_resolve_battle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_resolve_battle",
+  "parent":{
+    "name":"battles",
+    "path":"folders/Scripts/battles.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

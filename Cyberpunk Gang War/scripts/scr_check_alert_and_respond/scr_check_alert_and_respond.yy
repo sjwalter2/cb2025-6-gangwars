@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_alert_closest_defender",
+  "%Name":"scr_check_alert_and_respond",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_alert_closest_defender",
+  "name":"scr_check_alert_and_respond",
   "parent":{
     "name":"gangsters",
     "path":"folders/Scripts/gang/gangsters.yy",

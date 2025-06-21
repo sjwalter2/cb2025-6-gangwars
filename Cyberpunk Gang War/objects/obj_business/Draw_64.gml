@@ -1,3 +1,4 @@
+if(global.inputLocked) exit;
 var _stringArray = []
 
 if(distance_to_point(mouse_x,mouse_y) < 10 || (ds_list_find_index(global.selected,self) != -1)) {

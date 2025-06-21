@@ -1,8 +1,8 @@
-/// @function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name, is_intervening_path = false)
+/// @function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name)
 /// @description A* pathfinding on hex grid using axial coords
 /// @return Array of tile indices (from start to goal) or empty array if no path
 
-function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name, is_intervening_path = false) {
+function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name, allow_reserved_override = false) {
     var frontier = ds_priority_create();
     var came_from = ds_map_create(); // key: int, value: previous key
     var cost_so_far = ds_map_create(); // key: int, value: total cost
@@ -42,24 +42,34 @@ function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name, is_int
 			// Skip tiles blocked by gangsters or reservations, unless it's a friendly stronghold
 			var is_stronghold = (tile.type == "stronghold" && tile.owner == gang_name);
 			var blocked = false;
-			// Claim block check
-			if (ds_list_find_index(global.claimed_tile_indices, idx) != -1) {
-			    blocked = true;
-			}
-				if (ds_map_exists(global.gangster_tile_map, neighbor_key)) {
-			    var blocker_id = global.gangster_tile_map[? neighbor_key];
-			    if (instance_exists(blocker_id) && blocker_id != id && !is_stronghold) {
+			// Claim block check — allow override if responding to alert
+			if (!is_stronghold && ds_list_find_index(global.claimed_tile_indices, idx) != -1) {
+			    if (!allow_reserved_override || neighbor_key != scr_axial_key(goal_q, goal_r)) {
 			        blocked = true;
 			    }
 			}
-			if (!blocked && ds_map_exists(global.tile_reservations, neighbor_key)) {
-			    if (!is_stronghold) {
-			        // If this is not an intervening path, then block
-			        if (!is_intervening_path) {
+
+			// Gangster body block check
+			if (ds_map_exists(global.gangster_tile_map, neighbor_key)) {
+			    var blocker_id = global.gangster_tile_map[? neighbor_key];
+			    var is_target_tile = (neighbor_key == scr_axial_key(goal_q, goal_r));
+    
+			    if (instance_exists(blocker_id) && blocker_id != id && !is_stronghold) {
+			        if (!(allow_reserved_override && is_target_tile)) {
 			            blocked = true;
 			        }
 			    }
 			}
+			  
+			
+
+			// Reservation check — also allow override
+			if (!blocked && ds_map_exists(global.tile_reservations, neighbor_key)) {
+			    if (!allow_reserved_override || neighbor_key != scr_axial_key(goal_q, goal_r)) {
+			        blocked = true;
+			    }
+			}
+
 
 			if (blocked) continue;
 

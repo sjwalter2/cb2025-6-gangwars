@@ -2,6 +2,8 @@
 /// Handles per-frame movement animation and post-move behavior like capturing or state transitions.
 
 function scr_tick_gangster_moving(gangster) {
+
+	
     // Visual indicator that the gangster is moving
     gangster.flash_timer = current_time + 150;
     gangster.flash_type = "move";
@@ -23,15 +25,25 @@ function scr_tick_gangster_moving(gangster) {
 
     // Once movement completes
     if (gangster.move_ticks_elapsed >= gangster.move_total_ticks) {
-        scr_finalize_movement(gangster);
+    scr_finalize_movement(gangster);
 
-        // Followup move chaining
-        if (gangster.has_followup_move && array_length(gangster.move_path) > 0) {
-            scr_continue_followup_path(gangster);
-            return;
-        }
 
-        // Determine final tile interaction (capture, intervene, etc.)
-        scr_resolve_tile_state(gangster);
+    //// === Interrupt movement if alerted mid-path ===
+    if (!gangster.alert_responding && gangster.alert_active && gangster.alert_tile_index != -1 && gangster.state != "intervening") {
+        gangster.state = "idle"; // Let Step event logic take over on next frame
+        gangster.move_path = [];
+        gangster.has_followup_move = false;
+        return;
     }
+
+    // Followup move chaining
+    if (gangster.has_followup_move && array_length(gangster.move_path) > 0) {
+        scr_continue_followup_path(gangster);
+        return;
+    }
+
+    // Determine final tile interaction (capture, intervene, etc.)
+    scr_resolve_tile_state(gangster);
+}
+
 }

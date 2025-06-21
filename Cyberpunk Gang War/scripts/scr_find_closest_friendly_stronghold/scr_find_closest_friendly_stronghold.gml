@@ -24,7 +24,7 @@ function scr_find_closest_stronghold(gang_name, x, y, require_friendly) {
 
             with (obj_gangster) {
                 if (is_struct(move_target) && variable_struct_exists(move_target, "tile_index")) {
-                    if (move_target.tile_index == i && owner.name == gang_name) {
+                    if ((move_target.tile_index == i && owner.name == gang_name)) {
                         allowed = true;
                     }
                 }

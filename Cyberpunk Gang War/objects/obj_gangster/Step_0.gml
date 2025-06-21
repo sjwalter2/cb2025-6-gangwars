@@ -25,12 +25,26 @@ if ((is_moving || move_queued) && move_target != undefined) {
     y = lerp(start.y, target.y, t);
 
 }
-
-
+if(state == "intervening")
+	test = 1;
+else
+	interveneCount = 0;
+if test
+{
+	show_debug_message("Gangster " + string(id) + " state: " + string(state));
+}
+if test && state != "intervening"
+{
+	show_debug_message("Gangster Error " + string(id) + " state: " + string(state));
+}
 // === Decision logic happens when dequeued ===
 if (state == "deciding") {
-	if(stuck_waiting >3)
-		var k = 1;
+
+    // === Alert response overrides normal decision ===
+    if (scr_check_alert_and_respond(self)) exit;
+
+    // === Normal AI logic continues here if no alert is active ===
+
     var my_axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
     var start_key = scr_axial_key(my_axial.q, my_axial.r);
     if (!ds_map_exists(global.hex_lookup, start_key)) {
@@ -58,6 +72,8 @@ if (state == "deciding") {
         has_followup_move = true;
         var first_step = array_shift(move_path);
         if (array_length(move_path) == 0) has_followup_move = false;
+		if(stuck_waiting > 3)
+			var r = 2;
 
         scr_gangster_start_movement(self, first_step, true);
 		if(move_target != undefined)
@@ -67,7 +83,9 @@ if (state == "deciding") {
 		}
 		else
 		{
+			
 			state = "idle"
+			move_queued = false
 			stuck_waiting++;
 		}
     } else {
