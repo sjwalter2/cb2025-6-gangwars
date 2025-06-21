@@ -187,7 +187,7 @@ for (var i = 0; i < array_length(global.gang_territories); i++) {
     var new_gang = instance_create_layer(ui_base_x, y_offset, "UI", obj_gang);
 	new_gang.name = gang.name;
 	new_gang.owned = gang.owned;
-	scr_init_gang(new_gang, gang.name, gang.owned, 4);
+	scr_init_gang(new_gang, gang.name, gang.owned, 1);
 	if i == _random_gang_becomes_player_gang {
 		new_gang.autonomous = false
 	}

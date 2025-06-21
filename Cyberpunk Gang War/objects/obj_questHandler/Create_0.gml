@@ -43,7 +43,7 @@ function tick()
 {
 	if(ds_list_size(quests_list) <= 0)
 	{
-		show_debug_message("Ran out of new quests. Have a nice day!")
+		//show_debug_message("Ran out of new quests. Have a nice day!")
 		exit;
 	}
 	current_tick_count += 1

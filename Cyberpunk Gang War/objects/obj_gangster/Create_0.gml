@@ -5,7 +5,7 @@ boss = noone //Boss (optional); set to noone if gangster is a toplevel gang memb
 
 //Stats
 name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"),ord("Z")))
-
+myGang = ""
 charisma = 0
 might = 0
 honor = 0
@@ -22,6 +22,7 @@ path_progress = 0;      // Which tile in the path we're headed to
 move_timer = 0;         // Countdown to move completion
 state = "idle";         // state = ["idle", "thinking", "deciding", "moving", "capturing", "resupplying", "waiting"]
 start_tile_index = -1;  // Where we return after capturing
+interveneCount = 0;
 
 var axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
 current_tile.q = axial.q;
@@ -61,11 +62,6 @@ hoverTileQ = 0;
 hoverTileR = 0;
 hoverPath = [];
 
-alert_path = [];
-alert_target_tile_index = -1;
-is_intervening_path = false;
-alerted_by = noone;
-alert_after_move = false;
 
 move_ticks_elapsed = 0;
 move_total_ticks = 0;
@@ -76,12 +72,15 @@ captures_since_resupply = 0;
 resupply_ticks_remaining = 0;
 reserved_stronghold_key = undefined;
 
-
+alert_tile_index = -1;     // Which tile they’ve been alerted to defend
+alert_active = false;      // Whether an active alert is pending
+alert_sent = false;        // Used by capturing gangster to prevent duplicate alerts
+alert_responding = false;
 
 // Path following support
 move_path = [];         // Array of remaining tile indices to follow
 has_followup_move = false;  // Whether to continue pathing after reaching this tile
-
+test = 0;
 
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
@@ -99,7 +98,7 @@ function draw_polygon(cx, cy, radius, sides) {
     draw_primitive_end();
 }
 
-with (instance_create_depth(x+sprite_width+18,y-22,0,obj_buttonInfo))
+with (instance_create_layer(x+sprite_width+18,y-22,"Instances",obj_buttonInfo))
 {
 	relativeX = sprite_width+8
 	relativeY = -22
@@ -120,15 +119,17 @@ function array_shift(arr) {
 
 
 function tick() {
+	if(state == "intervening")
+	{
+		test = 1;	
+		interveneCount++;
+	}
+
     if (state == "capturing") {
         scr_tick_gangster_capturing(self);
         return;
     }
 
-    if (state == "alerted") {
-        scr_tick_gangster_alerted(self);
-        return;
-    }
 	if (state == "intervening") {
 	    scr_tick_gangster_intervening(self);
 	    return;
@@ -151,8 +152,6 @@ function tick() {
     } 
 
     if (state == "moving") {
-		if(stuck_waiting > 3)
-			var k = 1;
 		if ( move_total_ticks <= 0) 
 		{
 	        is_moving = false;
@@ -168,4 +167,5 @@ function tick() {
 		stuck_waiting_trigger = 0;
         return;
     }
+	
 }

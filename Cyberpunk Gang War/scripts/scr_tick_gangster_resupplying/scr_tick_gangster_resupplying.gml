@@ -1,5 +1,5 @@
 /// @function scr_tick_gangster_resupplying(gangster)
-/// @desc Attempts to reach a friendly stronghold and resupply. If blocked by enemy, switches to alerted state.
+/// @desc Attempts to reach a friendly stronghold and resupply.
 /// @returns N/A
 
 function scr_tick_gangster_resupplying(gangster) {
@@ -42,31 +42,6 @@ function scr_tick_gangster_resupplying(gangster) {
         return;
     }
 
-	// If adjacent but blocked by enemy — switch to ALERTED
-	if (dist == 1 && occupied) {
-	    // Check if the tile is still friendly before alerting
-	    var tile_index = ds_map_find_value(global.hex_lookup, stronghold_key);
-	    var tile = global.hex_grid[tile_index];
-
-	    if (tile.owner != gangster.owner.name) {
-	        // It's already been captured — nothing to do
-	        gangster.state = "idle";
-	        gangster.reserved_stronghold_key = undefined;
-	        return;
-	    }
-
-	    // If still valid target, proceed to alert
-	    var path = scr_hex_a_star_path(axial.q, axial.r, sx, sy, gangster.owner.name, true);
-	    if (is_array(path) && array_length(path) > 0) {
-			gangster.alert_target_tile_index = tile_index;
-			gangster.state = "intervening";
-			gangster.is_intervening_path = false;
-			gangster.alerted_by = blocker;
-			return;
-			
-	    }
-	    return;
-	}
 
 
     // Proceed with resupply if adjacent and unoccupied

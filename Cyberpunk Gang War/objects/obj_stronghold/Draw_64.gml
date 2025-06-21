@@ -1,3 +1,4 @@
+if(global.inputLocked) exit;
 var is_hovered = false;
 var gui_pos = scr_world_to_gui(x, y);
 var mx = device_mouse_x_to_gui(0);

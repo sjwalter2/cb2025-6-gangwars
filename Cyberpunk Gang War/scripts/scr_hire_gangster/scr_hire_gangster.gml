@@ -12,13 +12,13 @@ function scr_hire_gangster(_gang){
         }
     }
 	if(!_success){
-		show_debug_message("No owned strongholds! :(");
+		//show_debug_message("No owned strongholds! :(");
 		return 0;
 	}
 	var pos = scr_axial_to_pixel(tile.q, tile.r);
     var px = pos.px + global.offsetX;
     var py = pos.py + global.offsetY;
-	var gangster = instance_create_depth(px,py, 0, obj_gangster)
+	var gangster = instance_create_layer(px,py, "Instances", obj_gangster)
 	with (gangster) {
 		owner = _gang;
         name = scr_get_name(global.firstnames) + " " + chr(irandom_range(ord("A"), ord("Z")));
