@@ -55,7 +55,7 @@ function scr_neutralize_hex_stronghold(_func){
 			}
 						
 			core_tile_blink_count += 1
-			if core_tile_blink_count == 30 {
+			if core_tile_blink_count == 20 {
 				core_tile_blink_count = 0
 				core_tile_blinks_total += 1
 				if(core_tile_blinks_total % 2)

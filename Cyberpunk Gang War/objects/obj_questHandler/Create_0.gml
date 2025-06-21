@@ -24,8 +24,6 @@ while (!file_text_eof(quests))
 }
 file_text_close(quests);
 
-//TODO: make a way to quickly test scripts without relying on quest spawner
-//TODO: make a quick way to create json quests
 //TODO: make a quest journal for completed events?
 //TODO: make the quests time out after a while so the player has to choose fast
 
@@ -74,9 +72,9 @@ function tick()
 			current_tick_count = 0
 			
 			//Choose a random quest from the list
-			var _questNum = irandom(ds_list_size(quests_list)-1)
+			//var _questNum = irandom(ds_list_size(quests_list)-1)
 			//Choose quests in reverse list order (last entry in quests.txt is read first, etc)
-			//var _questNum = ds_list_size(quests_list)-1
+			var _questNum = ds_list_size(quests_list)-1
 
 			var _questJSON = json_parse(ds_list_find_value(quests_list,_questNum))
 			ds_list_delete(quests_list,_questNum)
@@ -84,7 +82,6 @@ function tick()
 			//Create the quest with the associated JSON
 			instance_create_layer(x,y,"UI",obj_quest,_questJSON)
 			
-			//TODO: pass player gang to the obj_quest so it knows what gang is player-controlled		
 		}
 		else
 		{

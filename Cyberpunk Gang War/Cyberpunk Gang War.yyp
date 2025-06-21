@@ -120,6 +120,7 @@
     {"id":{"name":"scr_pixel_to_axial","path":"scripts/scr_pixel_to_axial/scr_pixel_to_axial.yy",},},
     {"id":{"name":"scr_quest_hire_kid","path":"scripts/scr_quest_hire_kid/scr_quest_hire_kid.yy",},},
     {"id":{"name":"scr_quest_peony_gambler","path":"scripts/scr_quest_peony_gambler/scr_quest_peony_gambler.yy",},},
+    {"id":{"name":"scr_quest_territory_stash","path":"scripts/scr_quest_territory_stash/scr_quest_territory_stash.yy",},},
     {"id":{"name":"scr_resolve_tile_state","path":"scripts/scr_resolve_tile_state/scr_resolve_tile_state.yy",},},
     {"id":{"name":"scr_sample_quest","path":"scripts/scr_sample_quest/scr_sample_quest.yy",},},
     {"id":{"name":"scr_select_object","path":"scripts/scr_select_object/scr_select_object.yy",},},
