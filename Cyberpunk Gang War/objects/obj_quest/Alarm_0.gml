@@ -1,6 +1,5 @@
 /// @description Run "setup" case
 
-playerGang = noone
 
 with(obj_gang)
 {

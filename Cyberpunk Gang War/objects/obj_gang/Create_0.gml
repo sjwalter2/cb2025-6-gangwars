@@ -25,30 +25,6 @@ gangType =  gangTypeList[irandom(array_length(gangTypeList)-1)]
 
 roster = ds_list_create()
 
-
-////Test business - remove this later
-//with instance_create_depth(x,y + 200,0,obj_business) {
-//	owner = other
-//	manager = ds_list_find_value(other.roster,0)
-//}
-
-//Testing buttons
-//with (instance_create_depth(x-37,y,0,obj_button))
-//{
-//	variable="notoriety"
-//	parent=other
-//}
-
-////Testing buttons
-//with (instance_create_depth(x-37,y+37,0,obj_button))
-//{
-//	variable="notoriety"
-//	parent=other
-//	mode="decrease"
-//}
-
-
-
 function tick() {
 	
 	//Must pay pawns their salary!

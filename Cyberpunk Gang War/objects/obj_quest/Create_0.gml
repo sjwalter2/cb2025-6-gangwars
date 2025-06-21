@@ -12,3 +12,9 @@ display_outer_rect = 0
 //note that once activated, we run the "quest" script *every step*, so if the quest is on-going, make sure to use "if" statements to check for conditions or etc
 myQuest = noone
 func = ""
+playerGang = noone
+
+
+
+_width = camera_get_view_width(view_camera[0])
+_height = camera_get_view_height(view_camera[0])

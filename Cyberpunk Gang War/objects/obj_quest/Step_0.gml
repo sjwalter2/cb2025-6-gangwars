@@ -10,7 +10,7 @@ if(displayReady)
 }
 if(is_method(myQuest))
 {
-	if(func != "setup")
+	if(func != "setup" && func != "confirm")
 	{
 		//If quest is activated, execute whatever script is associated with this quest
 		myQuest(func)

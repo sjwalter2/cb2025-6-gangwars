@@ -1,6 +1,4 @@
 /// @description display "dialogue box" and create all relevant choice buttons
-var _width = camera_get_view_width(view_camera[0])
-var _height = camera_get_view_height(view_camera[0])
 
 
 if(button1 != "")

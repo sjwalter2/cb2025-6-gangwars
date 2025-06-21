@@ -16,8 +16,6 @@ Tutorial on how to make a quest:
 
 //For this sample quest, the player is assigned to capture a random hextile, we'll call HexA. The initial prompt gives them two options:
 
-//TODO: Run arbitrary code *before* prompting the player? Probably requires running this script once with a "setup" case. Not yet implemented, will update the quest objects to do this soon!
-
 //Example of excerpt of json you'd write
 //{ ... "button1":"Accept the quest to capture HexA at:", "func1":"Accept","button2": "I dont have time for this.", "func2":"Reject", ... }
 
@@ -31,13 +29,13 @@ function scr_sample_quest(_func){
 	//Check what the state of the quest is
 	switch _func {
 		case "setup":
-			//TODO (not implemented yet) You can include a setup func as we will always run this once when the quest is first created.
+			//You can include a setup func as we will always run this once when the quest is first created.
 			//Your script will run once when the obj_quest is first instantiated, allowing you to set some things up. For example, in this sample quest,
 			//We might select a random hex to be HexA. Anything you want to display in the quest dialogue box needs to be done here.
 			//You might, for example, modify the text of button1 to include the hex coordinates.
-			//TODO TODO TODO - this is not implemented yet and might not be implemented by the end of the game jam!
 			button1 = string_concat(button1, string(HexA.x), ",", string(HexA.y))
-			//If you have nothign you want to set up, it's a good idea to explicitly set a "setup" case anyway.
+			//If you have nothing you want to set up, it's a good idea to explicitly set a "setup" case anyway.
+			//This also prevents the script running while the player waits to make a choice
 			//Otherwise your "default" case will run, which you might not want!
 			break;
 		
@@ -67,12 +65,34 @@ function scr_sample_quest(_func){
 			//Now that the hex is captured, we get rewards
 			myGang.money += 100
 			someGangster.honor += 5
-			show_debug_message("Wow! you are so cool for capturing the hex!")
-			//Perhaps show a cool dialogue box?
 			
-			//obj_quest should probably destroy itself when the quest/event is complete, so make sure to do that at the end of the script. or, if it's a multi-part quest, at the end of the case(s) that end the quest.
+			//Create a dialogue congratulating the player
+			func = "confirm"
+			description = "Congratulations! You completed the quest by capturing the Hex!"
+			displayReady = true
+			with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+			{
+				parent = other
+				myFunction = "end"
+				text = "Ok"
+				shelfActive = true
+				guiX = x
+				guiY = y
+			}
+			break;
+			
+			
+		//This is a special case - the quest will NEVER execute the script when func="confirm". It should only be used when creating a dialogue box
+		//For example see case "Succeeded" above, or scr_quest_hire_kid for another example. You can leave out this case entirely as well.
+		case "confirm":
+			break;
+
+		case "end":
+			//This case is called when the player has succeeded and clicked the "OK" button confirming their success. This case ends the quest.
+			//obj_quest should destroy itself when the quest/event is complete, so make sure to do that at the end of the script. or, if it's a multi-part quest, at the end of the case(s) that end the quest.
 			instance_destroy()
 			break;
+			
 	}
 
 }

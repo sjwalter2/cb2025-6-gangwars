@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_hire_gangster",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_hire_gangster",
+  "parent":{
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -24,8 +24,6 @@ while (!file_text_eof(quests))
 }
 file_text_close(quests);
 
-//TODO: create a couple basic quest script templates
-//TODO: create a method to get player's gang specifically, set to a variable
 //TODO: make a way to quickly test scripts without relying on quest spawner
 //TODO: make a quick way to create json quests
 //TODO: make a quest journal for completed events?
