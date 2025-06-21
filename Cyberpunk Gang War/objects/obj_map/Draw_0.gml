@@ -112,6 +112,12 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 
 	var col = merge_color(base_col, c_black, 1 - target_brightness);
 	draw_illuminated_hex(draw_x, draw_y, hex_size, col);
+	if(ds_list_find_index(global.claimed_tile_indices,i) != -1)
+	{
+		draw_set_color(c_red)	
+		draw_circle(draw_x,draw_y,3,0)
+		
+	}
 
 }
 draw_set_alpha(.6)

@@ -47,6 +47,9 @@ is_moving = false;
 move_queued = false;
 move_target = undefined;
 move_ticks_remaining = 0;
+stuck_waiting = 0;
+stuck_waiting_trigger = 0;
+
 flash_timer = 0;
 flash_type = ""; // "move" or "arrive"
 first_tick_bonus = 0;
@@ -62,6 +65,7 @@ alert_path = [];
 alert_target_tile_index = -1;
 is_intervening_path = false;
 alerted_by = noone;
+alert_after_move = false;
 
 move_ticks_elapsed = 0;
 move_total_ticks = 0;
@@ -116,14 +120,6 @@ function array_shift(arr) {
 
 
 function tick() {
-    if (state == "moving" && move_total_ticks <= 0) {
-        show_debug_message("ERROR: Gangster " + name + " has invalid move_total_ticks!");
-        is_moving = false;
-        move_target = undefined;
-        state = "idle";
-        exit;
-    }
-
     if (state == "capturing") {
         scr_tick_gangster_capturing(self);
         return;
@@ -139,20 +135,37 @@ function tick() {
 	}
     if (state == "resupplying") {
         scr_tick_gangster_resupplying(self);
-        exit;
+        return;
     }
 
-    if (state == "waiting" && move_queued) {
+    if (state == "waiting") {
+		if(stuck_waiting_trigger)
+			stuck_waiting++;
+		else
+			stuck_waiting = 0;
         move_queued = false;
         is_moving = true;
         state = "moving";
+		stuck_waiting_trigger = 1;
         return;
-    } else if (state == "waiting" && !move_queued) {
-        state = "moving";
-    }
+    } 
 
-    if (is_moving) {
+    if (state == "moving") {
+		if(stuck_waiting > 3)
+			var k = 1;
+		if ( move_total_ticks <= 0) 
+		{
+	        is_moving = false;
+	        move_target = undefined;
+	        state = "idle";
+			move_target = undefined;
+		    move_ticks_elapsed = 0;
+		    move_total_ticks = 0;
+	        return;
+	    }
+
         scr_tick_gangster_moving(self);
-        exit;
+		stuck_waiting_trigger = 0;
+        return;
     }
 }

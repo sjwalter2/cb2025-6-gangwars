@@ -1,1 +1,1 @@
-nextSpeed = 4
+nextSpeed = 6
