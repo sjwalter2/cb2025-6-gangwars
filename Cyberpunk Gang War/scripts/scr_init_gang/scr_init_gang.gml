@@ -68,10 +68,6 @@ with (_gang) {
             honor = irandom(5);
             randomize();
 
-            //with (obj_gameHandler) {
-            //    ds_list_add(tickers, gangster);
-            //}
-
         }
 
         ds_list_add(roster, gangster);

@@ -3,12 +3,14 @@
 owner = noone //leave as noone; this is only used for compatibility with scripts
 boss = noone //leave as noone; this is only used for compatibility with scripts
 
+autonomous = true; // Set to false for player-controlled gangsters
+
 testPing = false
 
 money = 0
 taxRate = 0.5
 
-//todo: set pawn cost to 0 for now until we can guarantee gangs start with businesses
+//todo: set pawn cost to 0 for now until we can guarantee gangs can claim businesses
 pawnCost = 0
 //pawnCost = 2
 
@@ -22,30 +24,6 @@ var gangTypeList = ["Yakuza","Biker","Mafia","Hacker","Cyborg","Clown","Communis
 gangType =  gangTypeList[irandom(array_length(gangTypeList)-1)]
 
 roster = ds_list_create()
-
-
-////Test business - remove this later
-//with instance_create_depth(x,y + 200,0,obj_business) {
-//	owner = other
-//	manager = ds_list_find_value(other.roster,0)
-//}
-
-//Testing buttons
-//with (instance_create_depth(x-37,y,0,obj_button))
-//{
-//	variable="notoriety"
-//	parent=other
-//}
-
-////Testing buttons
-//with (instance_create_depth(x-37,y+37,0,obj_button))
-//{
-//	variable="notoriety"
-//	parent=other
-//	mode="decrease"
-//}
-
-
 
 function tick() {
 	

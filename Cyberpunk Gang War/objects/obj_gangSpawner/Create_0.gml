@@ -174,7 +174,11 @@ while (any_can_expand) {
 // === SPAWN ONE obj_gang FOR EACH GANG TERRITORY (UI ELEMENT) ===
 var ui_base_x = room_width - 10;
 var ui_base_y = 10;
-var ui_spacing = 100;
+var ui_spacing = 110;
+
+//Since gang color order seems to be static for now, I'm making the player gang random
+//That way you dont always play as the same gang ;P
+var _random_gang_becomes_player_gang = irandom(array_length(global.gang_territories)-1)
 
 for (var i = 0; i < array_length(global.gang_territories); i++) {
     var gang = global.gang_territories[i];
@@ -184,6 +188,9 @@ for (var i = 0; i < array_length(global.gang_territories); i++) {
 	new_gang.name = gang.name;
 	new_gang.owned = gang.owned;
 	scr_init_gang(new_gang, gang.name, gang.owned);
+	if i == _random_gang_becomes_player_gang {
+		new_gang.autonomous = false
+	}
 }
 
 
