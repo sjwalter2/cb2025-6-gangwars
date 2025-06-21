@@ -4,11 +4,14 @@
 /// @param target_tile_index - index into global.hex_grid
 
 function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1) {
+
     if (!instance_exists(gangster)) exit;
-    if (gangster.is_moving || gangster.move_queued) exit;
+    if (gangster.move_queued) exit;
 
     // Prevent duplicate claim
-	if (!gangster.is_intervening_path && ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) exit;
+	if (!gangster.is_intervening_path && 
+	ds_list_find_index(global.claimed_tile_indices, target_tile_index) != -1) 
+	exit;
 
     var tile = global.hex_grid[target_tile_index];
 

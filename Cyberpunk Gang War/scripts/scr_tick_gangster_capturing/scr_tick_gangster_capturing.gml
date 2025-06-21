@@ -12,13 +12,14 @@ function scr_tick_gangster_capturing(gangster) {
 
         with (obj_gangster) {
 		    if (alerted_by == other) {
-		        if (!intervened) {
+		        if (!intervened && state == "intervening") {
 		            intervened = true;
 		            intervened_used_capture = (captures_since_resupply < global.resupply_tile_limit);
 		        }
 			        state = "idle";
 			        alerted_by = noone;
 			        target_tile_index = -1;
+					alert_target_tile_index = -1;
 			        is_intervening_path = false;
 			        move_path = [];
 			        has_followup_move = false;

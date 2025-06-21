@@ -29,6 +29,8 @@ if ((is_moving || move_queued) && move_target != undefined) {
 
 // === Decision logic happens when dequeued ===
 if (state == "deciding") {
+	if(stuck_waiting >3)
+		var k = 1;
     var my_axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
     var start_key = scr_axial_key(my_axial.q, my_axial.r);
     if (!ds_map_exists(global.hex_lookup, start_key)) {
@@ -58,8 +60,16 @@ if (state == "deciding") {
         if (array_length(move_path) == 0) has_followup_move = false;
 
         scr_gangster_start_movement(self, first_step, true);
-        move_queued = true;
-        state = "waiting"; // ✅ Only if movement is valid
+		if(move_target != undefined)
+		{
+	        move_queued = true;
+	        state = "waiting"; // ✅ Only if movement is valid
+		}
+		else
+		{
+			state = "idle"
+			stuck_waiting++;
+		}
     } else {
         state = "idle"; // ✅ Don't wait if no valid move
     }

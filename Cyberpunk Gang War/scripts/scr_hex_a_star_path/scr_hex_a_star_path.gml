@@ -42,8 +42,11 @@ function scr_hex_a_star_path(start_q, start_r, goal_q, goal_r, gang_name, is_int
 			// Skip tiles blocked by gangsters or reservations, unless it's a friendly stronghold
 			var is_stronghold = (tile.type == "stronghold" && tile.owner == gang_name);
 			var blocked = false;
-
-			if (ds_map_exists(global.gangster_tile_map, neighbor_key)) {
+			// Claim block check
+			if (ds_list_find_index(global.claimed_tile_indices, idx) != -1) {
+			    blocked = true;
+			}
+				if (ds_map_exists(global.gangster_tile_map, neighbor_key)) {
 			    var blocker_id = global.gangster_tile_map[? neighbor_key];
 			    if (instance_exists(blocker_id) && blocker_id != id && !is_stronghold) {
 			        blocked = true;

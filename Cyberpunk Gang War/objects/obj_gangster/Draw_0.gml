@@ -80,8 +80,7 @@ draw_gangster_variant(x, y, global.hex_size);
 var state_color = c_white;
 var current_state = state;
 
-if (state == "waiting" && first_tick_bonus != 0)
-    current_state = "moving";
+
 
 switch (current_state) {
     case "idle":         state_color = c_white;     break;
@@ -99,3 +98,44 @@ draw_set_color(state_color);
 draw_text(x, y + gangsterHeight * 0.6, string_upper(current_state));
 
 draw_text(x, y + gangsterHeight * 1, "Captures: " + string_upper(global.resupply_tile_limit - captures_since_resupply));
+if(stuck_waiting > 1)
+{
+	draw_text(x, y + gangsterHeight * 1.5, "Stuck: " + string(stuck_waiting));
+}
+
+
+
+if (is_array(move_path) && array_length(move_path) > 0) {
+    draw_set_color(c_white);
+    draw_set_alpha(0.4);
+	var tx = x;
+	var ty = y;
+	if (is_struct(move_target)) {
+	    tx = move_target.target_pos.x;
+	    ty = move_target.target_pos.y;
+	    draw_line_width(x, y, tx, ty, 2);
+
+	}
+
+    var last_x = tx;
+    var last_y = ty;
+
+    for (var i = 0; i < array_length(move_path); i++) {
+        var idx = move_path[i];
+        if (idx >= 0 && idx < array_length(global.hex_grid)) {
+            var tile = global.hex_grid[idx];
+            var pos = scr_axial_to_pixel(tile.q, tile.r);
+            var tx = pos.px + global.offsetX;
+            var ty = pos.py + global.offsetY;
+
+            draw_line(last_x, last_y, tx, ty);
+            last_x = tx;
+            last_y = ty;
+			draw_set_color(c_red);
+        }
+    }
+
+    draw_set_alpha(1);
+
+}
+
