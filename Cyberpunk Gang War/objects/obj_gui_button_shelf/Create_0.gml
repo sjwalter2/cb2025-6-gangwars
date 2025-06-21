@@ -13,7 +13,7 @@ with nextBut
 {
 	nextShelf = other.gangShelf
 }
-displayShelf = [instance_create_depth(-100,-100,0,obj_buttonGlobalGangsterInfo),instance_create_depth(-100,-100,0,obj_buttonGlobalGangInfo),nextBut]
+displayShelf = [instance_create_depth(-100,-100,0,obj_buttonGlobalGangsterInfo),instance_create_depth(-100,-100,0,obj_buttonGlobalGangInfo),instance_create_depth(-100,-100,0,obj_buttonSpawnQuestGui),nextBut]
 
 //Gang Shelf
 alarm[0] = 1

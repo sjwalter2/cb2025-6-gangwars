@@ -134,6 +134,8 @@ var min_spacing = 3; // Min distance between strongholds
 
 global.stronghold_instances = [];
 
+
+//TODO: Replace this with scr_axial_distance?
 function axial_distance(q1, r1, q2, r2) {
     return max(abs(q1 - q2), abs(r1 - r2), abs((-q1 - r1) - (-q2 - r2)));
 }

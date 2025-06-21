@@ -13,6 +13,7 @@ Note: we create an obj_quest because some quests are not instantaneous/have long
 
 */
 
+global.spawnQuest = false
 
 quests_list = ds_list_create()
 
@@ -34,7 +35,7 @@ with(obj_gameHandler)
 	ds_list_add(tickers,other)	
 }
 
-min_ticks_between_quests = 8
+min_ticks_between_quests = 30
 current_tick_count = 0
 base_quest_chance=0.20
 quest_chance_increase_amount = 0.05 //Percent increase chance of a quest for each tick that goes by above the min
@@ -63,13 +64,14 @@ function tick()
 	if toExit
 		exit;
 	
-	if current_tick_count >= min_ticks_between_quests
+	if current_tick_count >= min_ticks_between_quests || global.spawnQuest == true
 	{
 		var test_for_quest = base_quest_chance + (current_tick_count-min_ticks_between_quests)*quest_chance_increase_amount
 		var _rand = random(1)
-		if _rand < test_for_quest //We quest!
+		if _rand < test_for_quest || global.spawnQuest == true //We quest!
 		{
 			current_tick_count = 0
+			global.spawnQuest = false
 			
 			//Choose a random quest from the list
 			//var _questNum = irandom(ds_list_size(quests_list)-1)

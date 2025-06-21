@@ -6,7 +6,7 @@ function scr_quest_territory_stash(_func){
 			{
 				func = "confirm"
 				var _gainMoney = irandom_range(100,600)
-				description = gangster.name + " was right. There's at least $" + string(_gainMoney) + " worth of Hex here! Ours for the taking."
+				description = gangster.name + " was right. There's gotta be $" + string(_gainMoney) + " worth of Hex here! Ours for the taking."
 				with playerGang
 				{
 					scr_gain_money(_gainMoney)
@@ -66,7 +66,7 @@ function scr_quest_territory_stash(_func){
 				instance_destroy();
 				exit;
 			} else {
-				outer_tile.type = "outer"
+				
 				outer_tile.color = make_color_rgb(220, 220, 20);
 				outer_tile_blink_count = 0
 				outer_tile_blinks_total = 0
