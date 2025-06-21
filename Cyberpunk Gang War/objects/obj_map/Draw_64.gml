@@ -27,7 +27,7 @@ for (var i = 0; i < array_length(global.hex_grid); i++) {
 
 if (on_board && draw_gui) {
     var gui_x = 12;
-    var gui_y = display_get_gui_height() - 80;
+    var gui_y = display_get_gui_height() - 180;
 
     var world_pos = scr_gui_to_world(gui_x, gui_y);
 

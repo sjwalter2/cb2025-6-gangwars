@@ -4,13 +4,14 @@
 
 function scr_tick_gangster_resupplying(gangster) {
     // Retry finding a stronghold if needed
-	if(stuck_waiting >3)
-		var k = 1;
     if (!is_array(gangster.move_path) || array_length(gangster.move_path) == 0) {
         gangster.reserved_stronghold_key = scr_find_closest_stronghold(gangster.owner.name, gangster.x, gangster.y, true);
     }
 
-    if (gangster.reserved_stronghold_key == undefined) return;
+    if (gangster.reserved_stronghold_key == undefined)
+	{
+		return;
+	}
 
     var axial = scr_pixel_to_axial(gangster.x - global.offsetX, gangster.y - global.offsetY);
     var sx = floor(gangster.reserved_stronghold_key / 10000) - 5000;
@@ -19,8 +20,9 @@ function scr_tick_gangster_resupplying(gangster) {
 
     var occupied = false;
 	var stronghold_key = scr_axial_key(sx, sy);
+	var blocker = noone;
 	if (ds_map_exists(global.gangster_tile_map, stronghold_key)) {
-		var blocker = ds_map_find_value(global.gangster_tile_map, stronghold_key);
+		blocker = ds_map_find_value(global.gangster_tile_map, stronghold_key);
 		if (blocker != gangster.id && instance_exists(blocker) && blocker.owner.name != gangster.owner.name) {
 		    occupied = true;
 		}
@@ -56,16 +58,12 @@ function scr_tick_gangster_resupplying(gangster) {
 	    // If still valid target, proceed to alert
 	    var path = scr_hex_a_star_path(axial.q, axial.r, sx, sy, gangster.owner.name, true);
 	    if (is_array(path) && array_length(path) > 0) {
-	        gangster.alert_path = path;
-	        gangster.alert_target_tile_index = tile_index;
-	        gangster.state = "alerted";
-	        gangster.is_intervening_path = true;
-	        gangster.target_tile_index = tile_index;
-	        gangster.path = path;
-	        gangster.move_path = path;
-
-	        var next_tile_index = array_shift(gangster.move_path);
-	        scr_gangster_start_movement(gangster, next_tile_index, false);
+			gangster.alert_target_tile_index = tile_index;
+			gangster.state = "intervening";
+			gangster.is_intervening_path = false;
+			gangster.alerted_by = blocker;
+			return;
+			
 	    }
 	    return;
 	}

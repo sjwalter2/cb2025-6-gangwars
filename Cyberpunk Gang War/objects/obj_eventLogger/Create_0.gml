@@ -1,3 +1,3 @@
 messages = [];
 defeat_messages = [];
-max_visible = 15;
+max_visible = 5;

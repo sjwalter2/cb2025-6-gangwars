@@ -72,7 +72,7 @@ function draw_gangster_variant(xp, yp, size) {
     random_set_seed(current_time);
 }
 
-scr_draw_path_to_target();
+//scr_draw_path_to_target();
 // Draw using hex size
 draw_gangster_variant(x, y, global.hex_size);
 //draw_text(x,y+40,name)

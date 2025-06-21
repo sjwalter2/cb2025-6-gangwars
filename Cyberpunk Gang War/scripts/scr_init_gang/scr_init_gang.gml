@@ -1,23 +1,24 @@
-/// @function scr_init_gang(gang, name, ownedTiles)
-/// @description Initializes a gang and spawns gangsters on the first two owned tiles.
-/// @param {instance} gang – the gang object (obj_gang)
-/// @param {string} name – the gang's name
-/// @param {array} ownedTiles – array of tile indices from global.hex_grid
+/// @function scr_init_gang(_gang, _name, _ownedTiles,_ numGangsters)
+/// @description Initializes a gang and spawns gangsters on random owned tiles.
+/// @param {instance} _gang – the gang object (obj_gang)
+/// @param {string} _name – the gang's name
+/// @param {array} _owned – array of tile indices from global.hex_grid
+/// @param {int} _numGangsters – number of gangsters to spawn
 
-var _gang = argument0;
-var _name = argument1;
-var _owned = argument2;
+function scr_init_gang(_gang, _name, _owned, _numGangsters)
+{
 
-if (!is_array(_owned) || array_length(_owned) < 2) {
+
+if (!is_array(_owned) || array_length(_owned) < 1 || _numGangsters <= 0) {
     show_debug_message("❌ scr_init_gang: _owned is not a valid tile array for " + string(_name));
     exit;
 }
 
-// === Pull tile positions BEFORE entering the with block ===
+// === Pull random tile positions BEFORE entering the with block ===
 var spawn_positions = [];
 
-for (var i = 0; i < 2; i++) {
-    var tile_index = _owned[i];
+for (var i = 0; i < _numGangsters; i++) {
+    var tile_index = _owned[irandom(array_length(_owned) - 1)];
     var tile = global.hex_grid[tile_index];
     var pos = scr_axial_to_pixel(tile.q, tile.r);
     var px = pos.px + global.offsetX;
@@ -47,7 +48,7 @@ with (_gang) {
 
     roster = ds_list_create();
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < array_length(spawn_positions); i++) {
         var pos = spawn_positions[i];
         var gangster = instance_create_depth(pos[0], pos[1], 0, obj_gangster);
 
@@ -67,9 +68,9 @@ with (_gang) {
             might = irandom(5);
             honor = irandom(5);
             randomize();
-
         }
 
         ds_list_add(roster, gangster);
     }
+}
 }

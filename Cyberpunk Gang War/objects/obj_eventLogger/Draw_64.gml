@@ -15,12 +15,14 @@ for (var i = 0; i < array_length(messages); i++) {
     draw_set_alpha(fade);
     draw_set_valign(fa_bottom);
     draw_set_halign(fa_left);
+	draw_set_font(smallfont);
 
-    var msg_prefix = "Gangster " + string(m.gangster) + " of the ";
-    var msg_tile = " captured tile (" + string(m.q) + "," + string(m.r) + ")";
+    var msg_prefix = string(m.gangster) + " of ";
+    var msg_tile = " captured (" + string(m.q) + "," + string(m.r) + ")";
     var msg_suffix = "";
     if (!is_undefined(m.prev_owner)) {
-        msg_suffix = " from " + string(m.prev_owner);
+		msg_tile += " from "
+        msg_suffix = string(m.prev_owner);
     }
 
     var prefix_width = string_width(msg_prefix);

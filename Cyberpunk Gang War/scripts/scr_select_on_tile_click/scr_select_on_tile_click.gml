@@ -12,7 +12,7 @@ function scr_select_on_tile_click() {
 	// === Priority 1: Gangsters
 	with (obj_gangster) {
 		var self_axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
-			if (self_axial.q == click_axial.q && self_axial.r == click_axial.r && !is_moving && !move_queued) {
+			if (self_axial.q == click_axial.q && self_axial.r == click_axial.r) {
 			    array_push(objects_on_tile, { inst: id, priority: 1 });
 			}
 	}

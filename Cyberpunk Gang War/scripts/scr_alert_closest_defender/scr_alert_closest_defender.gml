@@ -70,7 +70,8 @@ function scr_alert_closest_defender(gangster, capture_tile_index) {
         } else {
             var proximity = 1 - (c.cost / max_capture_ticks);
             var chance = (0.3 + 0.7 * proximity) * (c.has_capture ? 1 : 0.5);
-            should_alert = random(1) < chance;
+			chance = 1;
+            should_alert = random(1) <= chance;
         }
 
         if (should_alert) {

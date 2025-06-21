@@ -31,14 +31,6 @@ function scr_tick_gangster_moving(gangster) {
             return;
         }
 
-        // Continue alerted path if applicable
-        if (gangster.state == "moving_alerted") {
-            if (is_array(gangster.alert_path) && array_length(gangster.alert_path) > 0) {
-                scr_transition_to_alerted(gangster);
-                return;
-            }
-        }
-
         // Determine final tile interaction (capture, intervene, etc.)
         scr_resolve_tile_state(gangster);
     }
