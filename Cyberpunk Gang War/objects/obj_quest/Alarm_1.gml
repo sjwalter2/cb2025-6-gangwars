@@ -1,5 +1,30 @@
 /// @description display "dialogue box" and create all relevant choice buttons
 
+//Before creating a dialogue box, make sure an existing one is not already present. The quests break if multiple spawn dialogue boxes at once!
+if(instance_exists(obj_buttonQuest)){
+	alarm[1] = 1
+	exit;
+}
+
+
+//Either pause game or set to slowest speed when a quest starts
+with(obj_questHandler)
+{
+	//Either pause game, or set it to the slowest non-paused speed
+	if(pause_on_quest)
+	{
+		with(obj_gameHandler)
+		{
+			nextSpeed = 0
+		}
+	} else
+	{
+		with(obj_gameHandler)
+		{
+			nextSpeed = 1
+		}	
+	}
+}
 
 if(button1 != "")
 {

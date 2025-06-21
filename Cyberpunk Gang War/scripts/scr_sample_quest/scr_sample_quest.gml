@@ -14,9 +14,8 @@ Tutorial on how to make a quest:
 */
 
 
-//For this sample quest, the player is assigned to capture a random hextile, we'll call HexA. The initial prompt gives them two options:
-
-//Example of excerpt of json you'd write
+//For this sample quest, the player is assigned to capture a random hextile, we'll call HexA. The initial prompt gives them two options.
+//Example of excerpt of json
 //{ ... "button1":"Accept the quest to capture HexA at:", "func1":"Accept","button2": "I dont have time for this.", "func2":"Reject", ... }
 
 function scr_sample_quest(_func){

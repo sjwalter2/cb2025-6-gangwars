@@ -8,8 +8,8 @@ if shelfActive
 		with pawnsIncrease
 		{
 			parent=other.gang
-			cost = 10
-			text = other.gang.name + " Hire Pawn: $" + string(cost)
+			cost = parent.hirePawnCost
+			text = parent.name + " Hire Pawn: $" + string(cost)
 		}
 		with obj_gui_button_shelf {
 			createShelf([pawnsIncrease])

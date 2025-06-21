@@ -1,6 +1,9 @@
 var base_y = display_get_gui_height() - 32;
 var spacing = 24;
 
+var oldFont = draw_get_font()
+
+
 // Draw normal messages (skip "defeat" types)
 var draw_count = 0;
 for (var i = 0; i < array_length(messages); i++) {
@@ -66,3 +69,4 @@ draw_set_alpha(1);
 draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+draw_set_font(oldFont);

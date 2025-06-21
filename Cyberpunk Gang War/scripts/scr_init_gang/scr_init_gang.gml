@@ -35,7 +35,7 @@ with (_gang) {
 
     testPing = false;
 
-    money = 100;
+    money = 800;
     taxRate = 0.5;
 
     notoriety = 0;

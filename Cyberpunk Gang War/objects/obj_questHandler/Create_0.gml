@@ -50,8 +50,19 @@ function tick()
 	}
 	current_tick_count += 1
 	
-	//Make sure no quest prompts are already active
+	//Make sure no quest dialogues are already active
 	if instance_number(obj_buttonQuest) > 0
+		exit;
+		
+	//Make sure no quests are preparing to prompt
+	var toExit = false
+	with(obj_quest)
+	{
+		if alarm[0] > 0 || alarm[1] > 0
+			toExit = true
+	}
+	
+	if toExit
 		exit;
 	
 	if current_tick_count >= min_ticks_between_quests
@@ -62,25 +73,11 @@ function tick()
 		{
 			current_tick_count = 0
 			
-			//Either pause game, or set it to the slowest non-paused speed
-			if(pause_on_quest)
-			{
-				with(obj_gameHandler)
-				{
-					nextSpeed = 0
-				}
-			} else
-			{
-				with(obj_gameHandler)
-				{
-					nextSpeed = 1
-				}	
-			}
-			
 			//Choose a random quest from the list
-//			var _questNum = irandom(ds_list_size(quests_list)-1)
-//TODO
-			var _questNum = ds_list_size(quests_list)-1
+			var _questNum = irandom(ds_list_size(quests_list)-1)
+			//Choose quests in reverse list order (last entry in quests.txt is read first, etc)
+			//var _questNum = ds_list_size(quests_list)-1
+
 			var _questJSON = json_parse(ds_list_find_value(quests_list,_questNum))
 			ds_list_delete(quests_list,_questNum)
 			
