@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_check_remaining_stronghold",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_check_remaining_stronghold",
+  "parent":{
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

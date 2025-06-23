@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_stop_capture",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_stop_capture",
+  "parent":{
+    "name":"gangsters",
+    "path":"folders/Scripts/gang/gangsters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

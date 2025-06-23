@@ -22,9 +22,14 @@ function scr_tick_gangster_intervening(gangster) {
         }
 
         if (!capture_active) {
+			if (gangster.state == gangster.testState) 
+				show_debug_message("Changed from " + gangster.testState + " to idle 10")
             gangster.state = "idle";
         }
     } else {
+		if (gangster.state == gangster.testState) 
+					show_debug_message("Changed from " + gangster.testState + " to idle 16")
         gangster.state = "idle";
+		proper_intervene_reset = 1;
     }
 }

@@ -54,13 +54,15 @@ function scr_check_alert_and_respond(gangster) {
 
         var first_step = array_shift(gangster.move_path);
         scr_gangster_start_movement(gangster, first_step, true, true);
-        scr_clear_gang_alerts(gangster.owner.name, id);
+        scr_clear_gang_alerts(gangster.owner.name, id, gangster.alert_tile_index);
         gangster.alert_responding = true;
 		// ✅ Add these to match AI movement
 	    if (gangster.move_target != undefined) {
 	        gangster.move_queued = true;
 	        gangster.state = "waiting";
 	    } else {
+			if (gangster.state == gangster.testState) 
+				show_debug_message("Changed from " + gangster.testState + " to idle 6")
 	        gangster.state = "idle";
 	        gangster.move_queued = false;
 	    }

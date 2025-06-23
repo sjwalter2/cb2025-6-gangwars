@@ -37,6 +37,8 @@ if (global.currentSpeed > 0) {
                 tick();
             }
         }
+		with(obj_gangster)
+			moving_tick()
 
         global.currentSpeed = nextSpeed;
     }

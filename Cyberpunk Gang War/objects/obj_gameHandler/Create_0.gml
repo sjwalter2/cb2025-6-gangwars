@@ -17,9 +17,8 @@ global.fps_worst_10s = fps; // Start with current fps
 global.fps_avg_10s = fps;
 
 
-global.intervene_fail_chance_with_capture = 0.3;
-global.intervene_fail_chance_without_capture = 0.7;
-global.resupply_tile_limit = 2;
+global.intervene_fail_chance_with_capture = .6;
+global.intervene_fail_chance_without_capture = .2;
 
 global.currentSpeedBeforeBattle = 1;
 global.pendingBattles = [];
@@ -44,9 +43,6 @@ global.cost_enemy    = 4;
 
 global.resupply_tile_limit = 2;   // tiles gangster can capture before resupplying
 global.resupply_tick_cost = 2;    // how long they must wait to resupply
-
-global.intervene_fail_chance_with_capture = 0.7;  // 70% chance to fail if intervention used a capture
-global.intervene_fail_chance_without_capture = 0.3;  // 30% chance to fail if intervention had no capture left
 
 
 randomize()

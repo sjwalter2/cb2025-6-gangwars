@@ -3,11 +3,12 @@
 
 // === CONFIGURABLE SETTINGS ===
 var NUM_GANGS = 10;
+var NUM_GANGSTERS = 2;
 var GANG_MIN_SPREAD = 10;
 var GANG_MAX_SPREAD = 15;
 var CORE_MIN_DISTANCE = 5;
 var GANG_MIN_DISTANCE_FROM_EACH_OTHER = 6;
-var COLOR_VARIATION = 40;
+var COLOR_VARIATION = 100;
 
 
 
@@ -36,40 +37,19 @@ var base_colors = [
     make_color_rgb(200, 100, 255)   // violet
 ];
 
-// === GENERATE VARIED COLORS ===
+// === GENERATE HUE-BASED GANG COLORS ===
 var gang_colors = [];
-for (var i = 0; i < array_length(base_colors); i++) {
-    var base = base_colors[i];
-    var r = clamp(color_get_red(base) + irandom_range(-COLOR_VARIATION, COLOR_VARIATION), 0, 255);
-    var g = clamp(color_get_green(base) + irandom_range(-COLOR_VARIATION, COLOR_VARIATION), 0, 255);
-    var b = clamp(color_get_blue(base) + irandom_range(-COLOR_VARIATION, COLOR_VARIATION), 0, 255);
-    array_push(gang_colors, make_color_rgb(r, g, b));
-}
+var hue_step = floor(255 / (NUM_GANGS+1)); // Spread hues evenly across 0-255
 
-// === FIND ELIGIBLE TILES (non-core, not too close to core) ===
-var eligible_tiles = [];
-for (var i = 0; i < array_length(global.hex_grid); i++) {
-    var tile = global.hex_grid[i];
-    if (tile.type != "core") {
-        var too_close_to_core = false;
 
-        for (var j = 0; j < array_length(global.hex_grid); j++) {
-            var core_tile = global.hex_grid[j];
-            if (core_tile.type == "core") {
-                var dq = tile.q - core_tile.q;
-                var dr = tile.r - core_tile.r;
-                var dist = max(abs(dq), abs(dr), abs(-dq - dr));
-                if (dist < CORE_MIN_DISTANCE) {
-                    too_close_to_core = true;
-                    break;
-                }
-            }
-        }
+for (var i = 0; i < NUM_GANGS; i++) {
+    var hue = i * (hue_step - hue_step/8 + irandom(hue_step/4));
+    
+    var sat = clamp(255 - irandom_range(0, COLOR_VARIATION), 0, 255);
+    var val = clamp(255 - irandom_range(0, COLOR_VARIATION), 0, 255);
 
-        if (!too_close_to_core) {
-            array_push(eligible_tiles, i);
-        }
-    }
+    var gang_color = make_color_hsv(hue, sat, val);
+    array_push(gang_colors, gang_color);
 }
 
 // === FILTER VALID STRONGHOLDS ===
@@ -187,7 +167,7 @@ for (var i = 0; i < array_length(global.gang_territories); i++) {
     var new_gang = instance_create_layer(ui_base_x, y_offset, "UI", obj_gang);
 	new_gang.name = gang.name;
 	new_gang.owned = gang.owned;
-	scr_init_gang(new_gang, gang.name, gang.owned, 1);
+	scr_init_gang(new_gang, gang.name, gang.owned, NUM_GANGSTERS);
 	if i == _random_gang_becomes_player_gang {
 		new_gang.autonomous = false
 	}

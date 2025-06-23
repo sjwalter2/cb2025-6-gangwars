@@ -87,6 +87,8 @@ if (alert_active) {
 }
 
 draw_set_font(smallfont)
+draw_set_halign(fa_center);
+draw_set_valign(fa_bottom);
 var state_color = c_white;
 var current_state = state;
 

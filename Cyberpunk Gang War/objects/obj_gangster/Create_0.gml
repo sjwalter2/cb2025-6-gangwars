@@ -81,7 +81,15 @@ alert_responding = false;
 move_path = [];         // Array of remaining tile indices to follow
 has_followup_move = false;  // Whether to continue pathing after reaching this tile
 test = 0;
-
+proper_intervene_reset = 1;
+proper_capture_reset = 1;
+lastTicks = 0;
+intervene_tile = -1;
+state_history = [];
+state_history_max = 20; // number of frames to keep in history
+testState = "intervening"
+remaining_stronghold = true
+firstStop = 0;
 with(obj_gameHandler) {
 	ds_list_add(tickers,other)
 }
@@ -119,17 +127,15 @@ function array_shift(arr) {
 
 
 function tick() {
-	if(state == "intervening")
+	if(!remaining_stronghold && !firstStop)
 	{
-		test = 1;	
-		interveneCount++;
+		firstStop = 1;
+		//with(obj_gameHandler)
+		//	nextSpeed = 0;
 	}
-
-    if (state == "capturing") {
-        scr_tick_gangster_capturing(self);
-        return;
-    }
-
+	else if(remaining_stronghold && firstStop)
+		firstStop = 0;
+	
 	if (state == "intervening") {
 	    scr_tick_gangster_intervening(self);
 	    return;
@@ -149,23 +155,30 @@ function tick() {
         state = "moving";
 		stuck_waiting_trigger = 1;
         return;
-    } 
-
-    if (state == "moving") {
+    } 	
+	if (state == "moving") {
 		if ( move_total_ticks <= 0) 
 		{
 	        is_moving = false;
 	        move_target = undefined;
+			if (state == testState)		
+				show_debug_message("Changed from " + testState + " to idle 1")
 	        state = "idle";
 			move_target = undefined;
 		    move_ticks_elapsed = 0;
 		    move_total_ticks = 0;
 	        return;
 	    }
-
-        scr_tick_gangster_moving(self);
+		scr_tick_gangster_moving(self);
 		stuck_waiting_trigger = 0;
         return;
     }
-	
+}
+function moving_tick()
+{
+	if (state == "capturing") {
+        scr_tick_gangster_capturing(self);
+        return;
+    }
+
 }

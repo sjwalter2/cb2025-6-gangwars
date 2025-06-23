@@ -9,7 +9,7 @@ function scr_alert_gang_for_intervention(tile_index, capturing_gangster_id) {
 
     // Notify each gangster of the defending gang
     with (obj_gangster) {
-        if (owner.name == defending_gang && id != capturing_gangster_id) {
+        if (remaining_stronghold && !alert_responding && owner.name == defending_gang && id != capturing_gangster_id) {
             alert_tile_index = tile_index;
 			//if(state = "moving")
 			//	has_followup_move = false;

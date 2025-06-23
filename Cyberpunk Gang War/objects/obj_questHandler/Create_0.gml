@@ -35,7 +35,7 @@ with(obj_gameHandler)
 	ds_list_add(tickers,other)	
 }
 
-min_ticks_between_quests = 30
+min_ticks_between_quests = 3000000
 current_tick_count = 0
 base_quest_chance=0.20
 quest_chance_increase_amount = 0.05 //Percent increase chance of a quest for each tick that goes by above the min

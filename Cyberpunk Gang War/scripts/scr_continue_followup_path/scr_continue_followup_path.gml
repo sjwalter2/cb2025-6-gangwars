@@ -12,6 +12,8 @@ function scr_continue_followup_path(gangster) {
 
     // If tile is already occupied, cancel movement
     if (ds_map_exists(global.gangster_tile_map, next_key)  && !gangster.alert_responding && gangster.state != "intervening") {
+		if (gangster.state == gangster.testState) 
+				show_debug_message("Changed from " + gangster.testState + " to idle 7")
         gangster.state = "idle";
         gangster.move_path = [];
         gangster.has_followup_move = false;

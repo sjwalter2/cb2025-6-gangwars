@@ -30,6 +30,8 @@ function scr_tick_gangster_moving(gangster) {
 
     //// === Interrupt movement if alerted mid-path ===
     if (!gangster.alert_responding && gangster.alert_active && gangster.alert_tile_index != -1 && gangster.state != "intervening") {
+		if (gangster.state == gangster.testState) 
+			show_debug_message("Changed from " + gangster.testState + " to idle 11")
         gangster.state = "idle"; // Let Step event logic take over on next frame
         gangster.move_path = [];
         gangster.has_followup_move = false;

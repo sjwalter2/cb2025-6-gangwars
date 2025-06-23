@@ -8,7 +8,7 @@ function scr_gangster_start_movement(gangster, target_tile_index, firstMove=1, a
 
     if (!instance_exists(gangster)) exit;
     if (gangster.move_queued) exit;
-	if (gangster.state = "intervening") 
+	if (gangster.state == "intervening") 
 		exit;
 	var tile = global.hex_grid[target_tile_index];
     // Prevent duplicate claim

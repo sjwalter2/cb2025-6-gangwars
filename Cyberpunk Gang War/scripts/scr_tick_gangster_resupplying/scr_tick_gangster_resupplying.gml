@@ -50,6 +50,8 @@ function scr_tick_gangster_resupplying(gangster) {
         gangster.captures_since_resupply = 0;
         gangster.resupply_ticks_remaining = 0;
         gangster.reserved_stronghold_key = undefined;
+		if (gangster.state == gangster.testState) 
+			show_debug_message("Changed from " + gangster.testState + " to idle 12")
         gangster.state = "idle";
     }
 }

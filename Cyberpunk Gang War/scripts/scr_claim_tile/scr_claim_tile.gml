@@ -45,5 +45,7 @@ function scr_claim_tile(capture_tile_index, newOwner) {
             previous_color
         );
     }
+	with(obj_gangster)
+		remaining_stronghold = scr_check_remaining_stronghold(myGang);
 	scr_check_gang_defeat(previous_owner);
 }

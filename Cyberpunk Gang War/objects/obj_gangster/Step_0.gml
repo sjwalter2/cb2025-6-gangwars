@@ -5,6 +5,7 @@ if ((is_moving || move_queued) && move_target != undefined) {
     var start = move_target.start_pos;
     var target = move_target.target_pos;
     var total_ticks = move_total_ticks;
+	
 
     var base_tick = is_moving ? move_ticks_elapsed : 0;
     var tick_progress = 0;
@@ -25,18 +26,9 @@ if ((is_moving || move_queued) && move_target != undefined) {
     y = lerp(start.y, target.y, t);
 
 }
-if(state == "intervening")
-	test = 1;
-else
-	interveneCount = 0;
-if test
-{
-	show_debug_message("Gangster " + string(id) + " state: " + string(state));
-}
-if test && state != "intervening"
-{
-	show_debug_message("Gangster Error " + string(id) + " state: " + string(state));
-}
+
+
+
 // === Decision logic happens when dequeued ===
 if (state == "deciding") {
 
@@ -48,6 +40,8 @@ if (state == "deciding") {
     var my_axial = scr_pixel_to_axial(x - global.offsetX, y - global.offsetY);
     var start_key = scr_axial_key(my_axial.q, my_axial.r);
     if (!ds_map_exists(global.hex_lookup, start_key)) {
+		if (state == testState) 
+			show_debug_message("Changed from " + testState + " to idle 2")
         state = "idle";
         exit;
     }
@@ -60,6 +54,8 @@ if (state == "deciding") {
     var gang_name = owner.name;
     var target_index = scr_gangster_ai_decide_target(self);
     if (target_index == -1 || !is_real(target_index)) {
+		if (state == testState) 
+			show_debug_message("Changed from " + testState + " to idle 3")
         state = "idle";
         exit;
     }
@@ -83,12 +79,15 @@ if (state == "deciding") {
 		}
 		else
 		{
-			
+			if (state == testState) 
+				show_debug_message("Changed from " + testState + " to idle 4")
 			state = "idle"
 			move_queued = false
 			stuck_waiting++;
 		}
     } else {
+		if (state == testState) 
+			show_debug_message("Changed from " + testState + " to idle 5")
         state = "idle"; // ✅ Don't wait if no valid move
     }
 }
