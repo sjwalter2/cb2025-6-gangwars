@@ -65,6 +65,7 @@
     {"id":{"name":"obj_buttonGangInfo","path":"objects/obj_buttonGangInfo/obj_buttonGangInfo.yy",},},
     {"id":{"name":"obj_buttonGlobalGangInfo","path":"objects/obj_buttonGlobalGangInfo/obj_buttonGlobalGangInfo.yy",},},
     {"id":{"name":"obj_buttonGlobalGangsterInfo","path":"objects/obj_buttonGlobalGangsterInfo/obj_buttonGlobalGangsterInfo.yy",},},
+    {"id":{"name":"obj_buttonGlobalTrueFalse","path":"objects/obj_buttonGlobalTrueFalse/obj_buttonGlobalTrueFalse.yy",},},
     {"id":{"name":"obj_buttonHirePawnGui","path":"objects/obj_buttonHirePawnGui/obj_buttonHirePawnGui.yy",},},
     {"id":{"name":"obj_buttonInfo","path":"objects/obj_buttonInfo/obj_buttonInfo.yy",},},
     {"id":{"name":"obj_buttonNextShelf","path":"objects/obj_buttonNextShelf/obj_buttonNextShelf.yy",},},
@@ -91,7 +92,6 @@
     {"id":{"name":"obj_test_colors","path":"objects/obj_test_colors/obj_test_colors.yy",},},
     {"id":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"id":{"name":"rm_testColors","path":"rooms/rm_testColors/rm_testColors.yy",},},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"scr_alert_gang_for_intervention","path":"scripts/scr_alert_gang_for_intervention/scr_alert_gang_for_intervention.yy",},},
     {"id":{"name":"scr_axial_distance","path":"scripts/scr_axial_distance/scr_axial_distance.yy",},},
     {"id":{"name":"scr_axial_key","path":"scripts/scr_axial_key/scr_axial_key.yy",},},
@@ -155,7 +155,6 @@
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_gangmap","path":"rooms/rm_gangmap/rm_gangmap.yy",},},
     {"roomId":{"name":"rm_testColors","path":"rooms/rm_testColors/rm_testColors.yy",},},
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

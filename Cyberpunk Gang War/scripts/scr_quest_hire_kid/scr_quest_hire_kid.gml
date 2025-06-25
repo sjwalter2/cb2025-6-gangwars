@@ -10,8 +10,18 @@ function scr_quest_hire_kid(_func){
 				var new_gangster = scr_hire_gangster(playerGang)
 				if (new_gangster == 0)
 				{
-					show_message("Failed to create gangster")
-					instance_destroy()
+					func = "confirm"
+					description = "The kid skiddadled... Either we dont have a stronghold, or something else went wrong..."
+					displayReady = true
+					with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+					{
+						parent = other
+						myFunction = "end"
+						text = "Ok"
+						shelfActive = true
+						guiX = x
+						guiY = y
+					}
 				} else {
 					func = "confirm"
 					description = "You've agreed to hire on " + new_gangster.name + ", at least on a trial basis"

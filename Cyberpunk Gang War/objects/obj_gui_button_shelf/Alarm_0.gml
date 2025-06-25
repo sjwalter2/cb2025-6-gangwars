@@ -1,16 +1,26 @@
 
+//Info Shelf
 var nextBut = instance_create_depth(-100,-100,0,obj_buttonNextShelf)
 with nextBut
 {
-	nextShelf = other.displayShelf
+	nextShelf = other.gangShelf
 }
 
-for (var i = 0 ; i < instance_number(obj_gang) ; i += 1)
+var questRandBut = instance_create_depth(-100,-100,0,obj_buttonGlobalTrueFalse)
+with questRandBut
 {
-	array_push(gangShelf,instance_create_depth(-100,-100,0,obj_buttonGangInfo))
-	gangShelf[i].gang = instance_find(obj_gang,i)
-	gangShelf[i].text = gangShelf[i].gang.name
+	variable = "questsRandom"
+	text = "Randomly select quest"
 }
 
-array_push(gangShelf,nextBut)
+var questActiveBut = instance_create_depth(-100,-100,0,obj_buttonGlobalTrueFalse)
+with questActiveBut
+{
+	variable = "questsActive"
+	text = "Quests active"
+}
 
+displayShelf = [instance_create_depth(-100,-100,0,obj_buttonGlobalGangsterInfo),instance_create_depth(-100,-100,0,obj_buttonGlobalGangInfo),instance_create_depth(-100,-100,0,obj_buttonSpawnQuestGui),questActiveBut,questRandBut,nextBut]
+
+currentShelf = displayShelf
+currentParentShelf = displayShelf

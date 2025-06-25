@@ -5,21 +5,14 @@ shelfHeight = 0
 lineHeight = 0
 
 gangShelf = []
-
-
-//Info Shelf
-var nextBut = instance_create_depth(-100,-100,0,obj_buttonNextShelf)
-with nextBut
-{
-	nextShelf = other.gangShelf
-}
-displayShelf = [instance_create_depth(-100,-100,0,obj_buttonGlobalGangsterInfo),instance_create_depth(-100,-100,0,obj_buttonGlobalGangInfo),instance_create_depth(-100,-100,0,obj_buttonSpawnQuestGui),nextBut]
+displayShelf = []
 
 //Gang Shelf
 alarm[0] = 1
+alarm[1] = 2
 
-currentShelf = displayShelf
-currentParentShelf = displayShelf
+currentShelf = []
+currentParentShelf = []
 
 function changeShelf(shelf)
 {

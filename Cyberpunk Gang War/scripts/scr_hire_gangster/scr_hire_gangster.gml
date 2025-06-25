@@ -12,7 +12,7 @@ function scr_hire_gangster(_gang){
         }
     }
 	if(!_success){
-		//show_debug_message("No owned strongholds! :(");
+		show_debug_message("No owned strongholds! :(");
 		return 0;
 	}
 	var pos = scr_axial_to_pixel(tile.q, tile.r);

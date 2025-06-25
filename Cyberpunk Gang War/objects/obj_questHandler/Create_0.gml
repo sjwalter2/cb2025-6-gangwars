@@ -13,7 +13,18 @@ Note: we create an obj_quest because some quests are not instantaneous/have long
 
 */
 
+//is used to manually spawn a quest
 global.spawnQuest = false
+if(!variable_global_exists("questsActive"))
+{
+	global.questsActive = true;
+}
+
+if(!variable_global_exists("questsRandom"))
+{
+	global.questsRandom = false
+}
+
 
 quests_list = ds_list_create()
 
@@ -42,6 +53,11 @@ quest_chance_increase_amount = 0.05 //Percent increase chance of a quest for eac
 
 function tick()
 {
+	if( global.questsActive == false )
+	{
+		exit;
+	}
+	
 	if(ds_list_size(quests_list) <= 0)
 	{
 		//show_debug_message("Ran out of new quests. Have a nice day!")
@@ -73,10 +89,15 @@ function tick()
 			current_tick_count = 0
 			global.spawnQuest = false
 			
-			//Choose a random quest from the list
-			//var _questNum = irandom(ds_list_size(quests_list)-1)
-			//Choose quests in reverse list order (last entry in quests.txt is read first, etc)
-			var _questNum = ds_list_size(quests_list)-1
+			if(global.questsRandom)
+			{
+				//Choose a random quest from the list
+				var _questNum = irandom(ds_list_size(quests_list)-1)
+			} else
+			{
+				//Choose quests in reverse list order (last entry in quests.txt is read first, etc)
+				var _questNum = ds_list_size(quests_list)-1
+			}
 
 			var _questJSON = json_parse(ds_list_find_value(quests_list,_questNum))
 			ds_list_delete(quests_list,_questNum)
