@@ -12,7 +12,7 @@ function scr_quest_territory_stash(_func){
 					scr_gain_money(_gainMoney)
 				}
 				displayReady = true
-				with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+				with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 				{
 					parent = other
 					myFunction = "end"

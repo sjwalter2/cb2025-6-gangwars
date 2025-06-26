@@ -13,7 +13,7 @@ function scr_quest_hire_kid(_func){
 					func = "confirm"
 					description = "The kid skiddadled... Either we dont have a stronghold, or something else went wrong..."
 					displayReady = true
-					with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+					with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 					{
 						parent = other
 						myFunction = "end"
@@ -26,7 +26,7 @@ function scr_quest_hire_kid(_func){
 					func = "confirm"
 					description = "You've agreed to hire on " + new_gangster.name + ", at least on a trial basis"
 					displayReady = true
-					with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+					with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 					{
 						parent = other
 						myFunction = "end"
@@ -54,7 +54,7 @@ function scr_quest_hire_kid(_func){
 				func = "confirm"
 				description = "We shook the kid down for " + string(gainedCash) + " bucks. Sucks to be them!"
 				displayReady = true
-				with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+				with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 				{
 					parent = other
 					myFunction = "end"
@@ -82,7 +82,7 @@ function scr_quest_hire_kid(_func){
 				func = "confirm"
 				description = "Nobody messes with the " + playerGang.name + ". Gained " + string(gainedNotoriety) + " notoriety. Poor kid..."
 				displayReady = true
-				with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+				with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 				{
 					parent = other
 					myFunction = "end"

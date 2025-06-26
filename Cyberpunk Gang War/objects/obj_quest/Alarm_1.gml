@@ -28,7 +28,7 @@ with(obj_questHandler)
 
 if(button1 != "")
 {
-	with instance_create_layer(_width*0.333,_height*0.555,"questButtons",obj_buttonQuest)
+	with instance_create_layer(_width*0.333,_height*0.666,"questButtons",obj_buttonQuest)
 	{
 		parent = other
 		myFunction = other.func1
@@ -41,7 +41,7 @@ if(button1 != "")
 }
 if(button2 != "")
 {
-	with instance_create_layer(_width*0.666,_height*0.555,"questButtons",obj_buttonQuest)
+	with instance_create_layer(_width*0.666,_height*0.666,"questButtons",obj_buttonQuest)
 	{
 		parent = other
 		myFunction = other.func2
@@ -53,7 +53,7 @@ if(button2 != "")
 }
 if(button3 != "")
 {
-	with instance_create_layer(_width*0.333,_height*0.666,"questButtons",obj_buttonQuest)
+	with instance_create_layer(_width*0.333,_height*0.722,"questButtons",obj_buttonQuest)
 	{
 		parent = other
 		myFunction = other.func3
@@ -66,7 +66,7 @@ if(button3 != "")
 }
 if(button4 != "")
 {
-	with instance_create_layer(_width*0.666,_height*0.666,"questButtons",obj_buttonQuest)
+	with instance_create_layer(_width*0.666,_height*0.722,"questButtons",obj_buttonQuest)
 	{
 		parent = other
 		myFunction = other.func4

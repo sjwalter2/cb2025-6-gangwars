@@ -147,6 +147,7 @@
     {"id":{"name":"spr_buttonQuestSpawn","path":"sprites/spr_buttonQuestSpawn/spr_buttonQuestSpawn.yy",},},
     {"id":{"name":"spr_gangsterBod","path":"sprites/spr_gangsterBod/spr_gangsterBod.yy",},},
     {"id":{"name":"spr_gangsterHead","path":"sprites/spr_gangsterHead/spr_gangsterHead.yy",},},
+    {"id":{"name":"spr_questImages","path":"sprites/spr_questImages/spr_questImages.yy",},},
     {"id":{"name":"spr_speed","path":"sprites/spr_speed/spr_speed.yy",},},
     {"id":{"name":"spr_testCharacterColors","path":"sprites/spr_testCharacterColors/spr_testCharacterColors.yy",},},
   ],

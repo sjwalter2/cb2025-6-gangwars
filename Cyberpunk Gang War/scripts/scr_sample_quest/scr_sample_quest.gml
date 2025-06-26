@@ -71,7 +71,7 @@ function scr_sample_quest(_func){
 			func = "confirm"
 			description = "Congratulations! You completed the quest by capturing the Hex!"
 			displayReady = true
-			with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+			with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 			{
 				parent = other
 				myFunction = "end"
@@ -106,7 +106,7 @@ Quests are saved in datafiles/quests.txt
 Each line is a separate JSON object, with the following entries:
 
  name: the quest's name, string, to be displayed at the top
- image: what sprite to use. might be a sprite name, or might be an image_index within a single sprite - to be determined
+ image: which frame of the spr_questImages to use.
  description: string containing the quest text
  button1: text for button 1
  button2 (optional): text for button 2

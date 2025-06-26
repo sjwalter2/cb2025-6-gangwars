@@ -20,7 +20,7 @@ function scr_quest_peony_gambler(_func){
 				func = "confirm"
 				description = "It's awkward to give up our own man, but it'll be worse if the situation escalates with " + rivalGang.name + ". We'll need to spend a bit more to convince new recruits we're worth joining..."
 				displayReady = true
-				with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+				with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 				{
 					parent = other
 					myFunction = "pawnCostIncrease"
@@ -54,7 +54,7 @@ function scr_quest_peony_gambler(_func){
 			func = "confirm"
 			description = "Our refusal has bolstered the resolve of the Peony Gambler's follower " + newGangster.name + ", who has joined " + rivalGang.name + "."
 			displayReady = true
-			with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+			with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 			{
 				parent = other
 				myFunction = "end"
@@ -107,7 +107,7 @@ function scr_quest_peony_gambler(_func){
 				func = "confirm"
 				description = "It didn't take much to convince " + rivalGang.name + " to send the Peony Gambler off on a wild goose chase in another city. Perhaps cold cash is more powerful than justice..."
 				displayReady = true
-				with instance_create_layer(_width*0.5,_height*0.555,"questButtons",obj_buttonQuest)
+				with instance_create_layer(_width*0.5,_height*0.666,"questButtons",obj_buttonQuest)
 				{
 					parent = other
 					myFunction = "end"
